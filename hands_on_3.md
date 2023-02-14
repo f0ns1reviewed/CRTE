@@ -6,9 +6,10 @@ Enumerate following for the us.techcorp.local domain:
 − All modify rights/permissions for the studentuserx
 ```
 ## Index of content
-
-  1.[ACL Domain Admin](#acl-domain-admin)
-  2.[Permissions studentusers](#permissions-studentusers)
+    
+   1.[ACL Domain Admin](#acl-domain-admin)
+   
+   2.[Permissions studentusers](#permissions-studentusers)
   
 ## ACL Domain Admin
 
