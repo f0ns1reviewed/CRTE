@@ -1,6 +1,6 @@
 # Lab Of Certification
 
-![Lab controll]()
+![Lab controll](Lab.png)
 
 ## Index Content:
 
