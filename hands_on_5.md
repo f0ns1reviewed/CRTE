@@ -184,3 +184,195 @@ ServiceAbused Command
 ------------- -------
 ALG           net localgroup Administrators us\studentuser34 /add
 ```
+## Identify Machine Admin Access
+
+```
+PS C:\Windows\system32> Import-Module C:\AD\Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dll
+PS C:\Windows\system32> Import-Module C:\AD\Tools\ADModule-master\ActiveDirectory\ActiveDirectory.psd1
+PS C:\Windows\system32> function Get-ADPrincipalGroupMembershipRecursive ($SamAccountName)
+>> {
+>> $groups = @(Get-ADPrincipalGroupMembership -Identity $SamAccountName |
+>> select -ExpandProperty distinguishedname)
+>> $groups
+>> if ($groups.count -gt 0)
+>> {
+>> foreach ($group in $groups)
+>> {
+>> Get-ADPrincipalGroupMembershipRecursive $group
+>> }
+>> }
+>> }
+PS C:\Windows\system32> Get-ADPrincipalGroupMembershipRecursive 'studentuser17'
+CN=Domain Users,CN=Users,DC=us,DC=techcorp,DC=local
+CN=StudentUsers,CN=Users,DC=us,DC=techcorp,DC=local
+CN=Users,CN=Builtin,DC=us,DC=techcorp,DC=local
+CN=MaintenanceUsers,CN=Users,DC=us,DC=techcorp,DC=local
+CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
+
+```
+Finding ACLs and maching with previous groups:
+
+```
+PS C:\Windows\system32> Find-InterestingDomainAcl | ?{$_.IdentityReferenceName -match 'Managers'}
+WARNING: [Find-InterestingDomainAcl] Unable to convert SID 'S-1-5-21-210670787-2521448726-163245708-1147' to a distinguishedname with Convert-ADName
+WARNING: [Find-InterestingDomainAcl] Unable to convert SID 'S-1-5-21-210670787-2521448726-163245708-1147' to a distinguishedname with Convert-ADName
+WARNING: [Find-InterestingDomainAcl] Unable to convert SID 'S-1-5-21-210670787-2521448726-163245708-1147' to a distinguishedname with Convert-ADName
+
+
+ObjectDN                : OU=Mgmt,DC=us,DC=techcorp,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : ReadProperty, WriteProperty
+ObjectAceType           : bf9679c0-0de6-11d0-a285-00aa003049e2
+AceFlags                : ContainerInherit, InheritOnly
+AceType                 : AccessAllowedObject
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
+IdentityReferenceName   : managers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : OU=Mgmt,DC=us,DC=techcorp,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild
+ObjectAceType           : bf967a9c-0de6-11d0-a285-00aa003049e2
+AceFlags                : ContainerInherit
+AceType                 : AccessAllowedObject
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
+IdentityReferenceName   : managers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : OU=Mgmt,DC=us,DC=techcorp,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : 00000000-0000-0000-0000-000000000000
+AceFlags                : ContainerInherit, InheritOnly
+AceType                 : AccessAllowedObject
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
+IdentityReferenceName   : managers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : ReadProperty, WriteProperty
+ObjectAceType           : bf9679c0-0de6-11d0-a285-00aa003049e2
+AceFlags                : ContainerInherit, InheritOnly, Inherited
+AceType                 : AccessAllowedObject
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
+IdentityReferenceName   : managers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild
+ObjectAceType           : bf967a9c-0de6-11d0-a285-00aa003049e2
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowedObject
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
+IdentityReferenceName   : managers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : 00000000-0000-0000-0000-000000000000
+AceFlags                : ContainerInherit, InheritOnly, Inherited
+AceType                 : AccessAllowedObject
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
+IdentityReferenceName   : managers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Windows Virtual Machine,CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : ReadProperty, WriteProperty
+ObjectAceType           : bf9679c0-0de6-11d0-a285-00aa003049e2
+AceFlags                : ContainerInherit, InheritOnly, Inherited
+AceType                 : AccessAllowedObject
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
+IdentityReferenceName   : managers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Windows Virtual Machine,CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild
+ObjectAceType           : bf967a9c-0de6-11d0-a285-00aa003049e2
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowedObject
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
+IdentityReferenceName   : managers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=Windows Virtual Machine,CN=US-MGMT,OU=Mgmt,DC=us,DC=techcorp,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : 00000000-0000-0000-0000-000000000000
+AceFlags                : ContainerInherit, InheritOnly, Inherited
+AceType                 : AccessAllowedObject
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
+IdentityReferenceName   : managers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : ReadProperty, WriteProperty
+ObjectAceType           : bf9679c0-0de6-11d0-a285-00aa003049e2
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowedObject
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
+IdentityReferenceName   : managers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild
+ObjectAceType           : bf967a9c-0de6-11d0-a285-00aa003049e2
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowedObject
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
+IdentityReferenceName   : managers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : 00000000-0000-0000-0000-000000000000
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowedObject
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1117
+IdentityReferenceName   : managers
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
+IdentityReferenceClass  : group
+
+```
