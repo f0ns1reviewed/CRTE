@@ -8,3 +8,16 @@
 
 ```
 
+
+## Index of content
+
+  1. [Write Permissions](#find-computer)
+  2. [Abuse Permissions](#abuse-permissions)
+  3. [Extract Secrets](#extract-secrets)
+
+
+## Write Permissions
+
+## Abuse Permissions
+
+## Extract Secrets
