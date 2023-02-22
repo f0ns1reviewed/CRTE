@@ -2,10 +2,10 @@
 
 ## Index Of content:
 
-  1.[]()
-  2.[]()
+  1.[Certify Domain Admin](#certify-domain-admin)
+  2.[Certify Enterprise Admin](#certify-entreprise-admin)
   
-## Cerity:
+## Certify Domain Admin
 
 ```
 Microsoft Windows [Version 10.0.17763.3650]
@@ -504,7 +504,7 @@ whoami
 us\administrator
 ```
 
-The Same procedure for Enterprise ADmin:
+## Certify Enterprise Admin:
 
 Obtain Enterprise administrator pfx request:
 ```
