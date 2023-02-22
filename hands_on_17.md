@@ -3,6 +3,7 @@
 ## Index Of content:
 
   1.[Certify Domain Admin](#certify-domain-admin)
+  
   2.[Certify Enterprise Admin](#certify-entreprise-admin)
   
 ## Certify Domain Admin
@@ -504,7 +505,7 @@ whoami
 us\administrator
 ```
 
-## Certify Enterprise Admin:
+## Certify Enterprise Admin
 
 Obtain Enterprise administrator pfx request:
 ```
