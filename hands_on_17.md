@@ -4,7 +4,7 @@
 
   1.[Certify Domain Admin](#certify-domain-admin)
   
-  2.[Certify Enterprise Admin](#certify-entreprise-admin)
+  2.[Certify Enterprise Admin](#certify-enterprise-admin)
   
 ## Certify Domain Admin
 
