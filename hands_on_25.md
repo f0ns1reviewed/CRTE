@@ -181,7 +181,7 @@ Supplemental Credentials:
 ```
 ## Accesss eushare on euvendor dc
 Review chaed tickets:
-``
+```
 C:\Windows\system32>klist
 
 Current LogonId is 0:0x738a20d
@@ -209,7 +209,7 @@ Cached Tickets: (2)
         Session Key Type: AES-256-CTS-HMAC-SHA1-96
         Cache Flags: 0
         Kdc Called: EU-DC.eu.local
-``
+```
 Copy binaries to eu-dc.eu.local:
 
 ```
