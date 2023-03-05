@@ -1,7 +1,5 @@
 # Content Lab2:
 
-# Content Lab1:
-
 On this lab the attacker should enumerate the us.techcorp.local domain.
 
 ![Lab](Lab.png)
