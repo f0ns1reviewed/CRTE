@@ -8,7 +8,7 @@
 ## Index Of Content
 
   1. [Exploit Service](#exploit-service)
-  2. [Identify machine admin access](#identify-machoneadmin-access)
+  2. [Identify machine admin access](#identify-machine-admin-access)
 
 ## Exploit service
 
