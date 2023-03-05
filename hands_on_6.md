@@ -52,18 +52,6 @@ SID                  : S-1-5-21-210670787-2521448726-163245708-4601
 Surname              : svc
 UserPrincipalName    : appsvc
 
-DistinguishedName    : CN=Support38User,CN=Users,DC=us,DC=techcorp,DC=local
-Enabled              : True
-GivenName            : Support38
-Name                 : Support38User
-ObjectClass          : user
-ObjectGUID           : 95b86096-a51e-4255-b455-55c695434b09
-SamAccountName       : Support38user
-ServicePrincipalName : {us/Pwned}
-SID                  : S-1-5-21-210670787-2521448726-163245708-16128
-Surname              : user
-UserPrincipalName    : Support38user
-
 ```
 ## Kerberoas Attack
 
