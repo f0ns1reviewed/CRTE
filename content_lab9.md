@@ -3,6 +3,7 @@
 | computer | user |
 | ------- | ------ |
 | US-MAILMGMT | Administrator |
+| US-MAILMGMT | provisioningsvc |
 | US-MAILMGMT | US-MAILMGMT$ |
 
 ![us_mail-mgmt](us_mail-mgmt.png)
