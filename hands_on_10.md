@@ -10,10 +10,10 @@
 
 ## Index of content
 
-  1. [Enumerate gMSAs]
-  2. [Enumerate principals]
-  3. [Compromise principal]
-  4. [Use gMSA]
+  1. [Enumerate gMSAs](#enumerate-gmsas)
+  2. [Enumerate principals](#enumerate-principals)
+  3. [Compromise principal](#compromise-principals)
+  4. [Use gMSA](#use-gmsa)
 
 
 ## Enumerate gMSAs
