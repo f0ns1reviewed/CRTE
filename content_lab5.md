@@ -18,7 +18,7 @@ The first step is escalate privileges on local machine:
   - Review the services and abusse privileges with powerup
 ```
 
-The second step is escalate evaluate all ACLs on the for the studentuser17 :
+The second step is evaluate all ACLs over the us.techcorp.local domain for the studentuser17 :
 ```
  - Include the userstudent17 on machineAdmins groups
  - The machineadmins group allow the users access to US-MGMT such administrator
