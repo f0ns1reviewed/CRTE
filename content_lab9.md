@@ -11,5 +11,5 @@
 Extract credentials of interactive logon sessions and service accounts from us-mailmgmt.
 ```
   1. Abusse permissions of stracted credentials for LAPS.
-  2. Use powershell with mimikatz ps1 script and dump credentials from the target server fileless.
+  2. Use the Loader.exe to execute remote binary using network (fileless) and stract keys for the target server.
 
