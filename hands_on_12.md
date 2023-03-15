@@ -7,7 +7,7 @@ Admin.
 ```
 
 
-## Enumerta objects
+## Enumerte objects
 
 ```
  Get-ADObject -Filter {msDS-AllowedToDelegateTo -ne "$null"} -Properties msDS-AllowedToDelegateTo
