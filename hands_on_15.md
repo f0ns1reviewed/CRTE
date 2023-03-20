@@ -10,8 +10,8 @@ creating silver ticket for:
 
 ## Index of content
   
-  1. Silver Ticket HOST(#silver-ticket-host)
-  2. Silver Ticket WMI(#silver-ticket-wmi)
+  1. [Silver Ticket HOST](#silver-ticket-host)
+  2. [Silver Ticket WMI](#silver-ticket-wmi)
 
 
 ### Silver Ticket HOST
