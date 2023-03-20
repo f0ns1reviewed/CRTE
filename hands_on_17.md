@@ -1,5 +1,8 @@
 # Hands-On 17:
-
+```
+Check if AD CS is used by the target forest and find any vulnerable/abusable templates.
+Abuse any such template(s) to escalate to Domain Admin and Enterprise Admin.
+```
 ## Index Of content:
 
   1.[Certify Domain Admin](#certify-domain-admin)
