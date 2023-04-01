@@ -43,6 +43,8 @@
 
 ## Hands-On Labs solution:
 
+![Attacks accross the organization](compromissed_machines.png)
+
   1. [Hands-on 1](hands_on_1.md)
   2. [Hands-on 2](hands_on_2.md)
   3. [Hands-on 3](hands_on_3.md)
