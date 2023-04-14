@@ -60,6 +60,9 @@ Find-InterestingDomainAcl | ?{$_.IdentityReferenceName -match 'Managers'}
 ## ACLs by identity
 ```
 Get-DomainObjectACL -Identity "Domain Admins" -ResolveGUIDs | select AceType, ActiveDirectoryRigths, ObjectDN, ObjectSID
+```
+## ACLs with filters
+```
 Get-DomainObjectAcl | select -expandProperty ObjectDN  | Get-Unique | % {$_;Get-Acl AD:\$_  | select -ExpandProperty Access | ?{$_.IdentityReference -like '*Managers*'}}
 ```
 ## GPO
