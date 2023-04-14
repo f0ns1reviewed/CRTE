@@ -2,6 +2,11 @@
 
 ![Lab controll](Lab.png)
 
+## Enumeration:
+[Enumeration](enumeration.md)
+
+## Techniques
+[Techniques](techniques.md)
 
 ## Content by lab:
   
