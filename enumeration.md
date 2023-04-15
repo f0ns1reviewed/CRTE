@@ -5,6 +5,10 @@
 ```
 Get-ADComputer -Filter {TrustedForDelegation -eq $True} -Server us.techcorp.local
 ```
+## Constrained delegation
+```
+Get-ADObject -Filter {msDS-AllowedToDelegateTo -ne "$null"} -Properties msDS-AllowedToDelegateTo
+```
 
 ## Principals GMSA
 
