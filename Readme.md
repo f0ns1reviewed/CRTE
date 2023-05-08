@@ -1,6 +1,6 @@
 # CERTIFIED RED TEAM EXPERT
 
-![Lab controll](Lab.png)
+
 
 ## Enumeration Techniques:
 [Enumeration](enumeration.md)
